@@ -1,0 +1,111 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #D9D9D9;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.title {
+    font-family: '1968 Odyssey 3D Italic';
+    font-style: italic;
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 49px;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+.main-container {
+    display: flex;
+    gap: 20px;
+}
+
+.left-panel {
+    width: 1242px;
+    height: 643px;
+    background: #D9D9D9;
+    border: 5px solid #000000;
+    border-radius: 30px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.create-button {
+    width: 440px;
+    height: 74px;
+    background: #393939;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    font-family: 'Vivaldi';
+    font-size: 64px;
+    cursor: pointer;
+}
+
+.dnd-container {
+    position: absolute;
+    top: 20px;
+    text-align: center;
+    color: #6D6D6D;
+    font-family: 'TT Smalls Trial';
+    font-size: 64px;
+}
+
+.right-panel {
+    width: 535px;
+    height: 643px;
+    background: #A8A8A8;
+    border: 1px solid #E5E5E5;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+}
+
+.right-panel .item {
+    width: 100%;
+    height: 72px;
+    background: #5B5B5B;
+    border-radius: 10px;
+}
+
+.bottom-panel {
+    width: 1824px;
+    height: 282px;
+    background: #C2C2C2;
+    border: 5px solid #000000;
+    border-radius: 25px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.ai-chat {
+    font-family: 'Kone KSS 470 (Wyvern Ver)';
+    font-size: 72px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.bubble {
+    position: absolute;
+    width: 256px;
+    height: 256px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    bottom: 10px;
+    left: 10px;
+}
