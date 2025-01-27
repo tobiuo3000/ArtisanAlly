@@ -1,7 +1,6 @@
 import vertexai
 import vertexai.generative_models as genai
 
-
 func call_llm(isImageContained=false, prompt=None):
 	vertexai.init()
 	model = genai.GenerativeModel(
