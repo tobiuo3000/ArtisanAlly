@@ -1,0 +1,268 @@
+/* 全体のスタイル */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #D9D9D9;
+}
+
+.base-container {
+    position: absolute;
+    width: 1920px;
+    height: 1080px;
+    background: #D9D9D9;
+    top: -273px;
+    left: -780px;
+}
+
+/* タイトル */
+.title {
+    position: absolute;
+    top: -257px;
+    left: -730px;
+    width: 220px;
+    height: 49px;
+    font-family: '1968 Odyssey 3D Italic', sans-serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 49px;
+    color: #000000;
+}
+
+/* 左パネル */
+.left-panel {
+    position: absolute;
+    top: -193px;
+    left: -730px;
+    width: 1242px;
+    height: 643px;
+    background: #D9D9D9;
+    border: 5px solid #000000;
+    border-radius: 30px;
+    box-sizing: border-box;
+}
+
+/* ドラッグ＆ドロップエリア */
+.drug-and-drop {
+    position: relative;
+    width: 244px;
+    height: 77px;
+    top: 46px;
+    left: -230px;
+
+    margin: 40px auto;
+    text-align: center;
+}
+
+.upload-icon {
+    position: absolute;
+    width: 58px;
+    height: 58px;
+    top: 10px;
+    left: calc(50% - 80px);
+    background: url('upload_24.png') no-repeat center;
+    background-size: contain;
+}
+
+.DND {
+    position: absolute;
+    top: 10px;
+    left: calc(50% - 40px);
+    font-family: 'TT Smalls Trial', sans-serif;
+    font-size: 64px;
+    color: #6D6D6D;
+}
+
+/* CREATEボタン */
+.create-button {
+    position: relative;
+    width: 440px;
+    height: 74px;
+    margin: 0 auto;
+}
+
+.create-base-button {
+    position: absolute;
+    width: 440px;
+    height: 74px;
+    background: #393939;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 25px;
+}
+
+.create-text {
+    position: absolute;
+    width: 243px;
+    height: 65px;
+    left: 99px;
+    top: 9px;
+    font-family: 'Vivaldi', sans-serif;
+    font-size: 64px;
+    line-height: 65px;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+/* 編集アイコン群 */
+.edit-icons {
+    position: relative;
+    width: 400px;
+    height: 72px;
+    margin: 40px auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.flip-base, .expand-base, .shrink-base, .trashcan-base, .brightness-base {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    background: #B8B8B8;
+    border: 1px solid #D8D8D8;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
+
+.flip-icon {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    top: 11px;
+    left: 11px;
+    background: url('24890182.png') no-repeat center;
+    background-size: contain;
+}
+
+.expand-icon {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    top: 13px;
+    left: 13px;
+    background: url('拡大アイコン1.png') no-repeat center;
+    background-size: contain;
+}
+
+.shrink-icon {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    top: 13px;
+    left: 13px;
+    background: url('縮小アイコン1.png') no-repeat center;
+    background-size: contain;
+}
+
+.trashcan-icon {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    top: 13px;
+    left: 13px;
+    background: url('1034_tr_h.png') no-repeat center;
+    background-size: contain;
+}
+
+.brightness-icon {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    top: 13px;
+    left: 13px;
+    background: url('明度アイコン.png') no-repeat center;
+    background-size: contain;
+}
+
+/* 右パネル */
+.right-panel {
+    position: absolute;
+    top: 150px;
+    left: 1300px;
+    width: 535px;
+    height: 643px;
+    background: #A8A8A8;
+    border: 1px solid #E5E5E5;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 25px;
+}
+
+.panel-1, .panel-2, .panel-3, .panel-4 {
+    position: relative;
+    width: 438px;
+    height: 72px;
+    margin: 20px auto;
+    background: #5B5B5B;
+    border-radius: 10px;
+}
+
+/* 下部パネル */
+.bottom-panel {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    width: 1824px;
+    height: 282px;
+    background: #C2C2C2;
+    border: 5px solid #000000;
+    border-radius: 25px;
+}
+
+.AI-chat {
+    position: relative;
+    width: 475px;
+    height: 256px;
+    margin: 0 auto;
+}
+
+.bubble-icon {
+    position: absolute;
+    width: 256px;
+    height: 256px;
+    background: url('名称未設定 1.png') no-repeat center;
+    background-size: contain;
+    opacity: 0.5;
+}
+
+.AI-chat-text {
+    position: absolute;
+    top: 100px;
+    left: 260px;
+    font-family: 'Kone KSS 470 (Wyvern Ver)', sans-serif;
+    font-size: 72px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* その他のアイコン */
+.other-icons {
+    position: relative;
+    width: 176px;
+    height: 32px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sharing-icon, .ellipses-icon, .settings-icon, .black-bubble-icon {
+    width: 32px;
+    height: 32px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.sharing-icon {
+    background: url('シェアのアイコン素材.png') no-repeat center;
+}
+
+.ellipses-icon {
+    background: url('三点リーダーアイコン1.png') no-repeat center;
+}
+
+.settings-icon {
+    background: url('設定の歯車アイコン　その2.png') no-repeat center;
+}
+
+.black-bubble-icon {
+    background: url('吹き出しのアイコン16.png') no-repeat center;
+}
