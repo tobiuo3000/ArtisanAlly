@@ -9,16 +9,21 @@ body {
     justify-content: center;
     height: 100vh;
 }
-
 .title {
-    font-family: '1968 Odyssey 3D Italic';
-    font-style: italic;
-    font-weight: 400;
-    font-size: 48px;
-    line-height: 49px;
-    color: #000000;
-    margin-bottom: 20px;
+    position: absolute; /* 絶対配置 */
+    top: 10px; /* ページの上からの距離 */
+    left: 20px; /* ページの左からの距離 */
+    width: 220px;
+    height: 49px;
+
+    font-family: '1968 Odyssey 3D Italic', sans-serif; /* フォント指定 */
+    font-style: italic; /* イタリック体 */
+    font-weight: 400; /* フォントの太さ */
+    font-size: 48px; /* フォントサイズ */
+    line-height: 49px; /* 行の高さ */
+    color: #000000; /* テキストカラー */
 }
+
 
 .main-container {
     display: flex;
