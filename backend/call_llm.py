@@ -2,7 +2,7 @@ import vertexai
 import vertexai.generative_models as genai
 
 
-func call_llm(isImageContained=false, prompt=None):
+def call_llm(isImageContained=False, prompt=None):
 	vertexai.init()
 	model = genai.GenerativeModel(
 	    "models/gemini-1.5-pro"
@@ -17,7 +17,8 @@ func call_llm(isImageContained=false, prompt=None):
 		response = model.generate_content([prompt, image])
 	else:
 		response = model.generate_content([prompt])	
-	return response
+	return response.text
 
 if __name__ == "__main__":
-	call_llm()
+    res = call_llm()
+    print(res)
