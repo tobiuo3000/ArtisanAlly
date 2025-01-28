@@ -1,116 +1,353 @@
+/* 全体のスタイル */
 body {
     margin: 0;
     padding: 0;
-    background: #D9D9D9;
+
     font-family: Arial, sans-serif;
+    background-color: #D9D9D9;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100vh;
 }
-.title {
-    position: absolute; /* 絶対配置 */
-    top: 10px; /* ページの上からの距離 */
-    left: 20px; /* ページの左からの距離 */
-    width: 220px;
-    height: 49px;
-
-    font-family: '1968 Odyssey 3D Italic', sans-serif; /* フォント指定 */
-    font-style: italic; /* イタリック体 */
-    font-weight: 400; /* フォントの太さ */
-    font-size: 48px; /* フォントサイズ */
-    line-height: 49px; /* 行の高さ */
-    color: #000000; /* テキストカラー */
-}
-
-
-.main-container {
+/* 基本コンテナ設定（画面全体を覆う） */
+.base-container {
+    position: relative;
+    width: 100vw; /* 画面の横幅いっぱい */
+    height: auto; /* 自動で調整 */
+    aspect-ratio: 16 / 9; /* 16:9 の比率を固定 */
+    background: #D9D9D9;
     display: flex;
-    gap: 20px;
+    flex-direction: column; /* 縦方向に並べる */
+    align-items: center; /* 水平方向中央寄せ */
+    justify-content: space-between; /* 上・下のパネルに適度な余白 */
+    padding: 1%; /* 全体の余白を確保 */
 }
 
+/* ルート変数で基準サイズを指定 */
+:root {
+    --base-width: 1920; /* 横幅の基準 */
+    --base-height: 1080; /* 縦幅の基準 */
+}
+
+/* タイトル */
+.title {
+    position: absolute;
+    --top: 50; /* Figma上の X */
+    --left: 16; /* Figma上の Y */
+    --width: 220;
+    --height: 49;
+    font-family: '1968 Odyssey 3D Italic', sans-serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 49px;
+    color: #000000;
+}
+
+/* 上部コンテンツを並べるエリア */
+.top-content {
+    margin-top: 70px; /* タイトルの下に適切な余白を確保 */
+    display: flex;
+    justify-content: space-between; /* 左パネルと右パネルの間に余白 */
+    align-items: center;
+    width: 80%;
+    height: 55%; /* 画面の比率に合わせて調整 */
+    gap: 20px; /* 左右パネルの間隔を一定に */
+    margin-top: 20px; /* タイトルの下に配置する余白を追加 */
+    padding: 20px; /* 親要素の余白を追加 */
+}
+
+
+/* 左パネル */
 .left-panel {
-    width: 1242px;
-    height: 643px;
+    flex: 1;
+    height: 100%;
+
+
     background: #D9D9D9;
     border: 5px solid #000000;
     border-radius: 30px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    box-sizing: border-box;
+    padding: 20px; /* 内側の余白を確保 */
 }
 
+/* 右パネル */
+.right-panel {
+    flex: 0.5; /* 右パネルを左パネルの 1/2 の幅にする */
+    height: 100%; /* 縦いっぱいに広げる */
+
+    background: #A8A8A8;
+    border: 1px solid #E5E5E5;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 25px;
+    padding: 20px; /* 内側の余白を確保 */
+}
+
+.panel-1, .panel-2, .panel-3, .panel-4 {
+    width: 80%;
+    height: 20%;
+    margin: 20px auto;
+    background: #5B5B5B;
+    border-radius: 10px;
+}
+
+/* 下部パネル */
+.bottom-panel {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    height: 40%; /* 修正: 高さを確保 */
+    padding: 20px; /* 内側の余白 */
+
+    background: #C2C2C2;
+    border: 5px solid #000000;
+    border-radius: 25px;
+    padding: 20px; /* 内側の余白を確保 */
+}
+
+/* ドラッグ＆ドロップエリア */
+.drug-and-drop {
+    position: relative;
+    width: 244px;
+    height: 77px;
+    margin-left: 30px;
+    margin-top: 50%;
+
+    margin: 20px auto;
+    text-align: center;
+}
+
+.upload-icon {
+    position: absolute;
+    width: 58px;
+    height: 58px;
+    top: 10px;
+    left: calc(50% - 80px);
+    background: url('images/upload_24.png') no-repeat center;
+    background-size: contain;
+}
+
+.DND {
+    position: absolute;
+    top: 0px;
+    left: 85px;
+    left: calc(50% - 40px);
+    font-family: 'TT Smalls Trial', sans-serif;
+    font-size: 64px;
+    color: #6D6D6D;
+    transform: translateX(-50%); /* 修正: 中央揃え */
+}
+
+/* CREATEボタン */
 .create-button {
+    position: relative;
+    width: 440px;
+    height: 74px;
+    margin: 20px auto; /* 修正: 水平方向に中央配置 */
+    left: 0; /* 修正: 不要なleft指定を削除 */
+
+    margin: 0 auto;
+}
+
+.create-base-button {
+    position: absolute;
     width: 440px;
     height: 74px;
     background: #393939;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #FFFFFF;
-    font-family: 'Vivaldi';
-    font-size: 64px;
-    cursor: pointer;
 }
 
-.dnd-container {
+.create-text {
     position: absolute;
-    top: 20px;
-    text-align: center;
-    color: #6D6D6D;
-    font-family: 'TT Smalls Trial';
+    width: 243px;
+    height: 65px;
+    left: 99px;
+    top: 9px;
+    font-family: 'Vivaldi', sans-serif;
     font-size: 64px;
+    line-height: 65px;
+    color: #FFFFFF;
+    text-align: center;
 }
 
-.right-panel {
-    width: 535px;
-    height: 643px;
-    background: #A8A8A8;
-    border: 1px solid #E5E5E5;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 25px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 20px;
-}
-
-.right-panel .item {
-    width: 100%;
+/* 編集アイコン群 */
+.edit-icons {
+    position: relative;
+    width: 400px;
     height: 72px;
-    background: #5B5B5B;
+    top: 360px;
+    left: 82px;
+
+    margin: 40px auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.flip-base, .expand-base, .shrink-base, .trashcan-base, .brightness-base {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    background: #B8B8B8;
+    border: 1px solid #D8D8D8;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
 }
 
-.bottom-panel {
-    width: 1824px;
-    height: 282px;
-    background: #C2C2C2;
-    border: 5px solid #000000;
-    border-radius: 25px;
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+.flip-icon {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    top: 11px;
+    left: 11px;
+    background: url('images/reversal-icon.png') no-repeat center;
+    background-size: contain;
 }
 
-.ai-chat {
-    font-family: 'Kone KSS 470 (Wyvern Ver)';
+.expand-icon {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    top: 13px;
+    left: 13px;
+    background: url('images/拡大アイコン1.png') no-repeat center;
+    background-size: contain;
+}
+
+.shrink-icon {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    top: 13px;
+    left: 13px;
+    background: url('images/縮小アイコン1.png') no-repeat center;
+    background-size: contain;
+}
+
+.trashcan-icon {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    top: 13px;
+    left: 13px;
+    background: url('images/1034_tr_h.png') no-repeat center;
+    background-size: contain;
+}
+
+.brightness-icon {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    top: 13px;
+    left: 13px;
+    background: url('images/brightness-icon.png') no-repeat center;
+    background-size: contain;
+}
+
+
+
+.AI-chat {
+    position: relative;
+    width: 475px;
+    height: 256px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.bubble-icon {
+    position: absolute;
+    width: 256px;
+    height: 256px;
+    margin-bottom: 10px; /* アイコンとテキストの間に余白 */
+
+    background: url('bubble-icon.png') no-repeat center;
+    background-size: contain;
+    opacity: 0.5;
+}
+
+.AI-chat-text {
+    position: absolute;
+    top: 98px;
+    left: 211px;
+    font-family: 'Kone KSS 470 (Wyvern Ver)', sans-serif;
     font-size: 72px;
     color: rgba(255, 255, 255, 0.5);
 }
 
-.bubble {
-    position: absolute;
-    width: 256px;
-    height: 256px;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
-    bottom: 10px;
-    left: 10px;
+/* その他のアイコン */
+.other-icons {
+    position: relative;
+    width: 176px;
+    height: 32px;
+    top: -249px;
+    left: 918px;
+
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
+.sharing-icon, .ellipses-icon, .settings-icon, .black-bubble-icon {
+    width: 32px;
+    height: 32px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.sharing-icon {
+    background: url('images/sharing-icon.png') no-repeat center;
+    background-size: contain;
+}
+
+.ellipses-icon {
+    background: url('images/ellipses-icon.png') no-repeat center;
+    background-size: contain;
+}
+
+.settings-icon {
+    background: url('images/settings-icon.png') no-repeat center;
+    background-size: contain;
+}
+
+.black-bubble-icon {
+    background: url('images/black-bubble-icon.png') no-repeat center;
+    background-size: contain;
+}
+
+/*
+    フォントの設定
+*/
+
+/* 1968 Odyssey 3D Italic フォント */
+@font-face {
+    font-family: '1968 Odyssey 3D Italic';
+    src: url('fonts/1968odyssey3dital.ttf') format('truetype');
+    font-style: italic; /* フォントスタイルを明示 */
+    font-weight: 400;   /* フォントウェイトを明示 */
+}
+
+/* TT Smalls Trial フォント */
+@font-face {
+    font-family: 'TT Smalls Trial';
+    src: url('fonts/TT Smalls Trial Regular.otf') format('opentype');
+    font-weight: 400;   /* フォントウェイトを明示 */
+}
+
+/* Vivaldi フォント */
+@font-face {
+    font-family: 'Vivaldi';
+    src: url('fonts/VivaldiRegular-X3BXd.ttf') format('truetype');
+    font-weight: 400;   /* フォントウェイトを明示 */
+}
+
+/* Kone KSS 470 (Wyvern Ver) フォント */
+@font-face {
+    font-family: 'Kone KSS 470 (Wyvern Ver)';
+    src: url('fonts/kone-kss-470-wyvern-ver.ttf') format('truetype');
+    font-weight: 400;   /* フォントウェイトを明示 */
+}
+
