@@ -1,0 +1,4 @@
+    --left: ; /* Figma上の X */
+    --top: ; /* Figma上の Y */
+    --width: ; /* Figma上の W */
+    --height: ; /* Figma上の H */

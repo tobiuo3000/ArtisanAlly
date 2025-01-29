@@ -6,7 +6,7 @@ const baseHeight = 1080;
 function applyDynamicStyles() {
     // 動的スタイルを適用する要素を取得
     const elements = document.querySelectorAll(
-        '.title'
+        '.title, .other-icons, .top-content,  .edit-icons, .drug-and-drop, .create-button, .pannels .bottom-pannel, AI-chat, bubble_icon, .AI chat'
     );
 
     elements.forEach((element) => {
@@ -14,10 +14,17 @@ function applyDynamicStyles() {
         const styles = getComputedStyle(element);
         const topValue = parseFloat(styles.getPropertyValue('--top')) || 0;
         const leftValue = parseFloat(styles.getPropertyValue('--left')) || 0;
+        const widthValue = parseFloat(styles.getPropertyValue('--width')) || 0;
+        const heightValue = parseFloat(styles.getPropertyValue('--height')) || 0;
+
+        // 高さなどの値が正しく設定るかどうかのデバッグ用コード
+        console.log(`Element: ${element.className}, Top: ${topValue}, Left: ${leftValue}, Width: ${widthValue}, Height: ${heightValue}`);
 
         // インラインスタイルに計算結果を適用
-        element.style.top = `${(topValue / baseWidth) * 100}%`;
-        element.style.left = `${(leftValue / baseHeight) * 100}%`;
+        element.style.top = `${(topValue / baseHeight) * 100}%`;
+        element.style.left = `${(leftValue / baseWidth) * 100}%`;
+        element.style.width = `${(widthValue / baseWidth) * 100}%`;
+        element.style.height = `${(heightValue / baseHeight) * 100}%`;
     });
 }
 
