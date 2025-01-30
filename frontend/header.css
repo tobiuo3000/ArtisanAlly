@@ -1,0 +1,21 @@
+header{
+    display: flex;
+    width: 100%;
+    z-index: 100;
+    justify-content: space-between;
+}
+
+.appLogo {
+    height: 49px;
+    padding-left: 3%;
+}
+
+.toolIconGroup {
+    display: flex; /* 横並びにする*/
+    padding-right: 3%;
+}
+
+.toolIcon {
+    height: 49px;
+    margin-left: 20px;
+}
