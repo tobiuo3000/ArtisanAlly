@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>モックアップUI</title>
-    <link rel="stylesheet" href="header.css"> <!-- CSSファイルをリンク -->
-    <link rel="stylesheet" href="workSpace.css"> <!-- CSSファイルをリンク -->
-    <link rel="stylesheet" href="aiChat.css"> <!-- CSSファイルをリンク -->
-    <script src="calcsize.js"></script> <!--計算用のjavascriptファイルをリンク-->
+    <link rel="stylesheet" href="header.css"> <!-- ヘッダー部分のCSSファイル -->
+    <link rel="stylesheet" href="workSpace.css"> <!-- ワークスペース部分のCSSファイル -->
+    <link rel="stylesheet" href="aiChat.css"> <!-- AIチャット部分のCSSファイル -->
+    <script src="dndHandler.js"></script> <!--画像読み込み用のjavascriptファイル-->
+    <script src="calcsize.js"></script> <!--計算用のjavascript-->
 </head>
 <body>
     <header>
@@ -43,7 +44,7 @@
                     <div class="editIconBg">
                         <img src="./images/縮小アイコン1.png" alt ="縮小" class="editIcon">
                     </div>
-                    <div class="editIconBg">
+                    <div class="editIconBg" id="trash">
                         <img src="./images/1034_tr_h.png" alt ="削除" class="editIcon">
                     </div>
                     <div class="editIconBg">

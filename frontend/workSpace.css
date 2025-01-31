@@ -54,6 +54,12 @@
     transform: translate(-50%, -50%);
     display: flex;
     flex-flow: column;
+    overflow: hidden;
+}
+
+#uploadTile.dragging {
+    background-color: #999; /* ドラッグ中の背景色 */
+    border: 3px dashed #000; /* 境界線を点線に */
 }
 
 #dndText {
