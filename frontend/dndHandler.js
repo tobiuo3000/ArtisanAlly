@@ -33,8 +33,7 @@ document.addEventListener("DOMContentLoaded", () => { // HTMLが読み込まれ�
                         image: base64String, // BASE64でエンコード画像データを格納
                         image_type: file.type.split("/")[1] // 拡張子の名前を格納
                     }
-                    const  segmentedImage = getSegmentationImage(reader.result); // 下に定義する
-                    displayImage(segmentedImage);
+                    getSegmentationImage(jsonData); // 下に定義する
                 };
 
                 reader.readAsDataURL(file);
@@ -60,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => { // HTMLが読み込まれ�
 
     // サーバーへJSONを送信する関数
     function getSegmentationImage(jsonData) {
-        fetch("/upload", { // TODO エンドポイントを教えてもらった場所に変える
+        fetch("/image/", {
             method: "POST", // POSTメソッドでサーバーにデータを送信
             headers: {
                 "Content-Type": "application/json" // ここで送信するデータがJSON形式であることを明示

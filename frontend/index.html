@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="header.css"> <!-- ヘッダー部分のCSSファイル -->
     <link rel="stylesheet" href="workSpace.css"> <!-- ワークスペース部分のCSSファイル -->
     <link rel="stylesheet" href="aiChat.css"> <!-- AIチャット部分のCSSファイル -->
-    <script src="dndHandler.js"></script> <!--画像読み込み用のjavascriptファイル-->
-    <script src="calcsize.js"></script> <!--計算用のjavascript-->
+    <script src="dndHandler.js" defer></script> <!--画像読み込み用のjavascriptファイル-->
+    <script src="calcsize.js" defer></script> <!--計算用のjavascript-->
 </head>
 <body>
     <header>
@@ -63,66 +63,10 @@
         <div id="aiChat">
             <div id="messageBox"></div>
             <div id="inputBox">
-                <input type="text" placeholder="メッセージを入力" value=message id="inputMsg">
+                <input title="" type="text" placeholder="メッセージを入力" value=message id="inputMsg">
                 <button id="sendBtn">送信</button>
             </div>
         </div>
     </main>
-
-    
-    <!-- <div class="base-container">
-
-        <div class="title">TITLETITLE</div>
-
-        <div class="other-icons">
-
-        </div>
-
-
-        <div class="top-content">
-            <div class="left-pannel">
-                <div class="drug-and-drop">
-                    <div class="upload-icon"></div>
-                    <div class="DND">D & D</div>
-                </div>
-                <div class="create-button">
-                    <div class="create-base-button"></div>
-                    <div class="create-text">CREATE</div>
-                </div>
-                <div class="edit-icons">
-                    <div class="flip-base">
-                        <div class="flip-icon"></div>
-                    </div>
-                    <div class="expand-base">
-                        <div class="expand-icon"></div>
-                    </div>
-                    <div class="shrink-base">
-                        <div class="shrink-icon"></div>
-                    </div>
-                    <div class="trashcan-base">
-                        <div class="trashcan-icon"></div>
-                    </div>
-                    <div class="brightness-base">
-                        <div class="brightness-icon"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="right-pannel">
-                <div class="pannel-1"></div>
-                <div class="pannel-2"></div>
-                <div class="pannel-3"></div>
-                <div class="pannel-4"></div>
-            </div>
-        </div>
-
-
-        <div class="bottom-pannel">
-            <div class="AI-chat">
-                <div class="bubble-icon"></div>
-                <div class="AI-chat-text">AI Chat</div>
-            </div>
-        </div>
-    </div>
 </body>
-</html> -->
+</html>
