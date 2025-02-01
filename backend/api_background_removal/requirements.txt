@@ -1,0 +1,17 @@
+rembg
+rembg
+onnxruntime
+filetype==1.2.0
+watchdog==6.0.0
+aiohttp
+gradio
+asyncer==0.0.8
+
+google-cloud-aiplatform
+Flask==3.0.3
+gunicorn==22.0.0
+Werkzeug==3.0.3                                                                                                                                                                                                                                                                                                                                                               
+numpy==1.26.4
+opencv-python-headless==4.7.0.72
+                                                                                                                                                                                                   
+

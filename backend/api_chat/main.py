@@ -16,17 +16,12 @@ def hello_world():
 def post():
     # レスポンスはリストにする(今後複数のレスポンスを返すことを想定)
     response = []
-    json = request.json
+    json_data = request.json
     prompt_for_llm = "あなたはデザイナーのデザイン作成をサポートする専門家です。入力画像に対して以下の点から講評してください。①総合評価②色使い(明度と彩度、コントラストについて)③シルエットから見た全体のバランス④デザインの意外性⑤(入力画像がキャラクターの場合)キャラクターの性格予想。⑤については入力画像がキャラクターでは無い場合、回答しなくて良いです"
 
-    base64_image = json.get("image")
-    image_type_str = json.get("image_type")
-    """
-    img_stream = base64.b64decode(encoded_image)
-    img_array = np.frombuffer(bytearray(img_stream), dtype=np.uint8)
-    image = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
-    """
-     
+    base64_image = json_data.get("image")
+    image_type_str = json_data.get("image_type")
+
     response_of_llm = call_llm(image=base64_image, image_type=image_type_str, prompt=prompt_for_llm)
 
     response.append({'response' : response_of_llm})
