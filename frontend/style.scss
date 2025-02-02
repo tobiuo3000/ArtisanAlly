@@ -90,7 +90,9 @@ main {
             border-radius: $border-radius;
             width: 440px;
             height: 74px;
-
+            display: block;
+            margin: 0 auto;
+            
             #createBtnTxt {
                 font-size: 64px;
                 color: #fff;

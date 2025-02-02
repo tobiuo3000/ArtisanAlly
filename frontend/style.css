@@ -69,6 +69,8 @@ main {
   border-radius: 15px;
   width: 440px;
   height: 74px;
+  display: block;
+  margin: 0 auto;
 }
 #workSpace #leftPanel #createBtn #createBtnTxt {
   font-size: 64px;
