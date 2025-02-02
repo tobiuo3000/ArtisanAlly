@@ -1,9 +1,10 @@
-@charset "UTF-8";
 header {
-  display: flex; /* 横並びにする*/
-  width: 100%;
-  z-index: 100;
+  display: flex;
   justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  z-index: 100;
 }
 header .appLogo {
   height: 49px;
@@ -18,18 +19,124 @@ header .toolIconGroup .toolIcon {
   margin-left: 20px;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#workSpace {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+#workSpace #leftPanel {
+  position: relative;
+  width: 75%;
+  height: 643px;
+  border: 5px solid #000;
+  border-radius: 15px;
+  margin: 3% 1% 3% 3%;
+  overflow: hidden;
+}
+#workSpace #leftPanel #uploadTile {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-flow: column;
+  overflow: hidden;
+}
+#workSpace #leftPanel #uploadTile.dragging {
+  background-color: #999;
+  border: 3px dashed #000;
+}
+#workSpace #leftPanel #dndText {
+  font-size: 64px;
+  text-align: center;
+  color: #6D6D6D;
+  font-family: "TT Smalls Trial", sans-serif;
+}
+#workSpace #leftPanel #dndText #uploadImg {
+  text-align: center;
+  height: 58px;
+}
+#workSpace #leftPanel #createBtn {
+  background-color: #393939;
+  border-radius: 15px;
+  width: 440px;
+  height: 74px;
+}
+#workSpace #leftPanel #createBtn #createBtnTxt {
+  font-size: 64px;
+  color: #fff;
+  font-family: "Vivaldi", sans-serif;
+  padding-top: 10px;
+}
+#workSpace #leftPanel #editIconGroup {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  gap: 10px;
+}
+#workSpace #leftPanel #editIconGroup .editIconBg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #5B5B5B;
+  border-radius: 50%;
+  height: 64px;
+  width: 64px;
+}
+#workSpace #leftPanel #editIconGroup .editIconBg .editIcon {
+  height: 38px;
+  width: 38px;
+}
+#workSpace #leftPanel #previewImage {
+  max-width: 100%;
+  max-height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  display: block;
+  margin: auto;
+}
+#workSpace #rightPanel {
+  width: 25%;
+  height: 643px;
+  border-radius: 15px;
+  margin: 3% 3% 3% 1%;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #E5E5E5;
+  background-color: #A8A8A8;
+}
+#workSpace #rightPanel .descriptionItem {
+  background-color: #5B5B5B;
+  color: #fff;
+  margin: 20px 10px;
+  padding: 10px;
+  border-radius: 8px;
+}
+#workSpace #rightPanel .descriptionItem:first-child {
+  margin-top: 100px;
+}
+
 #aiChat {
   width: 94%;
   height: 282px;
   border: 5px solid #000;
   border-radius: 15px;
-  margin: 0 auto;
+  margin: 20px auto;
 }
 #aiChat #messageBox {
   flex-grow: 1;
   padding: 10px;
   height: 71%;
-  overflow-y: auto; /* y軸方向にあふれないようにautoをつける */
+  overflow-y: auto;
 }
 #aiChat #inputBox {
   display: flex;
@@ -50,93 +157,6 @@ header .toolIconGroup .toolIcon {
   font-size: 16px;
   border-radius: 5px;
   cursor: pointer;
-}
-
-#workSpace {
-  display: flex;
-}
-#workSpace #leftPanel {
-  position: relative;
-  width: 75%;
-  height: 643px;
-  border: 5px solid #000;
-  border-radius: 15px;
-  margin: 3% 1% 3% 3%;
-}
-#workSpace #rightPanel {
-  width: 25%;
-  height: 643px;
-  border-radius: 15px;
-  margin: 3% 3% 3% 1%;
-  display: flex;
-  flex-direction: column;
-  border: 2px solid #E5E5E5;
-  background-color: #A8A8A8;
-}
-#workSpace #editIconGroup {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-}
-#workSpace #editIconGroup .editIconBg {
-  display: inline-block;
-  background: #5B5B5B;
-  border-radius: 50%;
-  height: 64px;
-  width: 64px;
-}
-#workSpace #editIconGroup .editIconBg .editIcon {
-  display: inline-block;
-  position: absolute;
-  height: 38px;
-  width: 38px;
-  margin-left: 14px;
-  margin-top: 12px;
-}
-#workSpace #uploadTile {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-flow: column;
-  overflow: hidden;
-}
-#workSpace #uploadTile.dragging {
-  background-color: #999;
-  border: 3px dashed #000; /* 境界線を点線に */
-}
-#workSpace #dndText {
-  font-size: 64px;
-  text-align: center;
-  color: #6D6D6D;
-  font-family: "TT Smalls Trial", sans-serif;
-}
-#workSpace #uploadImg {
-  text-align: center;
-  height: 58px;
-}
-#workSpace #createBtn {
-  background-color: #393939;
-  border-radius: 15px;
-  width: 440px;
-  height: 74px;
-}
-#workSpace #createBtn #createBtnTxt {
-  font-size: 64px;
-  color: #fff;
-  font-family: "Vivaldi", sans-serif;
-  padding-top: 10px;
-}
-#workSpace .descriptionItem {
-  background-color: #5B5B5B;
-  color: #fff;
-  margin: 20px 10px;
-  padding: 10px;
-  border-radius: 8px;
-}
-#workSpace .descriptionItem:first-child {
-  margin-top: 100px;
 }
 
 @font-face {
