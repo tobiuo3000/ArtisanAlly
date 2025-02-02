@@ -3,31 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Three Side Draw</title>
-    <link rel="stylesheet" href="style.css">
+    <title>モックアップUI</title>
+    <link rel="stylesheet" href="header.css"> <!-- ヘッダー部分のCSSファイル -->
+    <link rel="stylesheet" href="workSpace.css"> <!-- ワークスペース部分のCSSファイル -->
+    <link rel="stylesheet" href="aiChat.css"> <!-- AIチャット部分のCSSファイル -->
+    <script src="dndHandler.js" defer></script> <!--画像読み込み用のjavascriptファイル-->
+    <script src="calcsize.js" defer></script> <!--計算用のjavascript-->
 </head>
 <body>
-    <div class="title">TITLETITLE</div>
+    <header>
+        <img src="./images/appLogo.png" alt="アプリのロゴ" class="appLogo">
+        <div class="toolIconGroup">
+            <img src="./images/sharing-icon.png" alt="SNSでシェア" class="toolIcon">
+            <img src="./images/ellipses-icon.png" alt="三点リーダー" class="toolIcon">
+            <img src="./images/settings-icon.png" alt="設定" class="toolIcon">
+            <img src="./images/black-bubble-icon.png" alt="吹き出し：黒" class="toolIcon">
+        </div>
+    </header>
+    <main>
+        <div id="workSpace">
+            <div id="leftPanel">
 
-    <div class="main-container">
-        <div class="left-panel">
-            <div class="dnd-container">
-                <div>D & D</div>
-                <div class="create-button">CREATE</div>
+                <div id="uploadTile">
+                    <div id="dndText">
+                        <img src="./images/upload_hoso.png" alt="upload" id="uploadImg">
+                        D & D
+                    </div>
+                    <button id="createBtn">
+                        <span id="createBtnTxt">CREATE</span>
+                    </button>
+                </div>
+
+                <div id="editIconGroup">
+                    <div class="editIconBg">
+                        <img src="./images/reversal-icon.png" alt ="反転" class="editIcon">
+                    </div>
+                    <div class="editIconBg">
+                        <img src="./images/拡大アイコン1.png" alt ="拡大" class="editIcon">
+                    </div>
+                    <div class="editIconBg">
+                        <img src="./images/縮小アイコン1.png" alt ="縮小" class="editIcon">
+                    </div>
+                    <div class="editIconBg" id="trash">
+                        <img src="./images/1034_tr_h.png" alt ="削除" class="editIcon">
+                    </div>
+                    <div class="editIconBg">
+                        <img src="./images/brightness-icon.png" alt ="明度" class="editIcon">
+                    </div>
+                </div>
+            </div>
+            <div id="rightPanel">
+                <div class="descriptionItem">説明うんちゃらかんちゃら</div>
+                <div class="descriptionItem">説明うんちゃらかんちゃら</div>
+                <div class="descriptionItem">説明うんちゃらかんちゃら</div>
+                <div class="descriptionItem">説明うんちゃらかんちゃら</div>
+                <div class="descriptionItem">説明うんちゃらかんちゃら</div>
             </div>
         </div>
-
-        <div class="right-panel">
-            <div class="item"></div>
-            <div class="item"></div>
-            <div class="item"></div>
-            <div class="item"></div>
+        <div id="aiChat">
+            <div id="messageBox"></div>
+            <div id="inputBox">
+                <input title="" type="text" placeholder="メッセージを入力" value=message id="inputMsg">
+                <button id="sendBtn">送信</button>
+            </div>
         </div>
-    </div>
-
-    <div class="bottom-panel">
-        <div class="ai-chat">AI chat</div>
-        <div class="bubble"></div>
-    </div>
+    </main>
 </body>
 </html>

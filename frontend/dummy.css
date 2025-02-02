@@ -5,33 +5,37 @@ body {
 
     font-family: Arial, sans-serif;
     background-color: #D9D9D9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 /* 基本コンテナ設定（画面全体を覆う） */
 .base-container {
     position: relative;
     width: 100vw; /* 画面の横幅いっぱい */
-    height: 100vh; /* 自動で調整 */
+    height: auto; /* 自動で調整 */
     aspect-ratio: 16 / 9; /* 16:9 の比率を固定 */
     background: #D9D9D9;
     display: flex;
-    flex-grow: 0;  /* 高さが伸びないようにする */
-    flex-shrink: 0; /* 逆に縮小もさせない */
-    height: auto;  /* 必要な高さのみ確保 */
-    max-height: 40%; /* 過剰な伸縮を防ぐ */
+    flex-direction: column; /* 縦方向に並べる */
     align-items: center; /* 水平方向中央寄せ */
     justify-content: space-between; /* 上・下のパネルに適度な余白 */
     padding: 1%; /* 全体の余白を確保 */
 }
 
+/* ルート変数で基準サイズを指定 */
+:root {
+    --base-width: 1920; /* 横幅の基準 */
+    --base-height: 1080; /* 縦幅の基準 */
+}
+
 /* タイトル */
 .title {
     position: absolute;
-
-    --left: 50; /* Figma上の X */
-    --top: 16; /* Figma上の Y */
-    --width: 220; /* Figma上の W */
-    --height: 49; /* Figma上の H */
-
+    --top: 50; /* Figma上の X */
+    --left: 16; /* Figma上の Y */
+    width: 220px;
+    height: 49px;
     font-family: '1968 Odyssey 3D Italic', sans-serif;
     font-style: italic;
     font-weight: 400;
@@ -40,101 +44,37 @@ body {
     color: #000000;
 }
 
-/* その他のアイコン */
-/* オートレイアウト */
-.other-icons {
-    position: absolute;
-    --top: 24; /* Figma上の Y */
-    --left: 1698; /* Figma上の X */
-    --width: 176; /* Figma上の W */
-    --height: 32; /* Figma上の H */
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0px;
-    gap: 16px;
-}
-
-.sharing-icon {
-    width: 32px;
-    height: 32px;
-
-    background: url('images/sharing-icon.png');
-    background-size: contain; /* 背景画像を要素内に収める */
-    background-repeat: no-repeat;
-    
-    /* オートレイアウト内部 */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-.ellipses-icon {
-    width: 32px;
-    height: 32px;
-    display: block; /* 空のdivでも表示されるようにする */
-    
-    background: url('images/ellipses-icon.png');
-    background-size: contain; /* 背景画像を要素内に収める */
-    background-repeat: no-repeat;
-    
-    /* オートレイアウト内部 */
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-}
-
-.settings-icon {
-    width: 32px;
-    height: 32px;
-    display: block; /* 空のdivでも表示されるようにする */
-    
-    background: url('images/settings-icon.png');
-    background-size: contain; /* 背景画像を要素内に収める */
-    background-repeat: no-repeat;
-    
-    /* オートレイアウト内部 */
-    flex: none;
-    order: 2;
-    flex-grow: 0;
-}
-
-.black-bubble-icon {
-    width: 32px;
-    height: 32px;
-    display: block; /* 空のdivでも表示されるようにする */
-    
-    background: url('images/black-bubble-icon.png');
-    background-size: contain; /* 背景画像を要素内に収める */
-    background-repeat: no-repeat;
-    
-    /* オートレイアウト内部 */
-    flex: none;
-    order: 3;
-    flex-grow: 0;
-}
-
-
 /* 上部コンテンツを並べるエリア */
 .top-content {
-    position: absolute;
+    margin-top: 70px; /* タイトルの下に適切な余白を確保 */
+    display: flex;
     justify-content: space-between; /* 左パネルと右パネルの間に余白 */
-    --left: 50; /* Figma上の X */
-    --top: 80; /* Figma上の Y */
-    --width: 1822; /* Figma上の W */
-    --height: 643; /* Figma上の H */
+    align-items: center;
+    width: 80%;
+    height: 55%; /* 画面の比率に合わせて調整 */
+    gap: 20px; /* 左右パネルの間隔を一定に */
+    margin-top: 20px; /* タイトルの下に配置する余白を追加 */
+    padding: 20px; /* 親要素の余白を追加 */
 }
 
 
+/* 左パネル */
+.left-panel {
+    flex: 1;
+    height: 100%;
+
+
+    background: #D9D9D9;
+    border: 5px solid #000000;
+    border-radius: 30px;
+    box-sizing: border-box;
+    padding: 20px; /* 内側の余白を確保 */
+}
 
 /* 右パネル */
-.right-pannel {
-    position: absolute;
-
-    --left: 1287; /* Figma上の X */
-    --top: 0; /* Figma上の Y */
-    --width: 535; /* Figma上の W */
-    --height: 643; /* Figma上の H */
+.right-panel {
+    flex: 0.5; /* 右パネルを左パネルの 1/2 の幅にする */
+    height: 100%; /* 縦いっぱいに広げる */
 
     background: #A8A8A8;
     border: 1px solid #E5E5E5;
@@ -143,7 +83,7 @@ body {
     padding: 20px; /* 内側の余白を確保 */
 }
 
-.pannel-1, .pannel-2, .pannel-3, .pannel-4 {
+.panel-1, .panel-2, .panel-3, .panel-4 {
     width: 80%;
     height: 20%;
     margin: 20px auto;
@@ -151,32 +91,25 @@ body {
     border-radius: 10px;
 }
 
+/* 下部パネル */
+.bottom-panel {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    height: 40%; /* 修正: 高さを確保 */
+    padding: 20px; /* 内側の余白 */
 
-/* 左パネル */
-.left-pannel {
-    position: absolute;
-    box-sizing: border-box;
-
-    left: 0px; /* Figma上の X */
-    top: 0px; /* Figma上の Y */
-    width: 1242px; /* Figma上の W */
-    height: 643px; /* Figma上の H */
-
-    background: #D9D9D9;
+    background: #C2C2C2;
     border: 5px solid #000000;
-    border-radius: 30px;
+    border-radius: 25px;
+    padding: 20px; /* 内側の余白を確保 */
 }
-
 
 /* ドラッグ＆ドロップエリア */
 .drug-and-drop {
-    position: absolute;
-
-    --left: 500; /* Figma上の X */
-    --top: 239; /* Figma上の Y */
-    --width: 244; /* Figma上の W */
-    --height: 77; /* Figma上の H */
-
+    position: relative;
+    width: 244px;
+    height: 77px;
     margin-left: 30px;
     margin-top: 50%;
 
@@ -186,28 +119,23 @@ body {
 
 .upload-icon {
     position: absolute;
-
-    left: 0; /* Figma上の X */
-    top: 10; /* Figma上の Y */
-    width: 58; /* Figma上の W */
-    height: 58; /* Figma上の H */
-
+    width: 58px;
+    height: 58px;
+    top: 10px;
+    left: calc(50% - 80px);
     background: url('images/upload_24.png') no-repeat center;
     background-size: contain;
-    opacity: 0.5;
 }
 
 .DND {
     position: absolute;
-    --left: 85; /* Figma上の X */
-    --top: 0; /* Figma上の Y */
-    --width: 159; /* Figma上の W */
-    --height: 77; /* Figma上の H */
-
+    top: 0px;
+    left: 85px;
+    left: calc(50% - 40px);
     font-family: 'TT Smalls Trial', sans-serif;
     font-size: 64px;
     color: #6D6D6D;
-
+    transform: translateX(-50%); /* 修正: 中央揃え */
 }
 
 /* CREATEボタン */
@@ -318,26 +246,6 @@ body {
 
 
 
-/* 下部パネル */
-.bottom-pannel {
-    display: flex;
-    align-items: center;
-
-    --left: 50; /* Figma上の X */
-    --top: 751; /* Figma上の Y */
-    --width: 1824; /* Figma上の W */
-    --height: 282; /* Figma上の H */
-
-
-    padding: 20px; /* 内側の余白 */
-
-    background: #C2C2C2;
-    border: 5px solid #000000;
-    border-radius: 25px;
-    padding: 20px; /* 内側の余白を確保 */
-}
-
-
 .AI-chat {
     position: relative;
     width: 475px;
@@ -355,7 +263,7 @@ body {
     height: 256px;
     margin-bottom: 10px; /* アイコンとテキストの間に余白 */
 
-    background: url('images/bubble-icon.png') no-repeat center;
+    background: url('bubble-icon.png') no-repeat center;
     background-size: contain;
     opacity: 0.5;
 }
@@ -369,6 +277,46 @@ body {
     color: rgba(255, 255, 255, 0.5);
 }
 
+/* その他のアイコン */
+.other-icons {
+    position: relative;
+    width: 176px;
+    height: 32px;
+    top: -249px;
+    left: 918px;
+
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sharing-icon, .ellipses-icon, .settings-icon, .black-bubble-icon {
+    width: 32px;
+    height: 32px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.sharing-icon {
+    background: url('images/sharing-icon.png') no-repeat center;
+    background-size: contain;
+}
+
+.ellipses-icon {
+    background: url('images/ellipses-icon.png') no-repeat center;
+    background-size: contain;
+}
+
+.settings-icon {
+    background: url('images/settings-icon.png') no-repeat center;
+    background-size: contain;
+}
+
+.black-bubble-icon {
+    background: url('images/black-bubble-icon.png') no-repeat center;
+    background-size: contain;
+}
 
 /*
     フォントの設定
@@ -402,5 +350,3 @@ body {
     src: url('fonts/kone-kss-470-wyvern-ver.ttf') format('truetype');
     font-weight: 400;   /* フォントウェイトを明示 */
 }
-
-
