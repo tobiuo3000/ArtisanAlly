@@ -1,406 +1,151 @@
-/* 全体のスタイル */
-body {
-    margin: 0;
-    padding: 0;
-
-    font-family: Arial, sans-serif;
-    background-color: #D9D9D9;
+@charset "UTF-8";
+header {
+  display: flex; /* 横並びにする*/
+  width: 100%;
+  z-index: 100;
+  justify-content: space-between;
 }
-/* 基本コンテナ設定（画面全体を覆う） */
-.base-container {
-    position: relative;
-    width: 100vw; /* 画面の横幅いっぱい */
-    height: 100vh; /* 自動で調整 */
-    aspect-ratio: 16 / 9; /* 16:9 の比率を固定 */
-    background: #D9D9D9;
-    display: flex;
-    flex-grow: 0;  /* 高さが伸びないようにする */
-    flex-shrink: 0; /* 逆に縮小もさせない */
-    height: auto;  /* 必要な高さのみ確保 */
-    max-height: 40%; /* 過剰な伸縮を防ぐ */
-    align-items: center; /* 水平方向中央寄せ */
-    justify-content: space-between; /* 上・下のパネルに適度な余白 */
-    padding: 1%; /* 全体の余白を確保 */
+header .appLogo {
+  height: 49px;
+  padding-left: 3%;
+}
+header .toolIconGroup {
+  display: flex;
+  padding-right: 3%;
+}
+header .toolIconGroup .toolIcon {
+  height: 49px;
+  margin-left: 20px;
 }
 
-/* タイトル */
-.title {
-    position: absolute;
-
-    --left: 50; /* Figma上の X */
-    --top: 16; /* Figma上の Y */
-    --width: 220; /* Figma上の W */
-    --height: 49; /* Figma上の H */
-
-    font-family: '1968 Odyssey 3D Italic', sans-serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 48px;
-    line-height: 49px;
-    color: #000000;
+#aiChat {
+  width: 94%;
+  height: 282px;
+  border: 5px solid #000;
+  border-radius: 15px;
+  margin: 0 auto;
+}
+#aiChat #messageBox {
+  flex-grow: 1;
+  padding: 10px;
+  height: 71%;
+  overflow-y: auto; /* y軸方向にあふれないようにautoをつける */
+}
+#aiChat #inputBox {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+#aiChat #inputBox #inputMsg {
+  flex-grow: 1;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+#aiChat #inputBox #sendBtn {
+  background-color: #af4cad;
+  border: none;
+  color: #fff;
+  padding: 8px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-/* その他のアイコン */
-/* オートレイアウト */
-.other-icons {
-    position: absolute;
-    --top: 24; /* Figma上の Y */
-    --left: 1698; /* Figma上の X */
-    --width: 176; /* Figma上の W */
-    --height: 32; /* Figma上の H */
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0px;
-    gap: 16px;
+#workSpace {
+  display: flex;
+}
+#workSpace #leftPanel {
+  position: relative;
+  width: 75%;
+  height: 643px;
+  border: 5px solid #000;
+  border-radius: 15px;
+  margin: 3% 1% 3% 3%;
+}
+#workSpace #rightPanel {
+  width: 25%;
+  height: 643px;
+  border-radius: 15px;
+  margin: 3% 3% 3% 1%;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #E5E5E5;
+  background-color: #A8A8A8;
+}
+#workSpace #editIconGroup {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+#workSpace #editIconGroup .editIconBg {
+  display: inline-block;
+  background: #5B5B5B;
+  border-radius: 50%;
+  height: 64px;
+  width: 64px;
+}
+#workSpace #editIconGroup .editIconBg .editIcon {
+  display: inline-block;
+  position: absolute;
+  height: 38px;
+  width: 38px;
+  margin-left: 14px;
+  margin-top: 12px;
+}
+#workSpace #uploadTile {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-flow: column;
+  overflow: hidden;
+}
+#workSpace #uploadTile.dragging {
+  background-color: #999;
+  border: 3px dashed #000; /* 境界線を点線に */
+}
+#workSpace #dndText {
+  font-size: 64px;
+  text-align: center;
+  color: #6D6D6D;
+  font-family: "TT Smalls Trial", sans-serif;
+}
+#workSpace #uploadImg {
+  text-align: center;
+  height: 58px;
+}
+#workSpace #createBtn {
+  background-color: #393939;
+  border-radius: 15px;
+  width: 440px;
+  height: 74px;
+}
+#workSpace #createBtn #createBtnTxt {
+  font-size: 64px;
+  color: #fff;
+  font-family: "Vivaldi", sans-serif;
+  padding-top: 10px;
+}
+#workSpace .descriptionItem {
+  background-color: #5B5B5B;
+  color: #fff;
+  margin: 20px 10px;
+  padding: 10px;
+  border-radius: 8px;
+}
+#workSpace .descriptionItem:first-child {
+  margin-top: 100px;
 }
 
-.sharing-icon {
-    width: 32px;
-    height: 32px;
-
-    background: url('images/sharing-icon.png');
-    background-size: contain; /* 背景画像を要素内に収める */
-    background-repeat: no-repeat;
-    
-    /* オートレイアウト内部 */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-.ellipses-icon {
-    width: 32px;
-    height: 32px;
-    display: block; /* 空のdivでも表示されるようにする */
-    
-    background: url('images/ellipses-icon.png');
-    background-size: contain; /* 背景画像を要素内に収める */
-    background-repeat: no-repeat;
-    
-    /* オートレイアウト内部 */
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-}
-
-.settings-icon {
-    width: 32px;
-    height: 32px;
-    display: block; /* 空のdivでも表示されるようにする */
-    
-    background: url('images/settings-icon.png');
-    background-size: contain; /* 背景画像を要素内に収める */
-    background-repeat: no-repeat;
-    
-    /* オートレイアウト内部 */
-    flex: none;
-    order: 2;
-    flex-grow: 0;
-}
-
-.black-bubble-icon {
-    width: 32px;
-    height: 32px;
-    display: block; /* 空のdivでも表示されるようにする */
-    
-    background: url('images/black-bubble-icon.png');
-    background-size: contain; /* 背景画像を要素内に収める */
-    background-repeat: no-repeat;
-    
-    /* オートレイアウト内部 */
-    flex: none;
-    order: 3;
-    flex-grow: 0;
-}
-
-
-/* 上部コンテンツを並べるエリア */
-.top-content {
-    position: absolute;
-    justify-content: space-between; /* 左パネルと右パネルの間に余白 */
-    --left: 50; /* Figma上の X */
-    --top: 80; /* Figma上の Y */
-    --width: 1822; /* Figma上の W */
-    --height: 643; /* Figma上の H */
-}
-
-
-
-/* 右パネル */
-.right-pannel {
-    position: absolute;
-
-    --left: 1287; /* Figma上の X */
-    --top: 0; /* Figma上の Y */
-    --width: 535; /* Figma上の W */
-    --height: 643; /* Figma上の H */
-
-    background: #A8A8A8;
-    border: 1px solid #E5E5E5;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 25px;
-    padding: 20px; /* 内側の余白を確保 */
-}
-
-.pannel-1, .pannel-2, .pannel-3, .pannel-4 {
-    width: 80%;
-    height: 20%;
-    margin: 20px auto;
-    background: #5B5B5B;
-    border-radius: 10px;
-}
-
-
-/* 左パネル */
-.left-pannel {
-    position: absolute;
-    box-sizing: border-box;
-
-    left: 0px; /* Figma上の X */
-    top: 0px; /* Figma上の Y */
-    width: 1242px; /* Figma上の W */
-    height: 643px; /* Figma上の H */
-
-    background: #D9D9D9;
-    border: 5px solid #000000;
-    border-radius: 30px;
-}
-
-
-/* ドラッグ＆ドロップエリア */
-.drug-and-drop {
-    position: absolute;
-
-    --left: 500; /* Figma上の X */
-    --top: 239; /* Figma上の Y */
-    --width: 244; /* Figma上の W */
-    --height: 77; /* Figma上の H */
-
-    margin-left: 30px;
-    margin-top: 50%;
-
-    margin: 20px auto;
-    text-align: center;
-}
-
-.upload-icon {
-    position: absolute;
-
-    left: 0; /* Figma上の X */
-    top: 10; /* Figma上の Y */
-    width: 58; /* Figma上の W */
-    height: 58; /* Figma上の H */
-
-    background: url('images/upload_24.png') no-repeat center;
-    background-size: contain;
-    opacity: 0.5;
-}
-
-.DND {
-    position: absolute;
-    --left: 85; /* Figma上の X */
-    --top: 0; /* Figma上の Y */
-    --width: 159; /* Figma上の W */
-    --height: 77; /* Figma上の H */
-
-    font-family: 'TT Smalls Trial', sans-serif;
-    font-size: 64px;
-    color: #6D6D6D;
-
-}
-
-/* CREATEボタン */
-.create-button {
-    position: relative;
-    width: 440px;
-    height: 74px;
-    margin: 20px auto; /* 修正: 水平方向に中央配置 */
-    left: 0; /* 修正: 不要なleft指定を削除 */
-
-    margin: 0 auto;
-}
-
-.create-base-button {
-    position: absolute;
-    width: 440px;
-    height: 74px;
-    background: #393939;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 25px;
-}
-
-.create-text {
-    position: absolute;
-    width: 243px;
-    height: 65px;
-    left: 99px;
-    top: 9px;
-    font-family: 'Vivaldi', sans-serif;
-    font-size: 64px;
-    line-height: 65px;
-    color: #FFFFFF;
-    text-align: center;
-}
-
-/* 編集アイコン群 */
-.edit-icons {
-    position: relative;
-    width: 400px;
-    height: 72px;
-    top: 360px;
-    left: 82px;
-
-    margin: 40px auto;
-    display: flex;
-    justify-content: space-between;
-}
-
-.flip-base, .expand-base, .shrink-base, .trashcan-base, .brightness-base {
-    position: relative;
-    width: 64px;
-    height: 64px;
-    background: #B8B8B8;
-    border: 1px solid #D8D8D8;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
-}
-
-.flip-icon {
-    position: absolute;
-    width: 42px;
-    height: 42px;
-    top: 11px;
-    left: 11px;
-    background: url('images/reversal-icon.png') no-repeat center;
-    background-size: contain;
-}
-
-.expand-icon {
-    position: absolute;
-    width: 38px;
-    height: 38px;
-    top: 13px;
-    left: 13px;
-    background: url('images/拡大アイコン1.png') no-repeat center;
-    background-size: contain;
-}
-
-.shrink-icon {
-    position: absolute;
-    width: 38px;
-    height: 38px;
-    top: 13px;
-    left: 13px;
-    background: url('images/縮小アイコン1.png') no-repeat center;
-    background-size: contain;
-}
-
-.trashcan-icon {
-    position: absolute;
-    width: 38px;
-    height: 38px;
-    top: 13px;
-    left: 13px;
-    background: url('images/1034_tr_h.png') no-repeat center;
-    background-size: contain;
-}
-
-.brightness-icon {
-    position: absolute;
-    width: 38px;
-    height: 38px;
-    top: 13px;
-    left: 13px;
-    background: url('images/brightness-icon.png') no-repeat center;
-    background-size: contain;
-}
-
-
-
-/* 下部パネル */
-.bottom-pannel {
-    display: flex;
-    align-items: center;
-
-    --left: 50; /* Figma上の X */
-    --top: 751; /* Figma上の Y */
-    --width: 1824; /* Figma上の W */
-    --height: 282; /* Figma上の H */
-
-
-    padding: 20px; /* 内側の余白 */
-
-    background: #C2C2C2;
-    border: 5px solid #000000;
-    border-radius: 25px;
-    padding: 20px; /* 内側の余白を確保 */
-}
-
-
-.AI-chat {
-    position: relative;
-    width: 475px;
-    height: 256px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-}
-
-.bubble-icon {
-    position: absolute;
-    width: 256px;
-    height: 256px;
-    margin-bottom: 10px; /* アイコンとテキストの間に余白 */
-
-    background: url('images/bubble-icon.png') no-repeat center;
-    background-size: contain;
-    opacity: 0.5;
-}
-
-.AI-chat-text {
-    position: absolute;
-    top: 98px;
-    left: 211px;
-    font-family: 'Kone KSS 470 (Wyvern Ver)', sans-serif;
-    font-size: 72px;
-    color: rgba(255, 255, 255, 0.5);
-}
-
-
-/*
-    フォントの設定
-*/
-
-/* 1968 Odyssey 3D Italic フォント */
 @font-face {
-    font-family: '1968 Odyssey 3D Italic';
-    src: url('fonts/1968odyssey3dital.ttf') format('truetype');
-    font-style: italic; /* フォントスタイルを明示 */
-    font-weight: 400;   /* フォントウェイトを明示 */
+  font-family: "TT Smalls Trial";
+  src: url("fonts/TT Smalls Trial Regular.otf") format("opentype");
+  font-weight: 400;
 }
-
-/* TT Smalls Trial フォント */
 @font-face {
-    font-family: 'TT Smalls Trial';
-    src: url('fonts/TT Smalls Trial Regular.otf') format('opentype');
-    font-weight: 400;   /* フォントウェイトを明示 */
-}
-
-/* Vivaldi フォント */
-@font-face {
-    font-family: 'Vivaldi';
-    src: url('fonts/VivaldiRegular-X3BXd.ttf') format('truetype');
-    font-weight: 400;   /* フォントウェイトを明示 */
-}
-
-/* Kone KSS 470 (Wyvern Ver) フォント */
-@font-face {
-    font-family: 'Kone KSS 470 (Wyvern Ver)';
-    src: url('fonts/kone-kss-470-wyvern-ver.ttf') format('truetype');
-    font-weight: 400;   /* フォントウェイトを明示 */
-}
-
-
+  font-family: "Vivaldi";
+  src: url("fonts/VivaldiRegular-X3BXd.ttf") format("truetype");
+  font-weight: 400;
+}/*# sourceMappingURL=style.css.map */
