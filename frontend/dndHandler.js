@@ -27,6 +27,8 @@ document.addEventListener("DOMContentLoaded", () => { // HTMLが読み込まれ�
             if (allowedTypes.includes(file.type)) { // 事前に定義した、特定の画像ファイルなら実行
                 const reader = new FileReader();
                 reader.onload = () => { // ファイルが読み込まれたら実行される
+                    const ImageSrc = reader.result;
+                    displayImage(ImageSrc);
                     // 読み込んだファイルをサーバーに送る（TODO）
                     const base64String = btoa(String.fromCharCode(...new Uint8Array(reader.result))); // BASE64に変換し、Jsonを作成する
                     const jsonData = {
@@ -46,6 +48,13 @@ document.addEventListener("DOMContentLoaded", () => { // HTMLが読み込まれ�
     // 画像を表示する関数
     function displayImage(imageSrc) {
         dndText.innerHTML = `<img src="${imageSrc}" alt="プレビュー" id="previewImage">`; // innnerHTMLに代入することで画像に置き換え
+        // スタイルを適用して枠内に収める
+        const previewImage = document.getElementById("previewImage");    
+        previewImage.style.maxWidth = "100%"; // 横幅を超えない
+        previewImage.style.maxHeight = "100%"; // 高さを超えない
+        previewImage.style.objectFit = "contain"; // アスペクト比を維持しつつフィット
+
+        
     }
 
 
