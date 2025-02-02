@@ -14,18 +14,20 @@ def hello_world():
 
 @app.route("/background_removal/", methods=["POST"])
 def post():
-    json = request.json
+    json_data = request.json
 
-    response = []
-    encoded_image = json.get("image")
-    image_type_str = json.get("image_type")
-    img_stream = base64.b64decode(encoded_image).decode('utf-8')
-    img_array = np.frombuffer(bytearray(img_stream), dtype=np.uint8)
-    image = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
-    image_without_background = remove(image)
-    
-    image_without_background_b64 = base64.b64encode(image_without_background)
-    response.append({'image_without_background_b64' : image_without_background_b64})
+    base64_image = json_data.get("image")
+    image_type_str = json_data.get("image_type")
+    image_stream = base64.b64decode(base64_image)
+    image_array = np.frombuffer(bytearray(image_stream), dtype=np.uint8)
+    image_without_background = remove(image_array, force_return_bytes=True)
+
+    image_without_background_b64 = base64.b64encode(image_without_background).decode("utf-8")
+    response = {'b64_image_without_background' : image_without_background_b64}
     
     return jsonify(response)
-    
+
+
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
