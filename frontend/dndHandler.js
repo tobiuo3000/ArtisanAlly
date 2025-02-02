@@ -29,10 +29,10 @@ document.addEventListener("DOMContentLoaded", () => { // HTMLが読み込まれ�
                 reader.onload = () => { // ファイルが読み込まれたら実行される
                     const ImageSrc = reader.result;
                     displayImage(ImageSrc);
-                    // 読み込んだファイルをサーバーに送る（TODO）
-                    const base64String = btoa(String.fromCharCode(...new Uint8Array(reader.result))); // BASE64に変換し、Jsonを作成する
+                    const resultList = ImageSrc.split(",");
+                    const base64data = resultList[resultList.length - 1];
                     const jsonData = {
-                        image: base64String, // BASE64でエンコード画像データを格納
+                        image: base64data, // BASE64でエンコード画像データを格納
                         image_type: file.type.split("/")[1] // 拡張子の名前を格納
                     }
                     getSegmentationImage(jsonData); // 下に定義する
