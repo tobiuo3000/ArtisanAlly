@@ -54,21 +54,48 @@ document.addEventListener("DOMContentLoaded", () => { // HTMLが読み込まれ�
         previewImage.style.maxHeight = "100%"; // 高さを超えない
         previewImage.style.objectFit = "contain"; // アスペクト比を維持しつつフィット
 
-        
+        previewImage.dataset.scale = "1"; // 初期スケールを1に設定
     }
 
-
+    const expand = document.getElementById("expand");
+    const shrink = document.getElementById("shrink");
     const trash = document.getElementById("trash");
+
+    // 画像を拡大する関数
+    expand.addEventListener("mouseup", () => {
+        const previewImage = document.getElementById("previewImage");
+        if (previewImage) {
+            let scale = parseFloat(previewImage.dataset.scale);
+            scale = Math.min(scale + 0.1, 2); // 最大2倍まで拡大
+            previewImage.style.transform = `scale(${scale})`;
+            previewImage.dataset.scale = scale.toString();
+        }
+    });
+
+    // 画像を縮小する関数
+    shrink.addEventListener("mouseup", () => {
+        const previewImage = document.getElementById("previewImage");
+        if (previewImage) {
+            let scale = parseFloat(previewImage.dataset.scale);
+            scale = Math.max(scale - 0.1, 0.5); // 最小0.5倍まで縮小
+            previewImage.style.transform = `scale(${scale})`;
+            previewImage.dataset.scale = scale.toString();
+        }
+    });
 
     // 画像を削除する関数
     trash.addEventListener("mouseup", () => {
-        dndText.innerHTML = "<img src=\"./images/upload_hoso.png\" alt=\"upload\" id=\"uploadImg\">D & D";
+        dndText.innerHTML = `
+            <img src="./images/upload_hoso.png" alt="upload" id="uploadImg">
+            D & D
+        `;
     });
+
 
 
     // サーバーへJSONを送信する関数
     function getSegmentationImage(jsonData) {
-        fetch("/image/", {
+        fetch("https://chat-471591578999.asia-northeast1.run.app/image/", {
             method: "POST", // POSTメソッドでサーバーにデータを送信
             headers: {
                 "Content-Type": "application/json" // ここで送信するデータがJSON形式であることを明示
