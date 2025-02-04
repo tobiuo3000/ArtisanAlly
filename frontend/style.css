@@ -135,10 +135,29 @@ main {
   margin: 20px auto;
 }
 #aiChat #messageBox {
-  flex-grow: 1;
-  padding: 10px;
-  height: 71%;
+  display: flex;
+  flex-direction: column;
+  max-height: 300px;
   overflow-y: auto;
+  padding: 10px;
+}
+#aiChat #messageBox .messageElemUs {
+  align-self: flex-end;
+  background-color: #007bff;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 12px;
+  margin: 5px;
+  max-width: 70%;
+}
+#aiChat #messageBox .messageElemAi {
+  align-self: flex-start;
+  background-color: #f1f1f1;
+  color: black;
+  padding: 8px 12px;
+  border-radius: 12px;
+  margin: 5px;
+  max-width: 70%;
 }
 #aiChat #inputBox {
   display: flex;

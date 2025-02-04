@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => { // HTMLが読み込まれたら処理を開始
     const uploadTile = document.getElementById("uploadTile");
     const dndText = document.getElementById("dndText");
+    const messageBox = document.getElementById("messageBox"); // messageboxを追加
+    const inputMsg = document.getElementById("inputMsg"); // inputMsgを追加
+    const sendBtn = document.getElementById("sendBtn"); // sendBtnを追加
 
     // 特定の画像フォーマットを定義
     const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"];
@@ -91,6 +94,27 @@ document.addEventListener("DOMContentLoaded", () => { // HTMLが読み込まれ�
         `;
     });
 
+    // 送信ボタンを押したときの処理
+    sendBtn.addEventListener("click", () => {
+        const userMessage = inputMsg.value.trim();
+        if (userMessage.length > 0) {
+            addMessage(userMessage, "messageElemUs");
+            inputMsg.value = ""; // 入力欄をクリア
+        }
+    });
+
+    // メッセージを追加、表示する処理
+    function addMessage(text, className) {
+        const messageElem = document.createElement("div");
+        messageElem.classList.add(className);
+        if (className === "messageElemUs") {
+            messageElem.textContent = text;  // ユーザー入力は textContent で XSS 防止
+        } else {
+            messageElem.innerHTML = `<pre>${text}</pre>`;  // AI レスポンスは改行保持
+        }
+        messageBox.appendChild(messageElem);
+        messageBox.scrollTop = messageBox.scrollHeight; // 最新メッセージへスクロール
+    }
 
 
     // サーバーへJSONを送信する関数
@@ -105,9 +129,11 @@ document.addEventListener("DOMContentLoaded", () => { // HTMLが読み込まれ�
         .then(response => response.json()) // サーバーからのレスポンスをJSONとして解析
         .then(data => {
             console.log("サーバーからのレスポンス:", data);
+            addMessage(JSON.stringify(data), "messageElemAi");
         })
         .catch(error => {
             console.error("エラーが発生しました:", error);
+            addMessage("エラーが発生しました", "messageElemAi");
         });
     }
 
