@@ -71,6 +71,7 @@ main {
   height: 74px;
   display: block;
   margin: 0 auto;
+  z-index: 100;
 }
 #workSpace #leftPanel #createBtn #createBtnTxt {
   font-size: 64px;
@@ -84,6 +85,7 @@ main {
   right: 10px;
   display: flex;
   gap: 10px;
+  z-index: 100;
 }
 #workSpace #leftPanel #editIconGroup .editIconBg {
   display: flex;
