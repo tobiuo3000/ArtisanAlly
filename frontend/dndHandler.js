@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => { // HTMLが読み込まれ�
 
     // サーバーへJSONを送信する関数
     function getSegmentationImage(jsonData) {
-        fetch("https://chat-471591578999.asia-northeast1.run.app/image/", {
+        fetch("/image/", {
             method: "POST", // POSTメソッドでサーバーにデータを送信
             headers: {
                 "Content-Type": "application/json" // ここで送信するデータがJSON形式であることを明示
