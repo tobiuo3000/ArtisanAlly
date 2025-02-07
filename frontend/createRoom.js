@@ -135,6 +135,9 @@ function displayImageData(firestoreDoc) {
   toggleSwitch2.checked = true;
   backgroundRemovalDiv.innerHTML = `<img src="${backgroundRemovalImageUrl}" alt="Heatmap" style="width: 100%;">`;
 
+  // AIチャットの講評をチャット欄の一番最初に乗っける
+  const aiChatText = firestoreDoc.fields.main_explanation.stringValue;
+  addMessageToChat(aiChatText, 'ai')
 
   // タブの初期表示
   showTab('tabpage1');
