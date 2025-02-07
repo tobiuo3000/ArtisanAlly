@@ -61,7 +61,7 @@ toggleSwitch2.addEventListener('change', () => {
   if (toggleSwitch1.checked) {
     toggleSwitch1.checked = false;
   }
-  if (toggleSwitch1.checked) {
+  if (toggleSwitch2.checked) {
     const backgroundRemovalImage = document.getElementById('backgroundRemovalImage');
     const imageUrl = backgroundRemovalImage.src;
     const leftPanelImageElem = document.getElementById('originalImage');
