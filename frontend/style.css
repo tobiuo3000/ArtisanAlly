@@ -174,7 +174,12 @@ main {
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem > div:first-child {
   margin: auto;
 }
-#resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #rep-colors,
+#resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #rep-colors {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #histogram,
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #heatmap,
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #backgroundRemoval {
@@ -182,6 +187,8 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  max-width: 300px;
+  height: 300px;
 }
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #heatmap + .toggle_label,
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #backgroundRemoval + .toggle_label {
@@ -202,10 +209,15 @@ main {
 #resultScreen #mainResultsScreen #rightPanel #tabbody #tabpage1 {
   display: block;
 }
-#resultScreen .toggle {
+#resultScreen .toggleWrapper {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+#resultScreen .toggleWrapper .toggle {
   display: none;
 }
-#resultScreen .toggle + .toggle_label {
+#resultScreen .toggleWrapper .toggle + .toggle_label {
   display: block;
   width: 60px;
   height: 30px;
@@ -215,7 +227,7 @@ main {
   cursor: pointer;
   transition: background-color 0.3s;
 }
-#resultScreen .toggle + .toggle_label::after {
+#resultScreen .toggleWrapper .toggle + .toggle_label::after {
   content: "";
   display: block;
   width: 26px;
@@ -227,10 +239,10 @@ main {
   left: 2px;
   transition: transform 0.3s;
 }
-#resultScreen .toggle:checked + .toggle_label {
+#resultScreen .toggleWrapper .toggle:checked + .toggle_label {
   background-color: #3498db;
 }
-#resultScreen .toggle:checked + .toggle_label::after {
+#resultScreen .toggleWrapper .toggle:checked + .toggle_label::after {
   transform: translateX(30px);
 }
 #resultScreen #aiChat {
