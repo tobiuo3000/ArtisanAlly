@@ -17,15 +17,15 @@ const tabbodyDiv = document.getElementById('tabbody');
 
 uploadTile.addEventListener('dragover', (e) => {
   e.preventDefault();
-  uploadTile.style.backgroundColor = '#e0e0e0'; // ドラッグオーバー時のスタイル
+  uploadTile.style.backgroundColor = '#e0e0e0';
 });
 uploadTile.addEventListener('dragleave', (e) => {
   e.preventDefault();
-  uploadTile.style.backgroundColor = ''; // ドラッグリーブ時のスタイル
+  uploadTile.style.backgroundColor = '';
 });
 uploadTile.addEventListener('drop', (e) => {
   e.preventDefault();
-  uploadTile.style.backgroundColor = ''; // ドロップ時のスタイル
+  uploadTile.style.backgroundColor = '';
   const file = e.dataTransfer.files[0];
   if (file && file.type.startsWith('image/')) {
     handleImageUpload(file);
@@ -52,7 +52,7 @@ function showTab(tabId) {
 document.querySelectorAll('#tabcontrol a').forEach(link => {
   link.addEventListener('click', (e) => {
     e.preventDefault();
-    const tabId = link.getAttribute('href').substring(1); // '#' を取り除く
+    const tabId = link.getAttribute('href').substring(1);
     showTab(tabId);
   });
 });
@@ -68,7 +68,7 @@ toggleSwitch2.addEventListener('change', () => {
 function showLoadingScreen() {
   uploadScreen.classList.add('hidden');
   loadingScreen.classList.remove('hidden');
-  resultScreen.classList.add('hidden'); // resultScreenを非表示にする
+  resultScreen.classList.add('hidden');
 }
 
 function showResultScreen() {
