@@ -34,24 +34,6 @@ uploadTile.addEventListener('drop', (e) => {
   }
 });
 
-// input type="file" の要素も同様にイベントをリッスンする（もしあれば）
-//  <input type="file" id="fileInput" style="display: none;"> のような要素がある場合
-const fileInput = document.getElementById('fileInput'); // もし存在する場合
-if (fileInput) {
-  fileInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      handleImageUpload(file);
-    } else {
-      alert('画像ファイルを選択してください。');
-    }
-  });
-  // uploadTileをクリックしたときに、fileInputのクリックイベントを発火させる（もしあれば）
-  uploadTile.addEventListener('click', () => {
-    fileInput.click();
-  });
-}
-
 // タブ切り替えの関数
 function showTab(tabId) {
   const tabContents = document.querySelectorAll('.descriptionItem');
