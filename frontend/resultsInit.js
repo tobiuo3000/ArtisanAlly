@@ -19,8 +19,12 @@ function showTab(tabId) {
   // アクティブなタブのスタイル変更
   const tabLinks = document.querySelectorAll('#tabcontrol a');
   tabLinks.forEach(link => link.classList.remove('active'));
+  tabLinks.forEach(link => {
+    link.firstElementChild.classList.remove('noneTransparent');
+  });
   const tarTab = document.querySelector(`#tabcontrol a[href="#${tabId}"]`);
   tarTab.classList.add('active');
+  tarTab.firstElementChild.classList.add('noneTransparent');
   tabbodyDiv.style.backgroundColor = window.getComputedStyle(tarTab).getPropertyValue("background-color");
 }
 

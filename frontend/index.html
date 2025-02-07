@@ -9,7 +9,6 @@
     <link rel="icon" href="./images/Logo design_01.svg" type="image/svg+xml">
     <meta name="google-site-verification" content="xHa6waH7caAmrRnBWyU6WOXCNEn6LlDgb-Ue8LZVjzs" />
     <meta name="robots" content="noindex">
-    <script src="createRoom.js" defer></script>
     <script src="uploadInit.js" defer></script>
     <script src="resultsInit.js" defer></script>
     <script src="aiChat.js" defer></script>
@@ -43,10 +42,11 @@
             </div>
             <div id="rightPanel">
                 <p id="tabcontrol">
-                    <a href="#tabpage1">Typical colors</a>
-                    <a href="#tabpage2">Histogram</a>
-                    <a href="#tabpage3">Heat map</a>
-                    <a href="#tabpage4">Background Removal</a>
+                    <a href="#tabpage1"><span>Typical colors</span></a>
+                    <a href="#tabpage2"><span>Histogram</span></a>
+                    <a href="#tabpage3"><span>Heat map</span></a>
+                    <a href="#tabpage4"><span>Background Removal</span></a>
+                    <span class="justify-fix"></span>
                 </p>
                 <div id="tabbody">
                     <div class="descriptionItem" id="tabpage1">
@@ -80,7 +80,7 @@
             <div id="messageBox"></div>
             <div id="inputBox">
                 <input title="" type="text" placeholder="メッセージを入力" id="inputMsg">
-                <button id="sendBtn">送信</button>
+                <button id="sendBtn">send</button>
             </div>
         </div>
     </div>
