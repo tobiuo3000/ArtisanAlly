@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
     <meta name="robots" content="noindex">
     <script src="dndHandler.js" defer></script> <!--画像読み込み用のjavascriptファイル-->
     <script src="calcsize.js" defer></script> <!--計算用のjavascript-->
+    <script src="rightpanel.js" defer></script> <!--rightpanelのタブ機能動作用のjavascriptファイル-->>
 </head>
+
 <body>
     <header>
         <img src="./images/TitleLogo.svg" alt="アプリのロゴ" class="appLogo">
@@ -37,28 +40,35 @@
 
                 <div id="editIconGroup">
                     <div class="editIconBg">
-                        <img src="./images/reversal-icon.png" alt ="反転" class="editIcon">
+                        <img src="./images/reversal-icon.png" alt="反転" class="editIcon">
                     </div>
                     <div class="editIconBg" id="expand">
-                        <img src="./images/拡大アイコン1.png" alt ="拡大" class="editIcon">
+                        <img src="./images/拡大アイコン1.png" alt="拡大" class="editIcon">
                     </div>
                     <div class="editIconBg" id="shrink">
-                        <img src="./images/縮小アイコン1.png" alt ="縮小" class="editIcon">
+                        <img src="./images/縮小アイコン1.png" alt="縮小" class="editIcon">
                     </div>
                     <div class="editIconBg" id="trash">
-                        <img src="./images/1034_tr_h.png" alt ="削除" class="editIcon">
+                        <img src="./images/1034_tr_h.png" alt="削除" class="editIcon">
                     </div>
                     <div class="editIconBg">
-                        <img src="./images/brightness-icon.png" alt ="明度" class="editIcon">
+                        <img src="./images/brightness-icon.png" alt="明度" class="editIcon">
                     </div>
                 </div>
             </div>
             <div id="rightPanel">
-                <div class="descriptionItem">説明うんちゃらかんちゃら</div>
-                <div class="descriptionItem">説明うんちゃらかんちゃら</div>
-                <div class="descriptionItem">説明うんちゃらかんちゃら</div>
-                <div class="descriptionItem">説明うんちゃらかんちゃら</div>
-                <div class="descriptionItem">説明うんちゃらかんちゃら</div>
+                <p id="tabcontrol">
+                    <a href="#tabpage1">タブ1</a>
+                    <a href="#tabpage2">タブ2</a>
+                    <a href="#tabpage3">タブ3</a>
+                </p>
+                <div id="tabbody">
+                    <div class="descriptionItem" div id="tabpage1">説明うんちゃらかんちゃら</div>
+                    <div class="descriptionItem" div id="tabpage1">説明うんちゃらかんちゃら</div>
+                    <div class="descriptionItem" div id="tabpage1">説明うんちゃらかんちゃら</div>
+                    <div class="descriptionItem" div id="tabpage1">説明うんちゃらかんちゃら</div>
+                    <div class="descriptionItem" div id="tabpage1">説明うんちゃらかんちゃら</div>
+                </div>
             </div>
         </div>
         <div id="aiChat">
@@ -70,4 +80,5 @@
         </div>
     </main>
 </body>
+
 </html>
