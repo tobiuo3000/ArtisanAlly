@@ -104,8 +104,7 @@ main {
 #workSpace #leftPanel #previewImage {
   max-width: 100%;
   max-height: 100%;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   display: block;
   margin: auto;
 }
@@ -216,4 +215,6 @@ main {
   font-family: "Vivaldi";
   src: url("fonts/VivaldiRegular-X3BXd.ttf") format("truetype");
   font-weight: 400;
-}/*# sourceMappingURL=style.css.map */
+}
+
+/*# sourceMappingURL=style.css.map */

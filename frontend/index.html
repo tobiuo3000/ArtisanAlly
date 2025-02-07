@@ -4,70 +4,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>モックアップUI</title>
-    <link rel="stylesheet" href="style.css"> <!-- ヘッダー部分のCSSファイル -->
+    <title>DOODLE SCOPE</title>
+    <link rel="stylesheet" href="style.css"> <!-- 全体のCSSファイル -->
     <link rel="icon" href="./images/Logo design_01.svg" type="image/svg+xml">
     <meta name="google-site-verification" content="xHa6waH7caAmrRnBWyU6WOXCNEn6LlDgb-Ue8LZVjzs" />
     <meta name="robots" content="noindex">
-    <script src="dndHandler.js" defer></script> <!--画像読み込み用のjavascriptファイル-->
-    <script src="calcsize.js" defer></script> <!--計算用のjavascript-->
-    <script src="rightpanel.js" defer></script> <!--rightpanelのタブ機能動作用のjavascriptファイル-->>
+    <script src="main.js" defer></script> <!--全体のjavascriptファイル-->
 </head>
 
 <body>
-    <header>
-        <img src="./images/TitleLogo.svg" alt="アプリのロゴ" class="appLogo">
-        <div class="toolIconGroup">
-            <img src="./images/sharing-icon.png" alt="SNSでシェア" class="toolIcon">
-            <img src="./images/ellipses-icon.png" alt="三点リーダー" class="toolIcon">
-            <img src="./images/settings-icon.png" alt="設定" class="toolIcon">
-            <img src="./images/black-bubble-icon.png" alt="吹き出し：黒" class="toolIcon">
+<main>
+    <!-- アップロード＆タイトル画面 -->
+    <div id=uploadScreen>
+        <img src="./images/TitleLogo.svg" alt="アプリのロゴ" class="appLogo" id="titleimg">
+        <div id="service-description"></div>
+        <div id="uploadTile">
+            <div id="dndText">
+                <div>Upload image</div>
+                <div>Drag & Drop</div>
+            </div>
         </div>
-    </header>
-    <main>
-        <div id="workSpace">
+    </div>
+    <!-- ローディング画面 -->
+    <div id="loadingScreen" class="screen hidden">
+        <p>creating...</p>
+        <div class="loader"></div>
+    </div>
+    <!-- 結果表示画面 -->
+    <div id="resultScreen">
+        <img src="./images/TitleLogo.svg" alt="アプリのロゴ" class="appLogo" id="headimg">
+        <div id="mainResultsScreen">
             <div id="leftPanel">
-
-                <div id="uploadTile">
-                    <div id="dndText">
-                        <img src="./images/upload_hoso.png" alt="upload" id="uploadImg">
-                        Drag & Drop image files
-                    </div>
-                    <button id="createBtn">
-                        <span id="createBtnTxt">CREATE</span>
-                    </button>
-                </div>
-
-                <div id="editIconGroup">
-                    <div class="editIconBg">
-                        <img src="./images/reversal-icon.png" alt="反転" class="editIcon">
-                    </div>
-                    <div class="editIconBg" id="expand">
-                        <img src="./images/拡大アイコン1.png" alt="拡大" class="editIcon">
-                    </div>
-                    <div class="editIconBg" id="shrink">
-                        <img src="./images/縮小アイコン1.png" alt="縮小" class="editIcon">
-                    </div>
-                    <div class="editIconBg" id="trash">
-                        <img src="./images/1034_tr_h.png" alt="削除" class="editIcon">
-                    </div>
-                    <div class="editIconBg">
-                        <img src="./images/brightness-icon.png" alt="明度" class="editIcon">
-                    </div>
-                </div>
+                <div id="loadedimage"></div>
             </div>
             <div id="rightPanel">
                 <p id="tabcontrol">
-                    <a href="#tabpage1">タブ1</a>
-                    <a href="#tabpage2">タブ2</a>
-                    <a href="#tabpage3">タブ3</a>
+                    <a href="#tabpage1">Typical colors</a>
+                    <a href="#tabpage2">Histogram</a>
+                    <a href="#tabpage3">Heat map</a>
                 </p>
                 <div id="tabbody">
-                    <div class="descriptionItem" div id="tabpage1">説明うんちゃらかんちゃら</div>
-                    <div class="descriptionItem" div id="tabpage1">説明うんちゃらかんちゃら</div>
-                    <div class="descriptionItem" div id="tabpage1">説明うんちゃらかんちゃら</div>
-                    <div class="descriptionItem" div id="tabpage1">説明うんちゃらかんちゃら</div>
-                    <div class="descriptionItem" div id="tabpage1">説明うんちゃらかんちゃら</div>
+                    <div class="descriptionItem" id="tabpage1">
+                        <div class="maincolor"></div>
+                        <div class="subcolor"></div>
+                        <div id="color-description"></div>
+                    </div>
+                    <div class="descriptionItem" id="tabpage2">
+                        <div id="histogram"></div>
+                        <div id="histogram-description"></div>
+                    </div>
+                    <div class="descriptionItem" id="tabpage3">
+                        <div id="heatmap"></div>
+                        <div id="heatmap-description"></div>
+                        <input class="toggle" id="toggle_switch" type='checkbox'>
+                        <label for="toggle_switch" class="toggle_label"></label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -78,7 +69,8 @@
                 <button id="sendBtn">送信</button>
             </div>
         </div>
-    </main>
+    </div>
+</main>
 </body>
 
 </html>
