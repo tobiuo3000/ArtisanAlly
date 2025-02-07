@@ -31,9 +31,19 @@ def post():
     image_array = np.frombuffer(bytearray(image_data), dtype=np.uint8)
     image_without_background = remove(image_array, force_return_bytes=True)
 
-    backremoved_filename = f"{uuid.uuid4()}.{file_type}"
+    backremoved_filename = f"{uuid.uuid4()}.png"
+    new_blob = bucket.blob(backremoved_filename)
 
-    blob.upload_from_string(image_data, content_type=f"image/{file_type}")
+    new_blob.upload_from_string(image_without_background, content_type="image/png")
+
+    doc_ref = db.collection("rooms").document(room_id)
+    doc_ref.update({"original_image_name": backremoved_filename})
+
+    nparr = np.frombuffer(image_data, np.uint8)
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+    color_clusters_list = get_kmeans_clusters_sorted(img=img, num_clusters=20)
+
 
     return None
 
