@@ -129,6 +129,7 @@ main {
   padding: 10px 20px;
   margin: 0 auto;
   border-radius: 10px 10px 0 0;
+  box-shadow: 3px 3px 1px #65558F;
   text-decoration: none;
   position: relative;
   z-index: 1;
@@ -142,19 +143,19 @@ main {
   color: black;
   text-align: center;
   font-size: 0.79em;
-  opacity: 0.6;
+  opacity: 0.5;
 }
 #resultScreen #mainResultsScreen #rightPanel #tabcontrol a:first-child {
-  background-color: #FFC312;
+  background-color: #FFCC00;
 }
 #resultScreen #mainResultsScreen #rightPanel #tabcontrol a:nth-child(2) {
-  background-color: #009432;
+  background-color: #00C7BE;
 }
 #resultScreen #mainResultsScreen #rightPanel #tabcontrol a:nth-child(3) {
-  background-color: #0652DD;
+  background-color: #32ADE6;
 }
 #resultScreen #mainResultsScreen #rightPanel #tabcontrol a:nth-child(4) {
-  background-color: #9980FA;
+  background-color: #4E4CBD;
 }
 #resultScreen #mainResultsScreen #rightPanel #tabcontrol a.active {
   z-index: 3;
@@ -163,10 +164,11 @@ main {
   border: none;
   padding: 20px;
   border-radius: 0 0 10px 10px;
-  background-color: #FFC312;
+  background-color: #FFCC00;
   position: relative;
-  z-index: 2;
+  z-index: 4;
   height: 460px;
+  box-shadow: 3px 3px 1px #65558F;
 }
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem {
   display: none;
@@ -240,7 +242,7 @@ main {
   transition: transform 0.3s;
 }
 #resultScreen .toggleWrapper .toggle:checked + .toggle_label {
-  background-color: #3498db;
+  background-color: #34C759;
 }
 #resultScreen .toggleWrapper .toggle:checked + .toggle_label::after {
   transform: translateX(30px);
@@ -270,17 +272,19 @@ main {
   border-radius: 5px;
 }
 #resultScreen #aiChat #messageBox .message.user-message {
-  background-color: #e0f7fa;
+  background-color: #007AFF;
   text-align: right;
   margin-left: auto;
   max-width: 70%;
+  color: white;
   width: fit-content;
   word-wrap: break-word;
 }
 #resultScreen #aiChat #messageBox .message.ai-message {
-  background-color: #f0f0f0;
+  background-color: #9C9C9C;
   text-align: left;
   margin-right: auto;
+  color: white;
   max-width: 70%;
   width: fit-content;
   word-wrap: break-word;

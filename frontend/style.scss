@@ -2,10 +2,10 @@ $text-color: #333;
 $primary-color: #3498db;
 $border-color: #ddd;
 
-$tab1-color: #FFC312;
-$tab2-color: #009432;
-$tab3-color: #0652DD;
-$tab4-color: #9980FA;
+$tab1-color: #FFCC00;
+$tab2-color: #00C7BE;
+$tab3-color: #32ADE6;
+$tab4-color: #4E4CBD;
 
 body {
     font-family: sans-serif;
@@ -151,6 +151,7 @@ main {
                     padding: 10px 20px;
                     margin: 0 auto;
                     border-radius: 10px 10px 0 0;
+                    box-shadow: 3px 3px 1px #65558F;
                     text-decoration: none;
                     position: relative;
                     z-index: 1;
@@ -163,7 +164,7 @@ main {
                         color: black;
                         text-align: center;
                         font-size: 0.79em;
-                        opacity: 0.6;
+                        opacity: 0.5;
                     }
 
 
@@ -192,8 +193,9 @@ main {
                 border-radius: 0 0 10px 10px;
                 background-color: $tab1-color;
                 position: relative;
-                z-index: 2;
+                z-index: 4;
                 height: 460px;
+                box-shadow: 3px 3px 1px #65558F;
 
                 .descriptionItem {
                     display: none;
@@ -278,7 +280,7 @@ main {
                 }
             }
             &:checked + .toggle_label {
-                background-color: $primary-color;
+                background-color: #34C759;
 
                 &::after {
                     transform: translateX(30px);
@@ -313,18 +315,20 @@ main {
                 border-radius: 5px;
 
                 &.user-message {
-                    background-color: #e0f7fa;
+                    background-color: #007AFF;
                     text-align: right;
                     margin-left: auto;
                     max-width: 70%;
+                    color: white;
                     width: fit-content;
                     word-wrap: break-word;
                 }
 
                 &.ai-message {
-                    background-color: #f0f0f0;
+                    background-color: #9C9C9C;
                     text-align: left;
                     margin-right: auto;
+                    color: white;
                     max-width: 70%;
                     width: fit-content;
                     word-wrap: break-word;
