@@ -9,15 +9,16 @@
     <link rel="icon" href="./images/Logo design_01.svg" type="image/svg+xml">
     <meta name="google-site-verification" content="xHa6waH7caAmrRnBWyU6WOXCNEn6LlDgb-Ue8LZVjzs" />
     <meta name="robots" content="noindex">
-    <script src="main.js" defer></script> <!--全体のjavascriptファイル-->
+    <script src="createRoom.js" defer></script>
+    <script src="main.js" defer></script>
 </head>
 
 <body>
 <main>
     <!-- アップロード＆タイトル画面 -->
-    <div id=uploadScreen class="">
+    <div id="uploadScreen">
         <img src="./images/TitleLogo.svg" alt="アプリのロゴ" class="appLogo" id="titleimg">
-        <div id="service-description">hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehhogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge<br>hogehogehogehogehogehogehogehogehogehogehogehogehogehoge</div>
+        <div id="service-description">hogehogehogehogehogehogehogehogehogehogehogehogehogehoge</div>
         <div id="uploadTile">
             <div id="dndText">
                 <div>Upload image</div>
@@ -26,15 +27,15 @@
         </div>
     </div>
     <!-- ローディング画面 -->
-    <div id="loadingScreen"  class="">
+    <div id="loadingScreen" class="screen hidden">
         <p>creating...</p>
         <div class="loader"></div>
     </div>
     <!-- 結果表示画面 -->
-    <div id="resultScreen"  class="">
-        <img src="./images/TitleLogo.svg" alt="アプリのロゴ" class="appLogo" id="headimg">
+    <div id="resultScreen">
         <div id="mainResultsScreen">
             <div id="leftPanel">
+                <img src="./images/TitleLogo.svg" alt="アプリのロゴ" class="appLogo" id="headimg">
                 <div id="loadedimage"></div>
             </div>
             <div id="rightPanel">
@@ -42,11 +43,11 @@
                     <a href="#tabpage1">Typical colors</a>
                     <a href="#tabpage2">Histogram</a>
                     <a href="#tabpage3">Heat map</a>
+                    <a href="#tabpage4">Background Removal</a>
                 </p>
                 <div id="tabbody">
                     <div class="descriptionItem" id="tabpage1">
-                        <div class="maincolor"></div>
-                        <div class="subcolor"></div>
+                        <div id="rep-colors"></div>
                         <div id="color-description"></div>
                     </div>
                     <div class="descriptionItem" id="tabpage2">
@@ -56,8 +57,18 @@
                     <div class="descriptionItem" id="tabpage3">
                         <div id="heatmap"></div>
                         <div id="heatmap-description"></div>
-                        <input class="toggle" id="toggle_switch" type='checkbox'>
-                        <label for="toggle_switch" class="toggle_label"></label>
+                        <div class="toggleWrapper">
+                            <input class="toggle" id="toggle_switch1" type='checkbox'>
+                            <label for="toggle_switch1" class="toggle_label"></label>
+                        </div>
+                    </div>
+                    <div class="descriptionItem" id="tabpage4">
+                        <div id="backgroundRemoval"></div>
+                        <div id="background-removal-description"></div>
+                        <div class="toggleWrapper">
+                            <input class="toggle" id="toggle_switch2" type='checkbox'>
+                            <label for="toggle_switch2" class="toggle_label"></label>
+                        </div>
                     </div>
                 </div>
             </div>
