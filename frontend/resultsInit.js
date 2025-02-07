@@ -41,11 +41,33 @@ document.querySelectorAll('#tabcontrol a').forEach(link => {
 
 // 右 タブ3 ヒートマップ トグルボタン処理
 toggleSwitch1.addEventListener('change', () => {
-  heatmapDiv.style.display = toggleSwitch1.checked ? 'block' : 'none';
+  if (toggleSwitch2.checked) {
+    toggleSwitch2.checked = false;
+  }
+  if (toggleSwitch1.checked) {
+    const heatmapImage = document.getElementById('heatmapImage');
+    const imageUrl = heatmapImage.src;
+    const leftPanelImageElem = document.getElementById('originalImage');
+    leftPanelImageElem.src = imageUrl;
+  } else {
+    const leftPanelImageElem = document.getElementById('originalImage');
+    leftPanelImageElem.src = originalImageUrl;
+  }
 });
 
 
 // 右 タブ4 バックグラウンドリムーバル トグルボタン処理
 toggleSwitch2.addEventListener('change', () => {
-  backgroundRemovalDiv.style.display = toggleSwitch2.checked ? 'block' : 'none';
+  if (toggleSwitch1.checked) {
+    toggleSwitch1.checked = false;
+  }
+  if (toggleSwitch1.checked) {
+    const backgroundRemovalImage = document.getElementById('backgroundRemovalImage');
+    const imageUrl = backgroundRemovalImage.src;
+    const leftPanelImageElem = document.getElementById('originalImage');
+    leftPanelImageElem.src = imageUrl;
+  } else {
+    const leftPanelImageElem = document.getElementById('originalImage');
+    leftPanelImageElem.src = originalImageUrl;
+  }
 });

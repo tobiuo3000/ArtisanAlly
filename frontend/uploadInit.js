@@ -1,5 +1,7 @@
 const uploadTile = document.getElementById('uploadTile');
 
+let originalImageUrl = null;
+
 // ドラッグ中の動作
 uploadTile.addEventListener('dragover', (e) => {
   e.preventDefault();
@@ -134,9 +136,10 @@ function displayImageData(firestoreDoc) {
 
   // アップロードされた画像を表示
   const originalImageName = firestoreDoc.fields.original_image_name.stringValue;
-  const originalImageUrl = storageBaseURL + originalImageName;
+  originalImageUrl = storageBaseURL + originalImageName;
   const img = document.createElement('img');
   img.src = originalImageUrl;
+  img.id = "originalImage";
   img.style.maxWidth = '100%';
   img.style.maxHeight = '100%';
   loadedImageDiv.style.backgroundColor = rep_colors[0];
@@ -154,15 +157,15 @@ function displayImageData(firestoreDoc) {
   const heatmapImageName = firestoreDoc.fields.heatmap_image_name.stringValue;
   const heatmapImageUrl = storageBaseURL + heatmapImageName;
   const heatmapDescriptionText  = firestoreDoc.fields.heatmap_explanation.stringValue;
-  toggleSwitch1.checked = true;
-  heatmapDiv.innerHTML = `<img src="${heatmapImageUrl}" alt="Heatmap">`;
+  toggleSwitch1.checked = false;
+  heatmapDiv.innerHTML = `<img src="${heatmapImageUrl}" alt="Heatmap" id="heatmapImage">`;
   heatmapDescription.textContent = heatmapDescriptionText;
 
   // タブ4を設定 バックグランドリムーバル
   const backgroundRemovalImageName = firestoreDoc.fields.back_removed_image_name.stringValue;
   const backgroundRemovalImageUrl = storageBaseURL + backgroundRemovalImageName;
-  toggleSwitch2.checked = true;
-  backgroundRemovalDiv.innerHTML = `<img src="${backgroundRemovalImageUrl}" alt="Heatmap">`;
+  toggleSwitch2.checked = false;
+  backgroundRemovalDiv.innerHTML = `<img src="${backgroundRemovalImageUrl}" alt="Heatmap" id="backgroundRemovalImage">`;
 
   // AIチャットの講評をチャット欄の一番最初に乗っける
   const aiChatText = firestoreDoc.fields.main_explanation.stringValue;
