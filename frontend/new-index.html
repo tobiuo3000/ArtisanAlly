@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOODLE SCOPE</title>
+    <link rel="stylesheet" href="new-style.css"> <!-- 全体のCSSファイル -->
+    <link rel="icon" href="./images/Logo design_01.svg" type="image/svg+xml">
+    <meta name="google-site-verification" content="xHa6waH7caAmrRnBWyU6WOXCNEn6LlDgb-Ue8LZVjzs" />
+    <meta name="robots" content="noindex">
+    <script src="new-main.js" defer></script> <!--全体のjavascriptファイル-->
+</head>
+
+<body>
+    <main>
+        <!-- アップロード＆タイトル画面 -->
+        <div id=uploadScreen>
+            <img src="./images/TitleLogo.svg" alt="アプリのロゴ" class="appLogo" id="titleimg">
+            <div id="service-description"></div>
+            <div id="uploadTile">
+                <div id="dndText">
+                    <div>Upload image</div>
+                    <div>Drag & Drop</div>
+                </div>
+            </div>
+        </div>
+        <!-- ローディング画面 -->
+        <div id="loadingScreen" class="screen hidden">
+            <p>creating...</p>
+            <div class="loader"></div>
+        </div>
+        <!-- 結果表示画面 -->
+        <div id="resultScreen">
+            <img src="./images/TitleLogo.svg" alt="アプリのロゴ" class="appLogo" id="headimg">
+            <div id="leftPanel">
+                <div id="loadedimage"></div>
+            </div>
+            <div id="rightPanel">
+                <p id="tabcontrol">
+                    <a href="#tabpage1">Typical colors</a>
+                    <a href="#tabpage2">Histogram</a>
+                    <a href="#tabpage3">Heat map</a>
+                </p>
+                <div id="tabbody">
+                    <div class="descriptionItem" id="tabpage1">
+                        <div class="maincolor"></div>
+                        <div class="subcolor"></div>
+                        <div id="color-description"></div>
+                    </div>
+                    <div class="descriptionItem" id="tabpage2">
+                        <div id="histogram"></div>
+                        <div id="histogram-description"></div>
+                    </div>
+                    <div class="descriptionItem" id="tabpage3">
+                        <div id="heatmap"></div>
+                        <div id="heatmap-description"></div>
+                        <input class="toggle" id="toggle_switch" type='checkbox'>
+                        <label for="toggle_switch" class="toggle_label"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="aiChat">
+            <div id="messageBox"></div>
+            <div id="inputBox">
+                <input title="" type="text" placeholder="メッセージを入力" id="inputMsg">
+                <button id="sendBtn">送信</button>
+            </div>
+        </div>
+        </div>
+    </main>
+</body>
+
+</html>
