@@ -9,7 +9,7 @@ sendBtn.addEventListener('click', async () => {
   const message = inputMsg.value.trim();
   if (!message) return;
   inputMsg.value = '';
-  addMessageToChat(message, 'user');
+  // addMessageToChat(message, 'user');
   try{
     const aiResponse = await getAiResponse(message, docId);
     // addMessageToChat(aiResponse, 'ai');
