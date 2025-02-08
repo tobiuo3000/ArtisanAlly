@@ -11,8 +11,6 @@ import cv2
 
 app = Flask(__name__)
 
-db = firestore.Client()
-
 @app.route("/")
 def hello_world():
     name = os.environ.get("NAME", "World")
@@ -25,6 +23,9 @@ def upload():
         return jsonify({"error": "No data sent."}), 400
     
     room_id = str(uuid.uuid4())
+    
+    db = firestore.Client()
+
     doc_ref = db.collection("rooms").document(room_id)
     doc_ref.collection("chat_history")
     doc_ref.collection("rep_colors")
@@ -47,8 +48,8 @@ def upload():
         return jsonify({"error": "No base64 image provided."}), 400
 
     image_stream = base64.b64decode(base64_image)
-    image_array = np.frombuffer(bytearray(image_stream), dtype=np.uint8)
-    image = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
+    #image_array = np.frombuffer(bytearray(image_stream), dtype=np.uint8)
+    #image = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
 
     upload_image_to_cloud_storage(image_stream, image_type_str, room_id)
 

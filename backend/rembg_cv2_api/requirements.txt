@@ -13,3 +13,5 @@ watchdog==6.0.0
 aiohttp
 gradio
 asyncer==0.0.8
+
+matplotlib

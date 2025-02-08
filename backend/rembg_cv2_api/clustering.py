@@ -1,11 +1,11 @@
-from google.cloud import storage
-import os
+from google.cloud import storage, firestore
 import numpy as np
 import cv2
 
-def get_kmeans_clusters_sorted(img, num_clusters=20) -> list:
+
+def calc_kmeans_clusters_sorted(image, num_clusters=20, room_id="", db=None) -> None:
     # 画像を (画素数, 3) の形状に変換し、float32型にキャスト
-    data = img.reshape(-1, 3).astype(np.float32)
+    data = image.reshape(-1, 3).astype(np.float32)
 
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
 
@@ -26,5 +26,12 @@ def get_kmeans_clusters_sorted(img, num_clusters=20) -> list:
     unique_labels, counts = np.unique(labels, return_counts=True)
     sorted_indices = np.argsort(counts)[::-1]
     sorted_centers = centers[sorted_indices].tolist()
-    return sorted_centers
 
+    doc_ref = db.collection("rooms").document(room_id)
+    rep_colors = [
+        {"r": int(color[0]), "g": int(color[1]), "b": int(color[2])}
+        for color in sorted_centers
+    ]
+    doc_ref.update({"rep_colors": rep_colors})
+        
+    return None
