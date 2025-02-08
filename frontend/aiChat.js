@@ -11,7 +11,7 @@ sendBtn.addEventListener('click', async () => {
   inputMsg.value = '';
   // addMessageToChat(message, 'user');
   try{
-    const aiResponse = await getAiResponse(message, docId);
+    const aiResponse = await getAiResponse(message);
     // addMessageToChat(aiResponse, 'ai');
   } catch (error) {
     console.error("Error getting AI response:", error);
