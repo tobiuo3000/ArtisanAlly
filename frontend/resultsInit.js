@@ -1,17 +1,10 @@
-const loadedImageDiv = document.getElementById('loadedimage');
-const repColors = document.getElementById('rep-colors');
-const histogramDiv = document.getElementById('histogram');
-const histogramDescription = document.getElementById('histogram-description');
-const heatmapDiv = document.getElementById('heatmap');
-const heatmapDescription = document.getElementById('heatmap-description');
-const backgroundRemovalDiv = document.getElementById('backgroundRemoval');
 const toggleSwitch1 = document.getElementById('toggle_switch1');
 const toggleSwitch2 = document.getElementById('toggle_switch2');
 const tabbodyDiv = document.getElementById('tabbody');
 
 
 // タブ切り替えの関数
-function showTab(tabId) {
+export function showTab(tabId) {
   const tabContents = document.querySelectorAll('.descriptionItem');
   tabContents.forEach(tab => tab.style.display = 'none');
   document.getElementById(tabId).style.display = 'block';

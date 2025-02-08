@@ -1,8 +1,43 @@
+import { showLoadingScreen, showResultScreen, showUploadScreen } from "./main.js";
+import { addMessageToChat } from "./aiChat.js";
+import { showTab } from "./resultsInit.js";
+
+// import { initializeApp } from "firebase/app";
+// import { getFirestore } from "firebase/firestore";
+
 const uploadTile = document.getElementById('uploadTile');
 
-let originalImageUrl = null; // 画像アップロード後に元の画像のURLを保持するための変数
+const loadedImageDiv = document.getElementById('loadedimage');
+const repColors = document.getElementById('rep-colors');
+const histogramDiv = document.getElementById('histogram');
+const histogramDescription = document.getElementById('histogram-description');
+const heatmapDiv = document.getElementById('heatmap');
+const heatmapDescription = document.getElementById('heatmap-description');
+const backgroundRemovalDiv = document.getElementById('backgroundRemoval');
+const toggleSwitch1 = document.getElementById('toggle_switch1');
+const toggleSwitch2 = document.getElementById('toggle_switch2');
 
-// 画像をアップロードタイルにドラッグ中の動作
+// APIのエンドポイント (仮のURL)
+const apiUrl = "/process-image";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA-wjt8D4zYzLhj6HEeLRqjSDWmTrBku70",
+  authDomain: "artisanallyproject.firebaseapp.com",
+  projectId: "artisanallyproject",
+  storageBucket: "artisanallyproject.firebasestorage.app",
+  messagingSenderId: "471591578999",
+  appId: "1:471591578999:web:4b37ca262aa514c91f8572"
+};
+if (!firebase.apps.length) { //多重初期化を防ぐ
+  firebase.initializeApp(firebaseConfig);
+}
+const db = firebase.firestore();
+const collectionName = 'rooms';
+let unsubscribe = null;
+
+let originalImageUrl = null;
+
+// ドラッグ中の動作
 uploadTile.addEventListener('dragover', (e) => {
   e.preventDefault();
   uploadTile.style.backgroundColor = '#e0e0e0';
@@ -14,43 +49,36 @@ uploadTile.addEventListener('dragleave', (e) => {
   uploadTile.style.backgroundColor = '';
 });
 
-// 画像がドロップされた時の動作
+// ドロップされた時の動作
 uploadTile.addEventListener('drop', (e) => {
-  e.preventDefault(); // デフォルトの動作を防ぐ
+  e.preventDefault();
   uploadTile.style.backgroundColor = '';
-  const file = e.dataTransfer.files[0]; // ドロップされた１枚目のファイルを取得
-  if (file && file.type.startsWith('image/')) { // 画像なら関数を呼び出し、そうでなければアラートを出す
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) {
     handleImageUpload(file);
   } else {
     alert('画像ファイルをドロップしてください。');
   }
 });
 
-
-// APIのエンドポイント (仮のURL)
-const apiUrl = "/process-image";
-
-const projectId = 'artisanallyproject';
-const databaseId = '(default)';
-const collectionName = 'rooms';
-
 // 画像がアップロードされた時の処理
 async function handleImageUpload(file) {
-  showLoadingScreen(); // ローディング画面を表示
+  showLoadingScreen();
   try {
-    const jsonData = await getJsonData(file); // 画像データをJSON形式に変換
-    const docId = sendImageToApi(jsonData); // JSONデータをAPIに送信
-    const firestoreDoc = await getFirestoreDoc(docId); // Firestoreから解析結果を取得
-    displayImageData(firestoreDoc); // 取得したデータを画面に表示
-    showResultScreen(); // 結果画面に切り替える
-  } catch (error) { // 途中でエラーが発生した場合
-    console.error("Error processing image:", error); // エラーをログに記録
-    alert("Error: " + error.message); // 警告ダイアログを表示
-    showUploadScreen(); // アップロード画面に戻す
+    const jsonData = await getJsonData(file);
+    const docId = sendImageToApi(jsonData);
+    const firestoreDoc = await getFirestoreDoc(docId);
+    displayImageData(firestoreDoc);
+    showResultScreen();
+    setupRealtimeListener(docId);
+  } catch (error) {
+    console.error("Error processing image:", error);
+    alert("Error: " + error.message);
+    showUploadScreen();
   }
 }
 
-// JSONデータをBase64に整形する
+// fileからjsonデータを整形する
 function getJsonData(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -77,102 +105,122 @@ function sendImageToApi(jsonData) {
   return "j1xs99a2ftshojouuuya";
 }
 
-// Firestoreのデータから代表色（rep_colors）を抽出し、Hexコードのリストとして返す関数
 function getRepColors(rep_colors) {
-  const rgbValues = []; // 最終的に代表色のHexコードを格納する配列
-  for (const key in rep_colors.mapValue.fields) { // mapValue.fields に含まれるすべての color1, color2, ... などの代表色をループ処理。
-    if (rep_colors.mapValue.fields.hasOwnProperty(key)) { //keyの値を取得し、データが配列形式かどうかを確認
-      const field = rep_colors.mapValue.fields[key];
-      if (field.arrayValue && field.arrayValue.values && Array.isArray(field.arrayValue.values)) {
-        const values = field.arrayValue.values; // values.mapを使い、Firestore形式(intergeValue)から数値（整数）として取得する。RGB値は[255,0,0]のような配列で格納
-        const rgb = values.map(value => {
-          if (value.hasOwnProperty("integerValue")){
-            return parseInt(value.integerValue, 10);
-          }
-          return null;
-        });
-        const hexCode = `#${rgb.map(value => value.toString(16).padStart(2, '0')).join('')}`; // RGB値をHexコード(16新数)に変換し、#FF00FFのような形にする
-        rgbValues.push(hexCode); // 変換したHexコードをリストに追加
-      }
-    }
+  const result = [];
+  for (const [key, value] of Object.entries(rep_colors)) {
+    result.push({ id: key, values: value });
   }
-  return rgbValues; // 最終的にHexコードを返す
+  result.sort((a, b) => parseInt(a.id) - parseInt(b.id));
+  return result;
 }
 
-// firestoreにアクセスし、指定したdocIdのデータを取得
+// firestoreのデータを取得
 async function getFirestoreDoc(docId) {
-  const baseURL = "https://firestore.googleapis.com/v1/projects/"
-  const databaseURL = baseURL + `${projectId}/databases/${databaseId}`
-  let documentUrl = databaseURL + `/documents/${collectionName}/${docId}`;
-  return await fetch(documentUrl)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+  try {
+    const docSnapshot = await db.collection(collectionName).doc(docId).get();
+    if (!docSnapshot.exists) {
+      throw new Error("Firestore document not found.");
+    }
+    return docSnapshot.data();
+  } catch (error) {
+    throw new Error(`Failed to fetch Firestore data: ${error.message}`);
+  }
+}
+
+// Firestoreのリアルタイムリスナーを設定
+function setupRealtimeListener(docId) {
+  // 以前のリスナーがあれば解除
+  if (unsubscribe) {
+    unsubscribe();
+  }
+  unsubscribe = db.collection(collectionName).doc(docId)
+    .onSnapshot((docSnapshot) => {
+      if (docSnapshot.exists) {
+        const data = docSnapshot.data();
+        displayImageData(data); // データを表示 (リアルタイム更新)
+        // 何かしらの関数を実行 (例: データ変更時の通知)
+        onDataChanged(data);
+      } else {
+        console.log("Document does not exist (anymore).");
       }
-      return response.json();
-    })
-    .catch(error => {
-      console.error('Error fetching document:', error);
+    }, (error) => {
+      console.error("Error in realtime listener:", error);
     });
 }
 
-// Firestoreから取得した各種情報を配置していく関数
+
+// 各種情報を配置
 function displayImageData(firestoreDoc) {
   console.log(firestoreDoc);
 
-  const bucketName = firestoreDoc.fields.bucket_name.stringValue;
+  const bucketName = firestoreDoc.bucket_name;
   const storageBaseURL = `https://storage.googleapis.com/${bucketName}/images/`
 
   // タブ1を設定 カラー
-  const rep_colors = getRepColors(firestoreDoc.fields.rep_colors);
-  for (const color in rep_colors) {
-    // 丸い背景色のみの小さな要素を複数配置する
-    const dropTile = document.createElement('div');
-    dropTile.id = color;
-    dropTile.className = 'drop-tile';
-    // 背景色にcolorを追加
-    dropTile.style.backgroundColor = rep_colors[color];
-    repColors.appendChild(dropTile);
+  if ("rep_colors" in firestoreDoc) {
+    const rep_colors = getRepColors(firestoreDoc.rep_colors);
+    for (const color in rep_colors) {
+      // 丸い背景色のみの小さな要素を複数配置する
+      const dropTile = document.createElement('div');
+      dropTile.id = color;
+      dropTile.className = 'drop-tile';
+      // 背景色にcolorを追加
+      dropTile.style.backgroundColor = rep_colors[color];
+      repColors.appendChild(dropTile);
+    }
   }
 
   // アップロードされた画像を表示
-  const originalImageName = firestoreDoc.fields.original_image_name.stringValue;
-  originalImageUrl = storageBaseURL + originalImageName;
-  const img = document.createElement('img');
-  img.src = originalImageUrl;
-  img.id = "originalImage";
-  img.style.maxWidth = '100%';
-  img.style.maxHeight = '100%';
-  loadedImageDiv.style.backgroundColor = rep_colors[0];
-  loadedImageDiv.innerHTML = '';
-  loadedImageDiv.appendChild(img);
+  if ("original_image_name" in firestoreDoc) {
+    const originalImageName = firestoreDoc.original_image_name;
+    originalImageUrl = storageBaseURL + originalImageName;
+    const img = document.createElement('img');
+    img.src = originalImageUrl;
+    img.id = "originalImage";
+    img.style.maxWidth = '100%';
+    img.style.maxHeight = '100%';
+    loadedImageDiv.style.backgroundColor = rep_colors[0];
+    loadedImageDiv.innerHTML = '';
+    loadedImageDiv.appendChild(img);
+  }
 
   // タブ2を設定 ヒストグラム
-  const histogramImageName = firestoreDoc.fields.histogram_image_name.stringValue;
-  const histogramImageUrl = storageBaseURL + histogramImageName;
-  const  histogramDescriptionText = firestoreDoc.fields.histogram_explanation.stringValue;
-  histogramDiv.innerHTML = `<img src="${histogramImageUrl}" alt="Histogram">`;
-  histogramDescription.textContent = histogramDescriptionText;
+  if ("histogram_image_name" in firestoreDoc && "histogram_explanation" in firestoreDoc) {
+    const histogramImageName = firestoreDoc.histogram_image_name;
+    const histogramImageUrl = storageBaseURL + histogramImageName;
+    const  histogramDescriptionText = firestoreDoc.histogram_explanation;
+    histogramDiv.innerHTML = `<img src="${histogramImageUrl}" alt="Histogram">`;
+    histogramDescription.textContent = histogramDescriptionText;
+  }
 
   // タブ3を設定 ヒートマップ
-  const heatmapImageName = firestoreDoc.fields.heatmap_image_name.stringValue;
-  const heatmapImageUrl = storageBaseURL + heatmapImageName;
-  const heatmapDescriptionText  = firestoreDoc.fields.heatmap_explanation.stringValue;
-  toggleSwitch1.checked = false;
-  heatmapDiv.innerHTML = `<img src="${heatmapImageUrl}" alt="Heatmap" id="heatmapImage">`;
-  heatmapDescription.textContent = heatmapDescriptionText;
+  if ("heatmap_image_name" in firestoreDoc && "heatmap_explanation" in firestoreDoc) {
+    const heatmapImageName = firestoreDoc.heatmap_image_name;
+    const heatmapImageUrl = storageBaseURL + heatmapImageName;
+    const heatmapDescriptionText  = firestoreDoc.heatmap_explanation;
+    toggleSwitch1.checked = false;
+    heatmapDiv.innerHTML = `<img src="${heatmapImageUrl}" alt="Heatmap" id="heatmapImage">`;
+    heatmapDescription.textContent = heatmapDescriptionText;
+  }
 
   // タブ4を設定 バックグランドリムーバル
-  const backgroundRemovalImageName = firestoreDoc.fields.back_removed_image_name.stringValue;
-  const backgroundRemovalImageUrl = storageBaseURL + backgroundRemovalImageName;
-  toggleSwitch2.checked = false;
-  backgroundRemovalDiv.innerHTML = `<img src="${backgroundRemovalImageUrl}" alt="Heatmap" id="backgroundRemovalImage">`;
+  if ("back_removed_image_name" in firestoreDoc) {
+    const backgroundRemovalImageName = firestoreDoc.back_removed_image_name;
+    const backgroundRemovalImageUrl = storageBaseURL + backgroundRemovalImageName;
+    toggleSwitch2.checked = false;
+    backgroundRemovalDiv.innerHTML = `<img src="${backgroundRemovalImageUrl}" alt="Heatmap" id="backgroundRemovalImage">`;
 
+  }
   // AIチャットの講評をチャット欄の一番最初に乗っける
-  const aiChatText = firestoreDoc.fields.main_explanation.stringValue;
-  addMessageToChat(aiChatText, 'ai')
-
-
+  if ("main_explanation" in firestoreDoc) {
+    const aiChatText = firestoreDoc.main_explanation;
+    addMessageToChat(aiChatText, 'ai')
+  }
   // タブの初期表示
   showTab('tabpage1');
+}
+
+// データ変更確認
+function onDataChanged(data) {
+  console.log("Data changed:", data);
 }

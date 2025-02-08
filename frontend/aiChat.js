@@ -23,7 +23,7 @@ async function getAiResponse(message) {
 }
 
 // メッセージを生成してぶちこむ
-function addMessageToChat(message, sender) {
+export function addMessageToChat(message, sender) {
   const messageElement = document.createElement('div');
   messageElement.classList.add('message');
   messageElement.classList.add(sender === 'user' ? 'user-message' : 'ai-message');
