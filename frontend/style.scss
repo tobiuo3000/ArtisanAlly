@@ -71,109 +71,48 @@ main {
 #loadingScreen {
     display: flex;
     flex-direction: column;
-    text-align: center;
     align-items: center;
-    /* 中央揃え */
     justify-content: center;
     padding: 50px;
+}
 
-    #loadingText {
-        margin-bottom: 50%;
-        /* テキストとアニメーションの間にスペース */
-        font-size: 1.2em;
-        font-weight: bold;
-        color: black;
-    }
+/* 黒いドーナツ型のリング（変化なし） */
+.loader circle {
+    transform-origin: center;
+}
 
-    .loader {
-        position: relative;
-        width: 60px;
-        height: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+/* 伸びる物体（最初に回る） */
+#falling-part {
+    stroke-dasharray: 0, 100; /* 初期状態: 短い */
+    stroke-dashoffset: 0;
+    animation: stretchPath 1.3s ease-in-out infinite, rotateOrbit 1.3s linear infinite;
+    animation-delay: 0.2s; /* 遅れて回転 */
+}
 
-    /* 固定されたドーナツ型の黒いリング */
-    .loader::before {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-color: transparent;
-        border: 30px solid black;
-        /* 外枠を黒く */
-        border-radius: 50%;
-        box-shadow: inset 0 0 0 18px white;
-        /* 中央を透明にする */
-    }
+/* 遅れて回るボール */
+#falling-part-ball {
+    transform: rotate(-90deg) translateX(30px); /* 円周に沿う動きのみ適用 */
+    transform-origin: 50% 50%;
+    animation: Rotateball 1.3s cubic-bezier(0.25, 0.6, 0.5, 0.6) infinite;
+    animation-delay: 0.4s; /* 遅れて回転 */
+}
 
-    /* 時計回りに回転する物体（未完成） */
-    .loader .falling-part {
-        position: absolute;
-        width: 30px;
-        height: 30px;
-        background-color: white;
-        border-radius: 50%;
-        top: 50%;
-        left: 50%;
-        transform-origin: center;
-        animation: orbitRotate 2s linear infinite, stretchScale 1.5s ease-in-out infinite;
-    }
+/* 伸びるアニメーション */
+@keyframes stretchPath {
+    0% { stroke-dasharray: 0, 360; stroke-dashoffset: 0; }  
+    100% { stroke-dasharray: 60, 180; stroke-dashoffset: -180; } /* 伸びた部分が後ろに移動 */
+}
 
-    /* 時計回りに遅れて回転する白いボール */
-    .loader .falling-part-small {
-        position: absolute;
-        width: 49%;
-        height: 49%;
-        background-color: white;
-        border-radius: 50%;
-        transform: translate(-50%, -50%) rotate(-90deg) translateX(45px) rotate(90deg);
-        transform-origin: center;
-        animation: orbitRotate 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
-        animation-delay: 0.1s;
-        /* 遅れて回る */
-    }
+/* 円周を沿って回転 */
+@keyframes rotateOrbit {
+    0% { transform: rotate(0deg) translate(0px, 0px) rotate(0deg); }
+    100% { transform: rotate(180deg) translate(0px, 0px) rotate(-180deg); }
+}
 
-    /* 白いボールがドーナツ型の円周を沿って回転 */
-    @keyframes orbitRotate {
-        0% {
-            transform: rotate(-90deg) translateX(45px) rotate(90deg);
-        }
-
-        100% {
-            transform: rotate(270deg) translateX(45px) rotate(270deg);
-        }
-    }
-
-    /* 白い物体がドーナツ型の円周を沿って回転（未完成） */
-    @keyframes stretchScale {
-        0% {
-            transform: translate(-50%, -50%) scaleY(1);
-        }
-
-        /* 最初は丸 */
-        25% {
-            transform: translate(-50%, -50%) scaleY(1.5);
-        }
-
-        /* 伸び始める */
-        50% {
-            transform: translate(-50%, -50%) scaleY(2);
-        }
-
-        /* 最大まで伸びる */
-        75% {
-            transform: translate(-50%, -50%) scaleY(1.5);
-        }
-
-        /* だんだん戻る */
-        100% {
-            transform: translate(-50%, -50%) scaleY(1);
-        }
-
-        /* 元に戻る */
-    }
+/* 円周を沿って回転 */
+@keyframes Rotateball {
+    0% { transform: rotate(-90deg) translateX(30px); }
+    100% { transform: rotate(270deg) translateX(30px); }
 }
 
 // 結果表示画面
@@ -474,9 +413,9 @@ main {
 }
 
 // 隠し要素
-.hidden {
-    display: none !important;
-}
+// .hidden {
+//   display: none !important;
+//}
 
 .noneTransparent {
     opacity: 1 !important;
