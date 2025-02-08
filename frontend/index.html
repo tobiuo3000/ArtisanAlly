@@ -30,8 +30,11 @@
     </div>
     <!-- ローディング画面 -->
     <div id="loadingScreen" class="screen hidden">
-        <p>creating...</p>
-        <div class="loader"></div>
+        <div id="loadingText">creating...</div>
+        <div class="loader">
+            <div class="falling-part"></div>       <!-- 大きい白い部分 -->
+            <div class="falling-part-small"></div> <!-- 小さい白い部分 -->
+        </div>
     </div>
     <!-- 結果表示画面 -->
     <div id="resultScreen">

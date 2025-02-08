@@ -1,8 +1,8 @@
 const uploadTile = document.getElementById('uploadTile');
 
-let originalImageUrl = null;
+let originalImageUrl = null; // 画像アップロード後に元の画像のURLを保持するための変数
 
-// ドラッグ中の動作
+// 画像をアップロードタイルにドラッグ中の動作
 uploadTile.addEventListener('dragover', (e) => {
   e.preventDefault();
   uploadTile.style.backgroundColor = '#e0e0e0';
@@ -14,12 +14,12 @@ uploadTile.addEventListener('dragleave', (e) => {
   uploadTile.style.backgroundColor = '';
 });
 
-//ドロップされた時の動作
+// 画像がドロップされた時の動作
 uploadTile.addEventListener('drop', (e) => {
-  e.preventDefault();
+  e.preventDefault(); // デフォルトの動作を防ぐ
   uploadTile.style.backgroundColor = '';
-  const file = e.dataTransfer.files[0];
-  if (file && file.type.startsWith('image/')) {
+  const file = e.dataTransfer.files[0]; // ドロップされた１枚目のファイルを取得
+  if (file && file.type.startsWith('image/')) { // 画像なら関数を呼び出し、そうでなければアラートを出す
     handleImageUpload(file);
   } else {
     alert('画像ファイルをドロップしてください。');
@@ -36,21 +36,21 @@ const collectionName = 'rooms';
 
 // 画像がアップロードされた時の処理
 async function handleImageUpload(file) {
-  showLoadingScreen();
+  showLoadingScreen(); // ローディング画面を表示
   try {
-    const jsonData = await getJsonData(file);
-    const docId = sendImageToApi(jsonData);
-    const firestoreDoc = await getFirestoreDoc(docId);
-    displayImageData(firestoreDoc);
-    showResultScreen();
-  } catch (error) {
-    console.error("Error processing image:", error);
-    alert("Error: " + error.message);
-    showUploadScreen();
+    const jsonData = await getJsonData(file); // 画像データをJSON形式に変換
+    const docId = sendImageToApi(jsonData); // JSONデータをAPIに送信
+    const firestoreDoc = await getFirestoreDoc(docId); // Firestoreから解析結果を取得
+    displayImageData(firestoreDoc); // 取得したデータを画面に表示
+    showResultScreen(); // 結果画面に切り替える
+  } catch (error) { // 途中でエラーが発生した場合
+    console.error("Error processing image:", error); // エラーをログに記録
+    alert("Error: " + error.message); // 警告ダイアログを表示
+    showUploadScreen(); // アップロード画面に戻す
   }
 }
 
-// fileからjsonデータを整形する
+// JSONデータをBase64に整形する
 function getJsonData(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -77,28 +77,29 @@ function sendImageToApi(jsonData) {
   return "j1xs99a2ftshojouuuya";
 }
 
+// Firestoreのデータから代表色（rep_colors）を抽出し、Hexコードのリストとして返す関数
 function getRepColors(rep_colors) {
-  const rgbValues = [];
-  for (const key in rep_colors.mapValue.fields) {
-    if (rep_colors.mapValue.fields.hasOwnProperty(key)) {
+  const rgbValues = []; // 最終的に代表色のHexコードを格納する配列
+  for (const key in rep_colors.mapValue.fields) { // mapValue.fields に含まれるすべての color1, color2, ... などの代表色をループ処理。
+    if (rep_colors.mapValue.fields.hasOwnProperty(key)) { //keyの値を取得し、データが配列形式かどうかを確認
       const field = rep_colors.mapValue.fields[key];
       if (field.arrayValue && field.arrayValue.values && Array.isArray(field.arrayValue.values)) {
-        const values = field.arrayValue.values;
+        const values = field.arrayValue.values; // values.mapを使い、Firestore形式(intergeValue)から数値（整数）として取得する。RGB値は[255,0,0]のような配列で格納
         const rgb = values.map(value => {
           if (value.hasOwnProperty("integerValue")){
             return parseInt(value.integerValue, 10);
           }
           return null;
         });
-        const hexCode = `#${rgb.map(value => value.toString(16).padStart(2, '0')).join('')}`;
-        rgbValues.push(hexCode);
+        const hexCode = `#${rgb.map(value => value.toString(16).padStart(2, '0')).join('')}`; // RGB値をHexコード(16新数)に変換し、#FF00FFのような形にする
+        rgbValues.push(hexCode); // 変換したHexコードをリストに追加
       }
     }
   }
-  return rgbValues;
+  return rgbValues; // 最終的にHexコードを返す
 }
 
-// firestoreのデータを取得
+// firestoreにアクセスし、指定したdocIdのデータを取得
 async function getFirestoreDoc(docId) {
   const baseURL = "https://firestore.googleapis.com/v1/projects/"
   const databaseURL = baseURL + `${projectId}/databases/${databaseId}`
@@ -115,7 +116,7 @@ async function getFirestoreDoc(docId) {
     });
 }
 
-// 各種情報を配置
+// Firestoreから取得した各種情報を配置していく関数
 function displayImageData(firestoreDoc) {
   console.log(firestoreDoc);
 

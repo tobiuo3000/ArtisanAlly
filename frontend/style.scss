@@ -29,6 +29,7 @@ main {
     .appLogo {
         width: 80%;
         max-width: 800px;
+        margin-top: 20%;
         margin-bottom: 20px;
     }
 
@@ -44,6 +45,11 @@ main {
         cursor: pointer;
         background-color: #fff;
         transition: background-color 0.3s ease; // ホバー時のスムーズな変化
+        width: 626px;
+        height: 431px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         &:hover {
             background-color: #f0f0f0;
@@ -63,25 +69,110 @@ main {
 
 // ローディング画面
 #loadingScreen {
+    display: flex;
+    flex-direction: column;
     text-align: center;
+    align-items: center;
+    /* 中央揃え */
+    justify-content: center;
     padding: 50px;
 
-    .loader {
-        border: 8px solid #f3f3f3;
-        border-top: 8px solid black;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        animation: spin 2s linear infinite;
-        margin: 20px auto;
+    #loadingText {
+        margin-bottom: 50%;
+        /* テキストとアニメーションの間にスペース */
+        font-size: 1.2em;
+        font-weight: bold;
+        color: black;
     }
-    @keyframes spin {
+
+    .loader {
+        position: relative;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* 固定されたドーナツ型の黒いリング */
+    .loader::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        border: 30px solid black;
+        /* 外枠を黒く */
+        border-radius: 50%;
+        box-shadow: inset 0 0 0 18px white;
+        /* 中央を透明にする */
+    }
+
+    /* 時計回りに回転する物体（未完成） */
+    .loader .falling-part {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-color: white;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform-origin: center;
+        animation: orbitRotate 2s linear infinite, stretchScale 1.5s ease-in-out infinite;
+    }
+
+    /* 時計回りに遅れて回転する白いボール */
+    .loader .falling-part-small {
+        position: absolute;
+        width: 49%;
+        height: 49%;
+        background-color: white;
+        border-radius: 50%;
+        transform: translate(-50%, -50%) rotate(-90deg) translateX(45px) rotate(90deg);
+        transform-origin: center;
+        animation: orbitRotate 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+        animation-delay: 0.1s;
+        /* 遅れて回る */
+    }
+
+    /* 白いボールがドーナツ型の円周を沿って回転 */
+    @keyframes orbitRotate {
         0% {
-            transform: rotate(0deg);
+            transform: rotate(-90deg) translateX(45px) rotate(90deg);
         }
+
         100% {
-            transform: rotate(360deg);
+            transform: rotate(270deg) translateX(45px) rotate(270deg);
         }
+    }
+
+    /* 白い物体がドーナツ型の円周を沿って回転（未完成） */
+    @keyframes stretchScale {
+        0% {
+            transform: translate(-50%, -50%) scaleY(1);
+        }
+
+        /* 最初は丸 */
+        25% {
+            transform: translate(-50%, -50%) scaleY(1.5);
+        }
+
+        /* 伸び始める */
+        50% {
+            transform: translate(-50%, -50%) scaleY(2);
+        }
+
+        /* 最大まで伸びる */
+        75% {
+            transform: translate(-50%, -50%) scaleY(1.5);
+        }
+
+        /* だんだん戻る */
+        100% {
+            transform: translate(-50%, -50%) scaleY(1);
+        }
+
+        /* 元に戻る */
     }
 }
 
@@ -146,6 +237,7 @@ main {
                 justify-content: space-around;
                 align-items: center;
                 margin-bottom: 0;
+
                 a {
                     display: block;
                     padding: 10px 20px;
@@ -155,6 +247,7 @@ main {
                     text-decoration: none;
                     position: relative;
                     z-index: 1;
+
                     span {
                         display: flex;
                         align-items: center;
@@ -168,18 +261,22 @@ main {
                     }
 
 
-                    &:first-child{
+                    &:first-child {
                         background-color: $tab1-color;
                     }
-                    &:nth-child(2){
+
+                    &:nth-child(2) {
                         background-color: $tab2-color;
                     }
-                    &:nth-child(3){
+
+                    &:nth-child(3) {
                         background-color: $tab3-color;
                     }
-                    &:nth-child(4){
+
+                    &:nth-child(4) {
                         background-color: $tab4-color;
                     }
+
                     &.active {
                         // border-bottom: 2px solid $primary-color;
                         z-index: 3;
@@ -199,7 +296,8 @@ main {
 
                 .descriptionItem {
                     display: none;
-                    & > div:first-child{
+
+                    &>div:first-child {
                         margin: auto;
                     }
 
@@ -220,11 +318,12 @@ main {
                         max-width: 300px;
                         height: 300px;
                     }
+
                     #heatmap,
                     #backgroundRemoval {
-                        + .toggle_label{
+                        +.toggle_label {
                             margin-top: 1rem;
-                            margin-left: auto;  //右詰
+                            margin-left: auto; //右詰
                         }
                     }
 
@@ -234,13 +333,15 @@ main {
                     #background-removal-description {
                         text-align: center;
                     }
+
                     img {
                         display: block;
                         margin: 0 auto;
                         max-width: 100%;
                     }
                 }
-                #tabpage1{
+
+                #tabpage1 {
                     display: block;
                 }
             }
@@ -253,10 +354,11 @@ main {
         display: flex;
         justify-content: center;
         margin: 20px;
+
         .toggle {
             display: none;
 
-            & + .toggle_label {
+            &+.toggle_label {
                 display: block;
                 width: 60px;
                 height: 30px;
@@ -279,7 +381,8 @@ main {
                     transition: transform 0.3s;
                 }
             }
-            &:checked + .toggle_label {
+
+            &:checked+.toggle_label {
                 background-color: #34C759;
 
                 &::after {
@@ -302,9 +405,11 @@ main {
             overflow-y: scroll;
             -ms-overflow-style: none;
             scrollbar-width: none;
-            ::-webkit-scrollbar{
-                display:none;
+
+            ::-webkit-scrollbar {
+                display: none;
             }
+
             padding: 10px;
             margin-bottom: 10px;
             border-radius: 5px;
@@ -335,6 +440,7 @@ main {
                 }
             }
         }
+
         #inputBox {
             display: flex;
             align-items: center;
@@ -378,6 +484,7 @@ main {
 
 #rep-colors {
     display: flex;
+
     .drop-tile {
         width: 30px;
         height: 30px;

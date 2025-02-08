@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body {
   font-family: sans-serif;
   margin: 0;
@@ -19,6 +20,7 @@ main {
 #uploadScreen .appLogo {
   width: 80%;
   max-width: 800px;
+  margin-top: 20%;
   margin-bottom: 20px;
 }
 #uploadScreen #service-description {
@@ -32,6 +34,11 @@ main {
   cursor: pointer;
   background-color: #fff;
   transition: background-color 0.3s ease;
+  width: 626px;
+  height: 431px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 #uploadScreen #uploadTile:hover {
   background-color: #f0f0f0;
@@ -46,25 +53,98 @@ main {
 }
 
 #loadingScreen {
+  display: flex;
+  flex-direction: column;
   text-align: center;
+  align-items: center;
+  /* 中央揃え */
+  justify-content: center;
   padding: 50px;
+  /* 固定されたドーナツ型の黒いリング */
+  /* 時計回りに回転する物体（未完成） */
+  /* 時計回りに遅れて回転する白いボール */
+  /* 白いボールがドーナツ型の円周を沿って回転 */
+  /* 白い物体がドーナツ型の円周を沿って回転（未完成） */
+}
+#loadingScreen #loadingText {
+  margin-bottom: 50%;
+  /* テキストとアニメーションの間にスペース */
+  font-size: 1.2em;
+  font-weight: bold;
+  color: black;
 }
 #loadingScreen .loader {
-  border: 8px solid #f3f3f3;
-  border-top: 8px solid black;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 2s linear infinite;
-  margin: 20px auto;
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-@keyframes spin {
+#loadingScreen .loader::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border: 30px solid black;
+  /* 外枠を黒く */
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 18px white;
+  /* 中央を透明にする */
+}
+#loadingScreen .loader .falling-part {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+  animation: orbitRotate 2s linear infinite, stretchScale 1.5s ease-in-out infinite;
+}
+#loadingScreen .loader .falling-part-small {
+  position: absolute;
+  width: 49%;
+  height: 49%;
+  background-color: white;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(-90deg) translateX(45px) rotate(90deg);
+  transform-origin: center;
+  animation: orbitRotate 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+  animation-delay: 0.1s;
+  /* 遅れて回る */
+}
+@keyframes orbitRotate {
   0% {
-    transform: rotate(0deg);
+    transform: rotate(-90deg) translateX(45px) rotate(90deg);
   }
   100% {
-    transform: rotate(360deg);
+    transform: rotate(270deg) translateX(45px) rotate(270deg);
   }
+}
+@keyframes stretchScale {
+  0% {
+    transform: translate(-50%, -50%) scaleY(1);
+  }
+  /* 最初は丸 */
+  25% {
+    transform: translate(-50%, -50%) scaleY(1.5);
+  }
+  /* 伸び始める */
+  50% {
+    transform: translate(-50%, -50%) scaleY(2);
+  }
+  /* 最大まで伸びる */
+  75% {
+    transform: translate(-50%, -50%) scaleY(1.5);
+  }
+  /* だんだん戻る */
+  100% {
+    transform: translate(-50%, -50%) scaleY(1);
+  }
+  /* 元に戻る */
 }
 
 #resultScreen {
@@ -109,8 +189,10 @@ main {
   margin: 0 auto;
   width: 80%;
   height: 80%;
-  object-fit: contain;
-  object-position: center;
+  -o-object-fit: contain;
+     object-fit: contain;
+  -o-object-position: center;
+     object-position: center;
 }
 #resultScreen #mainResultsScreen #rightPanel {
   display: block;
@@ -277,6 +359,7 @@ main {
   margin-left: auto;
   max-width: 70%;
   color: white;
+  width: -moz-fit-content;
   width: fit-content;
   word-wrap: break-word;
 }
@@ -286,6 +369,7 @@ main {
   margin-right: auto;
   color: white;
   max-width: 70%;
+  width: -moz-fit-content;
   width: fit-content;
   word-wrap: break-word;
 }
@@ -338,6 +422,4 @@ main {
 
 .toggleWrapper {
   margin: 0 auto;
-}
-
-/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=style.css.map */

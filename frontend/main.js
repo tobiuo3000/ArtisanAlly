@@ -22,4 +22,4 @@ function showUploadScreen() {
   resultScreen.classList.add('hidden');
 }
 // 初期状態は「初期画面」なので、下記を実行
-showUploadScreen();
+showLoadingScreen();
