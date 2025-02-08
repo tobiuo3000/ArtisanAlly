@@ -108,10 +108,15 @@ function sendImageToApi(jsonData) {
 function getRepColors(rep_colors) {
   const result = [];
   for (const [key, value] of Object.entries(rep_colors)) {
-    result.push({ id: key, values: value });
+    const hexCode = `#${value.map(v => v.toString(16).padStart(2, '0')).join('')}`;
+    result.push({ id: key, values: hexCode });
   }
   result.sort((a, b) => parseInt(a.id) - parseInt(b.id));
-  return result;
+  const hexCode_results = []
+  for (const [_, value] of Object.entries(result)) {
+    hexCode_results.push(value.values);
+  }
+  return hexCode_results;
 }
 
 // firestoreのデータを取得
@@ -157,8 +162,9 @@ function displayImageData(firestoreDoc) {
   const storageBaseURL = `https://storage.googleapis.com/${bucketName}/images/`
 
   // タブ1を設定 カラー
+  let rep_colors = null;
   if ("rep_colors" in firestoreDoc) {
-    const rep_colors = getRepColors(firestoreDoc.rep_colors);
+    rep_colors = getRepColors(firestoreDoc.rep_colors);
     for (const color in rep_colors) {
       // 丸い背景色のみの小さな要素を複数配置する
       const dropTile = document.createElement('div');
@@ -179,7 +185,11 @@ function displayImageData(firestoreDoc) {
     img.id = "originalImage";
     img.style.maxWidth = '100%';
     img.style.maxHeight = '100%';
-    loadedImageDiv.style.backgroundColor = rep_colors[0];
+    if (rep_colors !== null) {
+      loadedImageDiv.style.backgroundColor = rep_colors[0];
+    } else {
+      loadedImageDiv.style.backgroundColor = "#fff";
+    }
     loadedImageDiv.innerHTML = '';
     loadedImageDiv.appendChild(img);
   }
@@ -209,13 +219,12 @@ function displayImageData(firestoreDoc) {
     const backgroundRemovalImageUrl = storageBaseURL + backgroundRemovalImageName;
     toggleSwitch2.checked = false;
     backgroundRemovalDiv.innerHTML = `<img src="${backgroundRemovalImageUrl}" alt="Heatmap" id="backgroundRemovalImage">`;
-
   }
   // AIチャットの講評をチャット欄の一番最初に乗っける
-  if ("main_explanation" in firestoreDoc) {
-    const aiChatText = firestoreDoc.main_explanation;
-    addMessageToChat(aiChatText, 'ai')
-  }
+  // if ("main_explanation" in firestoreDoc) {
+  //   const aiChatText = firestoreDoc.main_explanation;
+  //   addMessageToChat(aiChatText, 'ai');
+  // }
   // タブの初期表示
   showTab('tabpage1');
 }

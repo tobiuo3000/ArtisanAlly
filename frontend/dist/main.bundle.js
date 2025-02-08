@@ -1,1 +1,1 @@
-(()=>{"use strict";const e=document.getElementById("uploadScreen"),d=document.getElementById("loadingScreen"),t=document.getElementById("resultScreen");e.classList.add("hidden"),d.classList.remove("hidden"),t.classList.add("hidden")})();
+(()=>{"use strict";const e=document.getElementById("uploadScreen"),d=document.getElementById("loadingScreen"),t=document.getElementById("resultScreen");e.classList.remove("hidden"),d.classList.add("hidden"),t.classList.add("hidden")})();
