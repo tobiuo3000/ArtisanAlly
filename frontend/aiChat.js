@@ -2,6 +2,8 @@ const messageBox = document.getElementById('messageBox');
 const inputMsg = document.getElementById('inputMsg');
 const sendBtn = document.getElementById('sendBtn');
 
+import { docRefId } from "./uploadInit.js";
+
 // メッセージの送信処理
 sendBtn.addEventListener('click', async () => {
   const message = inputMsg.value.trim();
@@ -9,7 +11,7 @@ sendBtn.addEventListener('click', async () => {
   inputMsg.value = '';
   addMessageToChat(message, 'user');
   try{
-    const aiResponse = await getAiResponse(message);
+    const aiResponse = await getAiResponse(message, docId);
     // addMessageToChat(aiResponse, 'ai');
   } catch (error) {
     console.error("Error getting AI response:", error);
@@ -18,16 +20,20 @@ sendBtn.addEventListener('click', async () => {
 });
 
 // aiエージェントを叩いてテキストを取得
-async function getAiResponse(message, docId) {
+async function getAiResponse(message) {
   try {
+    console.log({
+      "user_message": message,
+      "room_id": docRefId,
+    });
     const response = await fetch("/chat/", {
-      method: 'POST', // または 'PUT', 'PATCH' など、APIの仕様に合わせる
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         "user_message": message,
-        "room_id": docId,
+        "room_id": docRefId,
       }),
     });
     if (!response.ok) {

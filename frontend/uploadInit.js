@@ -20,6 +20,8 @@ const toggleSwitch2 = document.getElementById('toggle_switch2');
 // APIのエンドポイント (仮のURL)
 const apiUrl = "/process-image";
 
+export let docRefId = null;
+
 const firebaseConfig = {
   apiKey: "AIzaSyA-wjt8D4zYzLhj6HEeLRqjSDWmTrBku70",
   authDomain: "artisanallyproject.firebaseapp.com",
@@ -105,21 +107,20 @@ function sendImageToApi(jsonData) {
   console.log(apiUrl);
   console.log(jsonData.image.substr(0, 30) + "......");
   console.log(jsonData.image_type);
-  return "j1xs99a2ftshojouuuya";
+  docRefId = "30f925ae-3a98-41b5-90fe-9d6cf840559a";
+  return "30f925ae-3a98-41b5-90fe-9d6cf840559a";
 }
 
 function getRepColors(rep_colors) {
   const result = [];
-  for (const [key, value] of Object.entries(rep_colors)) {
-    const hexCode = `#${value.map(v => v.toString(16).padStart(2, '0')).join('')}`;
-    result.push({ id: key, values: hexCode });
+  for (const value of rep_colors) {
+    const r = value.r.toString(16).padStart(2, '0');
+    const g = value.g.toString(16).padStart(2, '0');
+    const b = value.b.toString(16).padStart(2, '0');
+    const hexCode = "#" + r + g + b;
+    result.push(hexCode);
   }
-  result.sort((a, b) => parseInt(a.id) - parseInt(b.id));
-  const hexCode_results = []
-  for (const [_, value] of Object.entries(result)) {
-    hexCode_results.push(value.values);
-  }
-  return hexCode_results;
+  return result;
 }
 
 // firestoreのデータを取得
@@ -257,7 +258,12 @@ function displayImageData(firestoreDoc) {
   }
 
   // タブ2を設定 ヒストグラム
-  if ("histogram_image_name" in firestoreDoc && "histogram_explanation" in firestoreDoc) {
+  if (
+    "histogram_image_name" in firestoreDoc &&
+    "histogram_explanation" in firestoreDoc &&
+    firestoreDoc.histogram_image_name !== null &&
+    firestoreDoc.histogram_explanation !== null
+  ) {
     const histogramImageName = firestoreDoc.histogram_image_name;
     const histogramImageUrl = storageBaseURL + histogramImageName;
     const  histogramDescriptionText = firestoreDoc.histogram_explanation;
@@ -266,7 +272,12 @@ function displayImageData(firestoreDoc) {
   }
 
   // タブ3を設定 ヒートマップ
-  if ("heatmap_image_name" in firestoreDoc && "heatmap_explanation" in firestoreDoc) {
+  if (
+    "heatmap_image_name" in firestoreDoc &&
+    "heatmap_explanation" in firestoreDoc &&
+    firestoreDoc.heatmap_image_name !== null &&
+    firestoreDoc.heatmap_explanation !== null
+  ) {
     const heatmapImageName = firestoreDoc.heatmap_image_name;
     const heatmapImageUrl = storageBaseURL + heatmapImageName;
     const heatmapDescriptionText  = firestoreDoc.heatmap_explanation;
@@ -276,7 +287,10 @@ function displayImageData(firestoreDoc) {
   }
 
   // タブ4を設定 バックグランドリムーバル
-  if ("back_removed_image_name" in firestoreDoc) {
+  if (
+    "back_removed_image_name" in firestoreDoc &&
+    firestoreDoc.back_removed_image_name !== null
+  ) {
     const backgroundRemovalImageName = firestoreDoc.back_removed_image_name;
     const backgroundRemovalImageUrl = storageBaseURL + backgroundRemovalImageName;
     toggleSwitch2.checked = false;
@@ -284,7 +298,10 @@ function displayImageData(firestoreDoc) {
   }
 
   // AIチャットをチャット欄に乗っける
-  if ("chat_history" in firestoreDoc) {
+  if (
+    "chat_history" in firestoreDoc &&
+    firestoreDoc.chat_history !== null
+  ) {
     setChatMsg(firestoreDoc);
   }
 }
