@@ -10,7 +10,7 @@ sendBtn.addEventListener('click', async () => {
   addMessageToChat(message, 'user');
   try{
     const aiResponse = await getAiResponse(message);
-    addMessageToChat(aiResponse, 'ai');
+    // addMessageToChat(aiResponse, 'ai');
   } catch (error) {
     console.error("Error getting AI response:", error);
     addMessageToChat("エラーが発生しました。", "ai");
@@ -18,8 +18,27 @@ sendBtn.addEventListener('click', async () => {
 });
 
 // aiエージェントを叩いてテキストを取得
-async function getAiResponse(message) {
-  return "「" + message + "」ね、あーしってるしってる。おいしいよね";
+async function getAiResponse(message, docId) {
+  try {
+    const response = await fetch("/chat/", {
+      method: 'POST', // または 'PUT', 'PATCH' など、APIの仕様に合わせる
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "user_message": message,
+        "room_id": docId,
+      }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    console.log('Success: chat');
+  } catch (error) {
+    console.error('Error:', error);
+    // エラーハンドリング (UIにエラーメッセージを表示するなど)
+    throw error; //エラーを呼び出し元に再度投げる。
+  }
 }
 
 // メッセージを生成してぶちこむ
