@@ -1,237 +1,438 @@
-// 変数定義
-$border-radius: 15px;
-$border-color: #000;
-$primary-bg-color: #5B5B5B;
-$secondary-bg-color: #A8A8A8;
-$input-border-color: #ccc;
-$btn-bg-color: #af4cad;
-$workspace-width: 75%;
-$rightpanel-width: 25%;
-$edit-icon-size: 64px;
+$text-color: #333;
+$primary-color: #3498db;
+$border-color: #ddd;
 
-// ヘッダー
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 10px;
-    z-index: 100;
+$tab1-color: #FFCC00;
+$tab2-color: #00C7BE;
+$tab3-color: #32ADE6;
+$tab4-color: #4E4CBD;
 
-    .appLogo {
-        height: 49px;
-        padding-left: 3%;
-    }
-
-    .toolIconGroup {
-        display: flex;
-        padding-right: 3%;
-
-        .toolIcon {
-            height: 49px;
-            margin-left: 20px;
-        }
-    }
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    color: $text-color;
 }
 
-// メインエリア
 main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
 }
 
-// ワークスペース
-#workSpace {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    margin-top: 20px;
+// アップロード画面
+#uploadScreen {
+    text-align: center;
 
-    #leftPanel {
-        position: relative;
-        width: $workspace-width;
-        height: 643px;
-        border: 5px solid $border-color;
-        border-radius: $border-radius;
-        margin: 3% 1% 3% 3%;
-        overflow: hidden; // 画像がはみ出さないようにする
+    .appLogo {
+        width: 80%;
+        max-width: 800px;
+        margin-top: 20%;
+        margin-bottom: 20px;
+    }
 
-        #uploadTile {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            flex-flow: column;
-            overflow: hidden;
+    #service-description {
+        max-width: 800px;
+        margin-bottom: 30px;
+    }
 
-            &.dragging {
-                background-color: #999;
-                border: 3px dashed $border-color;
-            }
+    #uploadTile {
+        border: 2px dashed #aaa;
+        padding: 40px;
+        border-radius: 30px;
+        cursor: pointer;
+        background-color: #fff;
+        transition: background-color 0.3s ease; // ホバー時のスムーズな変化
+        width: 626px;
+        height: 431px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            background-color: #f0f0f0;
         }
 
         #dndText {
-            font-size: 64px;
-            text-align: center;
-            color: #6D6D6D;
-            font-family: 'TT Smalls Trial', sans-serif;
+            font-size: 1.2em;
+            color: #666;
 
-            #uploadImg {
-                text-align: center;
-                height: 58px;
+            div:first-child {
+                font-weight: bold;
+                margin-bottom: 5px;
             }
         }
+    }
+}
 
-        #createBtn {
-            background-color: #393939;
-            border-radius: $border-radius;
-            width: 440px;
-            height: 74px;
-            display: block;
-            margin: 0 auto;
-            z-index: 100;
+// ローディング画面
+#loadingScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+}
 
-            #createBtnTxt {
-                font-size: 64px;
-                color: #fff;
-                font-family: 'Vivaldi', sans-serif;
-                padding-top: 10px;
-            }
-        }
+/* 黒いドーナツ型のリング（変化なし） */
+.loader circle {
+    transform-origin: center;
+}
 
-        #editIconGroup {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
+/* 伸びる物体（最初に回る） */
+#falling-part {
+    stroke-dasharray: 0, 100; /* 初期状態: 短い */
+    stroke-dashoffset: 0;
+    animation: stretchPath 1.3s ease-in-out infinite, rotateOrbit 1.3s linear infinite;
+    animation-delay: 0.2s; /* 遅れて回転 */
+}
+
+/* 遅れて回るボール */
+#falling-part-ball {
+    transform: rotate(-90deg) translateX(30px); /* 円周に沿う動きのみ適用 */
+    transform-origin: 50% 50%;
+    animation: Rotateball 1.3s cubic-bezier(0.25, 0.6, 0.5, 0.6) infinite;
+    animation-delay: 0.4s; /* 遅れて回転 */
+}
+
+/* 伸びるアニメーション */
+@keyframes stretchPath {
+    0% { stroke-dasharray: 0, 360; stroke-dashoffset: 0; }  
+    100% { stroke-dasharray: 60, 180; stroke-dashoffset: -180; } /* 伸びた部分が後ろに移動 */
+}
+
+/* 円周を沿って回転 */
+@keyframes rotateOrbit {
+    0% { transform: rotate(0deg) translate(0px, 0px) rotate(0deg); }
+    100% { transform: rotate(180deg) translate(0px, 0px) rotate(-180deg); }
+}
+
+/* 円周を沿って回転 */
+@keyframes Rotateball {
+    0% { transform: rotate(-90deg) translateX(30px); }
+    100% { transform: rotate(270deg) translateX(30px); }
+}
+
+// 結果表示画面
+#resultScreen {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    #mainResultsScreen {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 30px;
+
+        #leftPanel {
             display: flex;
-            gap: 10px;
-            z-index: 100;
+            width: 45%;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            margin: 0 auto;
 
-            .editIconBg {
+            #headimg {
+                width: 65%;
+                margin-bottom: 15px;
+            }
+
+            #loadedimage {
                 display: flex;
-                align-items: center;
                 justify-content: center;
-                background: $primary-bg-color;
-                border-radius: 50%;
-                height: $edit-icon-size;
-                width: $edit-icon-size;
+                align-items: center;
+                overflow: hidden;
+                background-color: #ddd;
+                width: 500px;
+                height: 500px;
+                border-radius: 10px;
 
-                .editIcon {
-                    height: 38px;
-                    width: 38px;
+                img {
+                    border-radius: 10px;
+                    padding: 20px;
+                    max-width: 100%;
+                    max-height: 100%;
+                    display: block;
+                    margin: 0 auto;
+                    width: 80%;
+                    height: 80%;
+                    object-fit: contain;
+                    object-position: center;
                 }
             }
         }
 
-        // アップロード画像のスタイル
-        #previewImage {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
+        #rightPanel {
             display: block;
-            margin: auto;
+            width: 45%;
+            border-radius: 10px;
+            margin: 0 auto;
+
+            #tabcontrol {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                margin-bottom: 0;
+
+                a {
+                    display: block;
+                    padding: 10px 20px;
+                    margin: 0 auto;
+                    border-radius: 10px 10px 0 0;
+                    box-shadow: 3px 3px 1px #65558F;
+                    text-decoration: none;
+                    position: relative;
+                    z-index: 1;
+
+                    span {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 100%;
+                        height: 100%;
+                        color: black;
+                        text-align: center;
+                        font-size: 0.79em;
+                        opacity: 0.5;
+                    }
+
+
+                    &:first-child {
+                        background-color: $tab1-color;
+                    }
+
+                    &:nth-child(2) {
+                        background-color: $tab2-color;
+                    }
+
+                    &:nth-child(3) {
+                        background-color: $tab3-color;
+                    }
+
+                    &:nth-child(4) {
+                        background-color: $tab4-color;
+                    }
+
+                    &.active {
+                        // border-bottom: 2px solid $primary-color;
+                        z-index: 3;
+                    }
+                }
+            }
+
+            #tabbody {
+                border: none;
+                padding: 20px;
+                border-radius: 0 0 10px 10px;
+                background-color: $tab1-color;
+                position: relative;
+                z-index: 4;
+                height: 460px;
+                box-shadow: 3px 3px 1px #65558F;
+
+                .descriptionItem {
+                    display: none;
+
+                    &>div:first-child {
+                        margin: auto;
+                    }
+
+                    #rep-colors {
+                        margin-bottom: 10px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    #histogram,
+                    #heatmap,
+                    #backgroundRemoval {
+                        margin-bottom: 10px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        max-width: 300px;
+                        height: 300px;
+                    }
+
+                    #heatmap,
+                    #backgroundRemoval {
+                        +.toggle_label {
+                            margin-top: 1rem;
+                            margin-left: auto; //右詰
+                        }
+                    }
+
+                    #color-description,
+                    #histogram-description,
+                    #heatmap-description,
+                    #background-removal-description {
+                        text-align: center;
+                    }
+
+                    img {
+                        display: block;
+                        margin: 0 auto;
+                        max-width: 100%;
+                    }
+                }
+
+                #tabpage1 {
+                    display: block;
+                }
+            }
         }
     }
 
-    #rightPanel {
-        width: $rightpanel-width;
-        height: 643px;
-        border-radius: $border-radius;
-        margin: 3% 3% 3% 1%;
+
+    // トグルスイッチ
+    .toggleWrapper {
         display: flex;
-        flex-direction: column;
-        border: 2px solid #E5E5E5;
-        background-color: $secondary-bg-color;
+        justify-content: center;
+        margin: 20px;
 
-        .descriptionItem {
-            background-color: $primary-bg-color;
-            color: #fff;
-            margin: 20px 10px;
+        .toggle {
+            display: none;
+
+            &+.toggle_label {
+                display: block;
+                width: 60px;
+                height: 30px;
+                background-color: #ccc;
+                border-radius: 15px;
+                position: relative;
+                cursor: pointer;
+                transition: background-color 0.3s;
+
+                &::after {
+                    content: "";
+                    display: block;
+                    width: 26px;
+                    height: 26px;
+                    border-radius: 50%;
+                    background-color: #fff;
+                    position: absolute;
+                    top: 2px;
+                    left: 2px;
+                    transition: transform 0.3s;
+                }
+            }
+
+            &:checked+.toggle_label {
+                background-color: #34C759;
+
+                &::after {
+                    transform: translateX(30px);
+                }
+            }
+        }
+    }
+
+    // AIチャット
+    #aiChat {
+        background-color: #fff;
+        border-radius: 10px;
+        max-width: 1200px;
+        border: 1px solid $border-color;
+        margin: 0 auto;
+
+        #messageBox {
+            height: 200px;
+            overflow-y: scroll;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+
+            ::-webkit-scrollbar {
+                display: none;
+            }
+
             padding: 10px;
-            border-radius: 8px;
+            margin-bottom: 10px;
+            border-radius: 5px;
 
-            &:first-child {
-                margin-top: 100px;
+            .message {
+                padding: 8px 12px;
+                margin-bottom: 5px;
+                border-radius: 5px;
+
+                &.user-message {
+                    background-color: #007AFF;
+                    text-align: right;
+                    margin-left: auto;
+                    max-width: 70%;
+                    color: white;
+                    width: fit-content;
+                    word-wrap: break-word;
+                }
+
+                &.ai-message {
+                    background-color: #9C9C9C;
+                    text-align: left;
+                    margin-right: auto;
+                    color: white;
+                    max-width: 70%;
+                    width: fit-content;
+                    word-wrap: break-word;
+                }
+            }
+        }
+
+        #inputBox {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            padding: 5px;
+            margin: 10px;
+
+            #inputMsg {
+                flex-grow: 1;
+                padding: 10px;
+                border-radius: 5px;
+                margin-right: 5px;
+                outline: none;
+                border: none;
+            }
+
+            #sendBtn {
+                padding: 10px 18px;
+                background-color: black;
+                color: #fff;
+                border: none;
+                border-radius: 25px;
+                white-space: nowrap;
+                cursor: pointer;
+                font-size: 1.3em;
+                width: 15%;
             }
         }
     }
 }
 
-// AIチャット
-#aiChat {
-    width: 94%;
-    height: 282px;
-    border: 5px solid $border-color;
-    border-radius: $border-radius;
-    margin: 20px auto;
+// 隠し要素
+// .hidden {
+//   display: none !important;
+//}
 
-    #messageBox {
-        // columnに変更
-        display: flex;
-        flex-direction: column;
-        max-height: 300px;
-        overflow-y: auto;
-        padding: 10px;
+.noneTransparent {
+    opacity: 1 !important;
+}
 
-        .messageElemUs {
-            align-self: flex-end;
-            background-color: #007bff;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 12px;
-            margin: 5px;
-            max-width: 70%;
-        }
-    
-        .messageElemAi {
-            align-self: flex-start;
-            background-color: #f1f1f1;
-            color: black;
-            padding: 8px 12px;
-            border-radius: 12px;
-            margin: 5px;
-            max-width: 70%;
-        }
-    }
+#rep-colors {
+    display: flex;
 
-
-
-    #inputBox {
-        display: flex;
-        padding: 10px;
-        border-top: 1px solid $input-border-color;
-
-        #inputMsg {
-            flex-grow: 1;
-            border: 1px solid $input-border-color;
-            border-radius: 5px;
-            margin-right: 10px;
-        }
-
-        #sendBtn {
-            background-color: $btn-bg-color;
-            border: none;
-            color: #fff;
-            padding: 8px 15px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    .drop-tile {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin: 5px auto;
+        border: 1px solid #ccc;
     }
 }
 
-// フォント設定
-@font-face {
-    font-family: 'TT Smalls Trial';
-    src: url('fonts/TT Smalls Trial Regular.otf') format('opentype');
-    font-weight: 400;
-}
-
-@font-face {
-    font-family: 'Vivaldi';
-    src: url('fonts/VivaldiRegular-X3BXd.ttf') format('truetype');
-    font-weight: 400;
+.toggleWrapper {
+    margin: 0 auto;
 }

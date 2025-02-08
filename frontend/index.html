@@ -1,73 +1,103 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>モックアップUI</title>
-    <link rel="stylesheet" href="style.css"> <!-- ヘッダー部分のCSSファイル -->
+    <title>DOODLE SCOPE</title>
+    <link rel="stylesheet" href="style.css"> <!-- 全体のCSSファイル -->
     <link rel="icon" href="./images/Logo design_01.svg" type="image/svg+xml">
     <meta name="google-site-verification" content="xHa6waH7caAmrRnBWyU6WOXCNEn6LlDgb-Ue8LZVjzs" />
     <meta name="robots" content="noindex">
-    <script src="dndHandler.js" defer></script> <!--画像読み込み用のjavascriptファイル-->
-    <script src="calcsize.js" defer></script> <!--計算用のjavascript-->
+    <script src="https://www.gstatic.com/firebasejs/11.3.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.3.0/firebase-firestore-compat.js"></script>
+    <script src="dist/uploadInit.bundle.js" defer></script>
+    <script src="dist/resultsInit.bundle.js" defer></script>
+    <script src="dist/aiChat.bundle.js" defer></script>
+    <script src="dist/main.bundle.js" defer></script>
 </head>
+
 <body>
-    <header>
-        <img src="./images/TitleLogo.svg" alt="アプリのロゴ" class="appLogo">
-        <div class="toolIconGroup">
-            <img src="./images/sharing-icon.png" alt="SNSでシェア" class="toolIcon">
-            <img src="./images/ellipses-icon.png" alt="三点リーダー" class="toolIcon">
-            <img src="./images/settings-icon.png" alt="設定" class="toolIcon">
-            <img src="./images/black-bubble-icon.png" alt="吹き出し：黒" class="toolIcon">
+<main>
+    <!-- アップロード＆タイトル画面 -->
+    <div id="uploadScreen">
+        <img src="./images/TitleLogo.svg" alt="アプリのロゴ" class="appLogo" id="titleimg">
+        <div id="service-description">hogehogehogehogehogehogehogehogehogehogehogehogehogehoge</div>
+        <div id="uploadTile">
+            <div id="dndText">
+                <div>Upload image</div>
+                <div>Drag & Drop</div>
+            </div>
         </div>
-    </header>
-    <main>
-        <div id="workSpace">
+    </div>
+    <!-- ローディング画面 -->
+    <div id="loadingScreen">
+        <div id="loadingText">creating...</div>
+        <svg class="loader" width="100" height="100" viewBox="0 0 100 100">
+            <!-- 黒いドーナツ型のリング -->
+            <circle cx="50" cy="50" r="30" stroke="black" stroke-width="20" fill="none"/>
+    
+            <!-- 伸びる物体（最初に回る） -->
+            <path id="falling-part" d="M50 20 A30 30 0 1 1 49 20" stroke="white" stroke-width="10" fill="none"
+                stroke-linecap="round"/>
+    
+            <!-- 遅れて回る白いボール -->
+            <circle id="falling-part-ball" cx="50" cy="50" r="5" fill="white"/>
+        </svg>
+    </div>
+    
+    <!-- 結果表示画面 -->
+    <div id="resultScreen">
+        <div id="mainResultsScreen">
             <div id="leftPanel">
-
-                <div id="uploadTile">
-                    <div id="dndText">
-                        <img src="./images/upload_hoso.png" alt="upload" id="uploadImg">
-                        Drag & Drop image files
-                    </div>
-                    <button id="createBtn">
-                        <span id="createBtnTxt">CREATE</span>
-                    </button>
-                </div>
-
-                <div id="editIconGroup">
-                    <div class="editIconBg">
-                        <img src="./images/reversal-icon.png" alt ="反転" class="editIcon">
-                    </div>
-                    <div class="editIconBg" id="expand">
-                        <img src="./images/拡大アイコン1.png" alt ="拡大" class="editIcon">
-                    </div>
-                    <div class="editIconBg" id="shrink">
-                        <img src="./images/縮小アイコン1.png" alt ="縮小" class="editIcon">
-                    </div>
-                    <div class="editIconBg" id="trash">
-                        <img src="./images/1034_tr_h.png" alt ="削除" class="editIcon">
-                    </div>
-                    <div class="editIconBg">
-                        <img src="./images/brightness-icon.png" alt ="明度" class="editIcon">
-                    </div>
-                </div>
+                <img src="./images/TitleLogo.svg" alt="アプリのロゴ" class="appLogo" id="headimg">
+                <div id="loadedimage"></div>
             </div>
             <div id="rightPanel">
-                <div class="descriptionItem">説明うんちゃらかんちゃら</div>
-                <div class="descriptionItem">説明うんちゃらかんちゃら</div>
-                <div class="descriptionItem">説明うんちゃらかんちゃら</div>
-                <div class="descriptionItem">説明うんちゃらかんちゃら</div>
-                <div class="descriptionItem">説明うんちゃらかんちゃら</div>
+                <p id="tabcontrol">
+                    <a href="#tabpage1"><span>Typical colors</span></a>
+                    <a href="#tabpage2"><span>Histogram</span></a>
+                    <a href="#tabpage3"><span>Heat map</span></a>
+                    <a href="#tabpage4"><span>Background Removal</span></a>
+                    <span class="justify-fix"></span>
+                </p>
+                <div id="tabbody">
+                    <div class="descriptionItem" id="tabpage1">
+                        <div id="rep-colors"></div>
+                        <div id="color-description"></div>
+                    </div>
+                    <div class="descriptionItem" id="tabpage2">
+                        <div id="histogram"></div>
+                        <div id="histogram-description"></div>
+                    </div>
+                    <div class="descriptionItem" id="tabpage3">
+                        <div id="heatmap"></div>
+                        <div id="heatmap-description"></div>
+                        <div class="toggleWrapper">
+                            <input class="toggle" id="toggle_switch1" type='checkbox'>
+                            <label for="toggle_switch1" class="toggle_label"></label>
+                        </div>
+                    </div>
+                    <div class="descriptionItem" id="tabpage4">
+                        <div id="backgroundRemoval"></div>
+                        <div id="background-removal-description"></div>
+                        <div class="toggleWrapper">
+                            <input class="toggle" id="toggle_switch2" type='checkbox'>
+                            <label for="toggle_switch2" class="toggle_label"></label>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="aiChat">
             <div id="messageBox"></div>
             <div id="inputBox">
                 <input title="" type="text" placeholder="メッセージを入力" id="inputMsg">
-                <button id="sendBtn">送信</button>
+                <button id="sendBtn">send</button>
             </div>
         </div>
-    </main>
+    </div>
+</main>
 </body>
+
 </html>
