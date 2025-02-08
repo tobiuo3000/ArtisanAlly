@@ -33,7 +33,9 @@ if (!firebase.apps.length) { //多重初期化を防ぐ
 }
 const db = firebase.firestore();
 const collectionName = 'rooms';
+const subcollectionName = "chat_history"
 let unsubscribe = null;
+let unsubscribeChat = null
 
 let originalImageUrl = null;
 
@@ -70,6 +72,7 @@ async function handleImageUpload(file) {
     const firestoreDoc = await getFirestoreDoc(docId);
     displayImageData(firestoreDoc);
     showResultScreen();
+    showTab('tabpage1');
     setupRealtimeListener(docId);
   } catch (error) {
     console.error("Error processing image:", error);
@@ -126,24 +129,40 @@ async function getFirestoreDoc(docId) {
     if (!docSnapshot.exists) {
       throw new Error("Firestore document not found.");
     }
-    return docSnapshot.data();
+    let data = docSnapshot.data();
+    const subCollectionRef = db.collection(collectionName)
+      .doc(docId).collection(subcollectionName);
+    const querySnapshot = await subCollectionRef.get();
+    data[subcollectionName] = {}
+    for (const doc of querySnapshot.docs) {
+      data[subcollectionName][doc.id] = doc.data();
+      data[subcollectionName][doc.id]["id"] = doc.id;
+    }
+    return data;
   } catch (error) {
     throw new Error(`Failed to fetch Firestore data: ${error.message}`);
   }
 }
 
-// Firestoreのリアルタイムリスナーを設定
+
 function setupRealtimeListener(docId) {
   // 以前のリスナーがあれば解除
   if (unsubscribe) {
     unsubscribe();
   }
+  const subCollectionRef = db.collection(collectionName)
+    .doc(docId).collection(subcollectionName);
   unsubscribe = db.collection(collectionName).doc(docId)
     .onSnapshot((docSnapshot) => {
       if (docSnapshot.exists) {
         const data = docSnapshot.data();
-        displayImageData(data); // データを表示 (リアルタイム更新)
-        // 何かしらの関数を実行 (例: データ変更時の通知)
+        subCollectionRef.get().then((querySnapshot) => {
+            data[subcollectionName] = {}
+            for (const doc of querySnapshot.docs) {
+              data[subcollectionName][doc.id] = doc.data();
+            }
+          })
+        displayImageData(data);
         onDataChanged(data);
       } else {
         console.log("Document does not exist (anymore).");
@@ -151,8 +170,61 @@ function setupRealtimeListener(docId) {
     }, (error) => {
       console.error("Error in realtime listener:", error);
     });
+  if (unsubscribeChat) {
+    unsubscribeChat();
+  }
+  unsubscribeChat = subCollectionRef.onSnapshot((snapshot) => {
+    snapshot.docChanges().forEach((change) => {
+      getFirestoreDoc(docId)
+        .then(data => {
+          displayImageData(data);
+          onDataChanged(data);
+        });
+      console.log("New document added: ", change.doc.data());
+    });
+  }, (error) => {
+    console.error("Error listening for changes: ", error);
+    // エラーハンドリング (再接続など)
+  });
 }
 
+function initColorsTab(firestoreDoc) {
+  repColors.innerHTML = "";
+  const rep_colors = getRepColors(firestoreDoc.rep_colors);
+  for (const color in rep_colors) {
+    // 丸い背景色のみの小さな要素を複数配置する
+    const dropTile = document.createElement('div');
+    dropTile.id = color;
+    dropTile.className = 'drop-tile';
+    // 背景色にcolorを追加
+    dropTile.style.backgroundColor = rep_colors[color];
+    repColors.appendChild(dropTile);
+  }
+  return rep_colors[0];
+}
+
+function setChatMsg(firestoreDoc) {
+  const msgList = [];
+  for (const [_, value] of Object.entries(firestoreDoc.chat_history)) {
+    msgList.push(value)
+  }
+  msgList.sort((a, b) => {
+    const dateA = new Date(a.created_at);
+    const dateB = new Date(b.created_at);
+    return dateA - dateB;
+  });
+  const existingMessageIds = new Set();
+  const oldMessages = document.getElementsByClassName("message");
+  for (const message of oldMessages) {
+    existingMessageIds.add(message.id);
+  }
+  for (const msg of msgList) {
+    if (existingMessageIds.has(msg.id)) {
+      continue;
+    }
+    addMessageToChat(msg.text, msg.sender, msg.id);
+  }
+}
 
 // 各種情報を配置
 function displayImageData(firestoreDoc) {
@@ -161,23 +233,13 @@ function displayImageData(firestoreDoc) {
   const bucketName = firestoreDoc.bucket_name;
   const storageBaseURL = `https://storage.googleapis.com/${bucketName}/images/`
 
-  // タブ1を設定 カラー
-  let rep_colors = null;
-  if ("rep_colors" in firestoreDoc) {
-    rep_colors = getRepColors(firestoreDoc.rep_colors);
-    for (const color in rep_colors) {
-      // 丸い背景色のみの小さな要素を複数配置する
-      const dropTile = document.createElement('div');
-      dropTile.id = color;
-      dropTile.className = 'drop-tile';
-      // 背景色にcolorを追加
-      dropTile.style.backgroundColor = rep_colors[color];
-      repColors.appendChild(dropTile);
-    }
-  }
-
   // アップロードされた画像を表示
   if ("original_image_name" in firestoreDoc) {
+    // タブ1を設定 カラー
+    let mainColor = null
+    if ("rep_colors" in firestoreDoc) {
+      mainColor = initColorsTab(firestoreDoc);
+    }
     const originalImageName = firestoreDoc.original_image_name;
     originalImageUrl = storageBaseURL + originalImageName;
     const img = document.createElement('img');
@@ -185,8 +247,8 @@ function displayImageData(firestoreDoc) {
     img.id = "originalImage";
     img.style.maxWidth = '100%';
     img.style.maxHeight = '100%';
-    if (rep_colors !== null) {
-      loadedImageDiv.style.backgroundColor = rep_colors[0];
+    if (mainColor !== null) {
+      loadedImageDiv.style.backgroundColor = mainColor;
     } else {
       loadedImageDiv.style.backgroundColor = "#fff";
     }
@@ -220,13 +282,11 @@ function displayImageData(firestoreDoc) {
     toggleSwitch2.checked = false;
     backgroundRemovalDiv.innerHTML = `<img src="${backgroundRemovalImageUrl}" alt="Heatmap" id="backgroundRemovalImage">`;
   }
-  // AIチャットの講評をチャット欄の一番最初に乗っける
-  // if ("main_explanation" in firestoreDoc) {
-  //   const aiChatText = firestoreDoc.main_explanation;
-  //   addMessageToChat(aiChatText, 'ai');
-  // }
-  // タブの初期表示
-  showTab('tabpage1');
+
+  // AIチャットをチャット欄に乗っける
+  if ("chat_history" in firestoreDoc) {
+    setChatMsg(firestoreDoc);
+  }
 }
 
 // データ変更確認
