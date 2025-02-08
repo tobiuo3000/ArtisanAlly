@@ -33,11 +33,11 @@ if (!firebase.apps.length) { //多重初期化を防ぐ
 }
 const db = firebase.firestore();
 const collectionName = 'rooms';
-const subcollectionName = "chat_history"
+const subcollectionName = "chat_history";
 let unsubscribe = null;
-let unsubscribeChat = null
+let unsubscribeChat = null;
 
-let originalImageUrl = null;
+export let originalImageUrl = null;
 
 // ドラッグ中の動作
 uploadTile.addEventListener('dragover', (e) => {

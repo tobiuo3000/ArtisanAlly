@@ -1,3 +1,5 @@
+import { originalImageUrl } from "./uploadInit.js";
+
 const toggleSwitch1 = document.getElementById('toggle_switch1');
 const toggleSwitch2 = document.getElementById('toggle_switch2');
 const tabbodyDiv = document.getElementById('tabbody');
