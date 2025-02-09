@@ -134,7 +134,8 @@ async function callAPIs(docId) {
   const endPointList = [
     "/main_commentary/",
     "/histogram_commentary/",
-    "/background_removal/"
+    "/background_removal/",
+    "/heatmap/"
   ]
   for (const endPoint of endPointList) {
     try {
