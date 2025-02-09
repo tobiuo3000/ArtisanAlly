@@ -308,30 +308,34 @@ function displayImageData(firestoreDoc) {
   // タブ2を設定 ヒストグラム
   if (
     "histogram_image_name" in firestoreDoc &&
-    "histogram_explanation" in firestoreDoc &&
-    firestoreDoc.histogram_image_name !== null &&
-    firestoreDoc.histogram_explanation !== null
+    firestoreDoc.histogram_image_name !== null
   ) {
     const histogramImageName = firestoreDoc.histogram_image_name;
     const histogramImageUrl = storageBaseURL + histogramImageName;
-    const  histogramDescriptionText = firestoreDoc.histogram_explanation;
     histogramDiv.innerHTML = `<img src="${histogramImageUrl}" alt="Histogram">`;
-    histogramDescription.textContent = histogramDescriptionText;
+  }
+  if (
+    "histogram_explanation" in firestoreDoc &&
+    firestoreDoc.histogram_explanation !== null
+  ) {
+    histogramDescription.textContent = firestoreDoc.histogram_explanation;
   }
 
   // タブ3を設定 ヒートマップ
   if (
     "heatmap_image_name" in firestoreDoc &&
-    "heatmap_explanation" in firestoreDoc &&
-    firestoreDoc.heatmap_image_name !== null &&
-    firestoreDoc.heatmap_explanation !== null
+    firestoreDoc.heatmap_image_name !== null
   ) {
     const heatmapImageName = firestoreDoc.heatmap_image_name;
     const heatmapImageUrl = storageBaseURL + heatmapImageName;
-    const heatmapDescriptionText  = firestoreDoc.heatmap_explanation;
     toggleSwitch1.checked = false;
     heatmapDiv.innerHTML = `<img src="${heatmapImageUrl}" alt="Heatmap" id="heatmapImage">`;
-    heatmapDescription.textContent = heatmapDescriptionText;
+  }
+  if (
+    "heatmap_explanation" in firestoreDoc &&
+    firestoreDoc.heatmap_explanation !== null
+  ) {
+    heatmapDescription.textContent = firestoreDoc.heatmap_explanation;
   }
 
   // タブ4を設定 バックグランドリムーバル
