@@ -115,9 +115,9 @@ async function sendImageToApi(jsonData) {
 
     const data = await response.json();
 
-    if (data && data.id) {
-      console.log("Received ID:", data.id);
-      return data.id;
+    if (data && data.room_id) {
+      console.log("Received ID:", data.room_id);
+      return data.room_id;
     } else {
       throw new Error("Invalid response format: 'id' property missing.");
     }
