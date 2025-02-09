@@ -19,7 +19,7 @@ from flask import Flask, request, jsonify
               2. flask endpoint
 """
 
-client = storage.Client(credentials=cred)
+client = storage.Client()
   
 
 
@@ -117,8 +117,7 @@ def process(model_dir, image, window_size, points_per_side, pred_iou_thresh, sta
     # チェックポイントとモデル設定（今回は vit_h を使用）
     sam_checkpoint = "/app/models/sam_vit_h_4b8939.pth"
     model_type = "vit_h"
-    device = "cuda"  # Cloud Shell の場合 GPU がなければ "cpu" にa
-    する  "cuda" 
+    device = "cuda"  # Cloud Shell の場合 GPU がなければ "cpu" にする  "cuda" 
 
     sam = sam_model_registry[model_type](checkpoint=sam_checkpoint)
     sam.to(device=device)
@@ -221,6 +220,53 @@ def post():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=8080)
+
+    if False:
+        app.run(debug=True, host="0.0.0.0", port=8080)
+
+    else:
+        room_id = "b5cf506d-a958-4abb-b41f-f77db5d8eb02"
+        db = firestore.Client()
     
- 
+        doc_snapshot = db.collection("rooms").document(room_id).get()
+        firestore_dict = doc_snapshot.to_dict()
+        if firestore_dict is None:
+            print("firestore loading error")
+
+        original_image_filename = firestore_dict.get("original_image_name")
+        BUCKET_NAME = "artisanally_images"
+        
+        try:
+            bucket = client.bucket(BUCKET_NAME)
+            blob = bucket.blob("images/" + original_image_filename)
+            image_data = blob.download_as_string()
+            nparr = np.frombuffer(image_data, np.uint8)
+            image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+            
+            # SAM 処理用パラメータ
+            window_size = 64 
+            points_per_side = 64
+            pred_iou_thresh = 0.88
+            stability_score_thresh = 0.95
+            min_mask_region_area = 50
+            
+            # model_dir はチェックポイントがある GCS もしくはローカルのディレクトリパス（ここでは PATH を使用）
+            seg_mask, heatmap, overlay = process(PATH, image, window_size, points_per_side, pred_iou_thresh, stability_score_thresh, min_mask_region_area)
+            
+            file_type = "png"
+            image_datas = [seg_mask, heatmap, overlay]
+            image_names = ["seg_mask", "heatmap", "overlay"]
+            doc_ref = db.collection("rooms").document(room_id)
+            
+            for i in range(3):
+                image_id = str(uuid.uuid4())
+                new_filename = f"{image_id}.{file_type}"
+                destination_blob_name = f"images/{new_filename}"
+                upload_image_to_gcs(image_array=image_datas[i], bucket=bucket, destination_blob_name=destination_blob_name)
+                doc_ref.update({f"{image_names[i]}_image_name": new_filename})
+            
+            print("200")
+        except Exception as e:
+            print(str(e))
+    
+    

@@ -59,6 +59,7 @@ def first_commentary():
     except Exception as e:
         return jsonify({f"error": str(e)})
 
+
 @app.route("/histogram_commentary/", methods=["POST"])
 def second_commentary():
     data = request.json
