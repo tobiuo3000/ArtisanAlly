@@ -30,23 +30,27 @@ main {
         width: 80%;
         max-width: 800px;
         margin-top: 20%;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 
     #service-description {
         max-width: 800px;
-        margin-bottom: 30px;
+        margin-bottom: 10px;
         font-size: 1.3em;
         ///*font-weight: bold;*///
-        font-family: "Train One", serif;
+        ///*font-family: "Train One", serif;*///
         .train-one-regular {
             font-family: "Train One", serif;
             font-weight: 400;
             font-style: normal;
         }
-
     }
-
+    #description-details {
+        max-width: 800px;
+        margin-bottom: 20px;
+        font-size: 0.75em;
+        line-height: 0.5
+    }
     #uploadTile {
         margin: auto;
         border: 2px dashed #aaa;
