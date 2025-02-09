@@ -136,7 +136,7 @@ async function callAPIs(docId) {
     "/histogram_commentary/",
     "/background_removal/",
     "/heatmap/"
-  ]
+  ];
   for (const endPoint of endPointList) {
     try {
       const response = await fetch(endPoint, {
