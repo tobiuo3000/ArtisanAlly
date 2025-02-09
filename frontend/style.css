@@ -26,7 +26,13 @@ main {
 #uploadScreen #service-description {
   max-width: 800px;
   margin-bottom: 30px;
-  font-size: 1.2em;
+  font-size: 1.3em;
+  font-family: "Train One", serif;
+}
+#uploadScreen #service-description .train-one-regular {
+  font-family: "Train One", serif;
+  font-weight: 400;
+  font-style: normal;
 }
 #uploadScreen #uploadTile {
   margin: auto;
