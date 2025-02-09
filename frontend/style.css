@@ -69,16 +69,15 @@ main {
 #falling-part {
   stroke-dasharray: 0, 100; /* 初期状態: 短い */
   stroke-dashoffset: 0;
-  animation: stretchPath 1.3s ease-in-out infinite, rotateOrbit 1.3s linear infinite;
-  animation-delay: 0.2s; /* 遅れて回転 */
+  animation: stretchPath 1.5s infinite, rotateOrbit 1.5s linear infinite;
 }
 
 /* 遅れて回るボール */
 #falling-part-ball {
   transform: rotate(-90deg) translateX(30px); /* 円周に沿う動きのみ適用 */
   transform-origin: 50% 50%;
-  animation: Rotateball 1.3s cubic-bezier(0.25, 0.6, 0.5, 0.6) infinite;
-  animation-delay: 0.4s; /* 遅れて回転 */
+  animation: Rotateball 1.5s cubic-bezier(0.1, 0.6, 0.9, 0.9) infinite;
+  animation-timing-function: ease-in-out;
 }
 
 /* 伸びるアニメーション */
@@ -88,14 +87,20 @@ main {
     stroke-dashoffset: 0;
   }
   100% {
-    stroke-dasharray: 60, 180;
-    stroke-dashoffset: -180;
+    stroke-dasharray: 80, 190;
+    stroke-dashoffset: -190;
   } /* 伸びた部分が後ろに移動 */
 }
 /* 円周を沿って回転 */
 @keyframes rotateOrbit {
   0% {
     transform: rotate(0deg) translate(0px, 0px) rotate(0deg);
+  }
+  10% {
+    transform: rotate(0deg) translate(0px, 0px) rotate(0deg);
+  }
+  75% {
+    transform: rotate(180deg) translate(0px, 0px) rotate(-180deg);
   }
   100% {
     transform: rotate(180deg) translate(0px, 0px) rotate(-180deg);
@@ -105,6 +110,12 @@ main {
 @keyframes Rotateball {
   0% {
     transform: rotate(-90deg) translateX(30px);
+  }
+  20% {
+    transform: rotate(-90deg) translateX(30px);
+  }
+  75% {
+    transform: rotate(270deg) translateX(30px);
   }
   100% {
     transform: rotate(270deg) translateX(30px);
@@ -362,6 +373,10 @@ main {
   cursor: pointer;
   font-size: 1.3em;
   width: 15%;
+}
+
+.hidden {
+  display: none !important;
 }
 
 .noneTransparent {
