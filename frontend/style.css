@@ -26,6 +26,7 @@ main {
 #uploadScreen #service-description {
   max-width: 800px;
   margin-bottom: 30px;
+  font-size: 1.2em;
 }
 #uploadScreen #uploadTile {
   margin: auto;
