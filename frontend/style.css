@@ -393,6 +393,10 @@ main {
   width: 15%;
 }
 
+.hidden {
+  display: none !important;
+}
+
 .noneTransparent {
   opacity: 1 !important;
 }
