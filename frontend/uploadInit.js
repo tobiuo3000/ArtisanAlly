@@ -17,9 +17,6 @@ const backgroundRemovalDiv = document.getElementById('backgroundRemoval');
 const toggleSwitch1 = document.getElementById('toggle_switch1');
 const toggleSwitch2 = document.getElementById('toggle_switch2');
 
-// APIのエンドポイント (仮のURL)
-const apiUrl = "/process-image";
-
 export let docRefId = null;
 
 const firebaseConfig = {
@@ -78,7 +75,7 @@ async function handleImageUpload(file) {
     setupRealtimeListener(docId);
   } catch (error) {
     console.error("Error processing image:", error);
-    alert("Error: " + error.message);
+    // alert("Error: " + error.message);
     showUploadScreen();
   }
 }
@@ -116,18 +113,18 @@ async function sendImageToApi(jsonData) {
       throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
     }
 
-    const data = await response.json(); // レスポンスボディをJSONとして解析
+    const data = await response.json();
 
     if (data && data.id) {
       console.log("Received ID:", data.id);
-      return data.id; // サーバーから返されたIDを返す
+      return data.id;
     } else {
       throw new Error("Invalid response format: 'id' property missing.");
     }
 
   } catch (error) {
     console.error("Error sending image:", error);
-    throw error; // エラーを上位の呼び出し元に伝播させる（重要）
+    throw error;
   }
 }
 
