@@ -68,6 +68,7 @@ async function handleImageUpload(file) {
   try {
     const jsonData = await getJsonData(file);
     const docId = await sendImageToApi(jsonData);
+    await callAPIs(docId);
     const firestoreDoc = await getFirestoreDoc(docId);
     displayImageData(firestoreDoc);
     showResultScreen();
@@ -125,6 +126,35 @@ async function sendImageToApi(jsonData) {
   } catch (error) {
     console.error("Error sending image:", error);
     throw error;
+  }
+}
+
+// 複数のAPIを叩く
+async function callAPIs(docId) {
+  const endPointList = [
+    "/main_commentary/",
+    "/histogram_commentary/",
+    "/background_removal/"
+  ]
+  for (const endPoint of endPointList) {
+    try {
+      const response = await fetch(endPoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "room_id": docId,
+        }),
+      });
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+      }
+    } catch (error) {
+      console.error("Error sending image:", error);
+      throw error;
+    }
   }
 }
 
