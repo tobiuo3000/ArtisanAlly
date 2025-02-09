@@ -56,6 +56,9 @@ main {
 #uploadScreen #uploadTile:hover {
   background-color: #f0f0f0;
 }
+#uploadScreen #uploadTile .imageicon {
+  margin: auto;
+}
 #uploadScreen #uploadTile #dndText {
   font-size: 1.2em;
   color: #666;
