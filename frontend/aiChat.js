@@ -15,7 +15,7 @@ sendBtn.addEventListener('click', async () => {
     // addMessageToChat(aiResponse, 'ai');
   } catch (error) {
     console.error("Error getting AI response:", error);
-    addMessageToChat("エラーが発生しました。", "ai");
+    // addMessageToChat("エラーが発生しました。", "ai");
   }
 });
 

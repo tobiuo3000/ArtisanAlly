@@ -70,7 +70,7 @@ async function handleImageUpload(file) {
   showLoadingScreen();
   try {
     const jsonData = await getJsonData(file);
-    const docId = sendImageToApi(jsonData);
+    const docId = await sendImageToApi(jsonData);
     const firestoreDoc = await getFirestoreDoc(docId);
     displayImageData(firestoreDoc);
     showResultScreen();
@@ -102,14 +102,35 @@ function getJsonData(file) {
 }
 
 // Base64エンコードされた画像をAPIに送信、firestoreのIDを得る
-function sendImageToApi(jsonData) {
-  // ダミーデータを戻す
-  console.log(apiUrl);
-  console.log(jsonData.image.substr(0, 30) + "......");
-  console.log(jsonData.image_type);
-  docRefId = "30f925ae-3a98-41b5-90fe-9d6cf840559a";
-  return "30f925ae-3a98-41b5-90fe-9d6cf840559a";
+async function sendImageToApi(jsonData) {
+  try {
+    const response = await fetch('/upload/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(jsonData),
+    });
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+    }
+
+    const data = await response.json(); // レスポンスボディをJSONとして解析
+
+    if (data && data.id) {
+      console.log("Received ID:", data.id);
+      return data.id; // サーバーから返されたIDを返す
+    } else {
+      throw new Error("Invalid response format: 'id' property missing.");
+    }
+
+  } catch (error) {
+    console.error("Error sending image:", error);
+    throw error; // エラーを上位の呼び出し元に伝播させる（重要）
+  }
 }
+
 
 function getRepColors(rep_colors) {
   const result = [];
