@@ -56,16 +56,18 @@ main {
 #uploadScreen #uploadTile:hover {
   background-color: #f0f0f0;
 }
-#uploadScreen #uploadTile .imageicon {
-  margin: auto;
-}
 #uploadScreen #uploadTile #dndText {
   font-size: 1.2em;
   color: #666;
 }
+#uploadScreen #uploadTile #dndText .imageicon {
+  width: 24px;
+  vertical-align: bottom;
+  padding: 4px;
+}
 #uploadScreen #uploadTile #dndText div:first-child {
   font-weight: bold;
-  margin-bottom: 5px;
+  margin: 0;
 }
 
 #loadingScreen {
