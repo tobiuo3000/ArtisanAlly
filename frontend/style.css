@@ -326,8 +326,8 @@ main {
 #resultScreen #aiChat {
   background-color: #fff;
   border-radius: 10px;
-  max-width: 1200px;
-  border: 1px solid #ddd;
+  max-width: 1140px;
+  border: 2px solid #ddd;
   margin: 0 auto;
 }
 #resultScreen #aiChat #messageBox {
@@ -391,10 +391,6 @@ main {
   cursor: pointer;
   font-size: 1.3em;
   width: 15%;
-}
-
-.hidden {
-  display: none !important;
 }
 
 .noneTransparent {
