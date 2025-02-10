@@ -66,10 +66,15 @@ async function handleImageUpload(file) {
   showLoadingScreen();
   try {
     const jsonData = await getJsonData(file);
+    console.log(window.location.origin);
     // ここを消してした二つのコメントアウトを戻す
-    const docId = "593ea0ec-47ed-4ff1-918a-7cf2512d9d92";
-    // const docId = await sendImageToApi(jsonData);
-    // docRefId = docId;
+    let docId = null;
+    if (window.location.origin.includes("localhost")) {
+      docId = "593ea0ec-47ed-4ff1-918a-7cf2512d9d92";
+    } else {
+      docId = await sendImageToApi(jsonData);
+    }
+    docRefId = docId;
     const firestoreDoc = await getFirestoreDoc(docId);
     displayImageData(firestoreDoc);
     showResultScreen();
