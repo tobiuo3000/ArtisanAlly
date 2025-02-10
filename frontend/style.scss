@@ -264,6 +264,11 @@ main {
                 .descriptionItem {
                     display: none;
 
+                    .descriptionText {
+                        text-align: center;
+                        padding: 20px;
+                    }
+
                     &>div:first-child {
                         margin: auto;
                     }

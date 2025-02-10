@@ -250,6 +250,10 @@ main {
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem {
   display: none;
 }
+#resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem .descriptionText {
+  text-align: center;
+  padding: 20px;
+}
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem > div:first-child {
   margin: auto;
 }
