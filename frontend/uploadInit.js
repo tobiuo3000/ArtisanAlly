@@ -67,8 +67,10 @@ async function handleImageUpload(file) {
   showLoadingScreen();
   try {
     const jsonData = await getJsonData(file);
-    const docId = await sendImageToApi(jsonData);
-    await callAPIs(docId);
+    // ここを消してした二つのコメントアウトを戻す
+    const docId = "593ea0ec-47ed-4ff1-918a-7cf2512d9d92";
+    // const docId = await sendImageToApi(jsonData);
+    // await callAPIs(docId);
     const firestoreDoc = await getFirestoreDoc(docId);
     displayImageData(firestoreDoc);
     showResultScreen();
@@ -316,10 +318,10 @@ function displayImageData(firestoreDoc) {
     histogramDiv.innerHTML = `<img src="${histogramImageUrl}" alt="Histogram">`;
   }
   if (
-    "histogram_explanation" in firestoreDoc &&
-    firestoreDoc.histogram_explanation !== null
+    "histogram_commentary" in firestoreDoc &&
+    firestoreDoc.histogram_commentary !== null
   ) {
-    histogramDescription.textContent = firestoreDoc.histogram_explanation;
+    histogramDescription.textContent = firestoreDoc.histogram_commentary;
   }
 
   // タブ3を設定 ヒートマップ
@@ -333,10 +335,10 @@ function displayImageData(firestoreDoc) {
     heatmapDiv.innerHTML = `<img src="${heatmapImageUrl}" alt="Heatmap" id="heatmapImage">`;
   }
   if (
-    "heatmap_explanation" in firestoreDoc &&
-    firestoreDoc.heatmap_explanation !== null
+    "heatmap_commentary" in firestoreDoc &&
+    firestoreDoc.heatmap_commentary !== null
   ) {
-    heatmapDescription.textContent = firestoreDoc.heatmap_explanation;
+    heatmapDescription.textContent = firestoreDoc.heatmap_commentary;
   }
 
   // タブ4を設定 バックグランドリムーバル
