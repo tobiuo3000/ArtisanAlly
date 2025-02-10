@@ -203,7 +203,7 @@ main {
 }
 #resultScreen #mainResultsScreen #rightPanel #tabcontrol a {
   display: block;
-  padding: 15px 25px;
+  padding: 15px 24px;
   position: absolute;
   top: 15px;
   border-radius: 10px 10px 0 0;
@@ -288,7 +288,8 @@ main {
   justify-content: center;
   align-items: center;
   max-width: 500px;
-  height: 100px;
+  max-height: 230px;
+  height: 250px;
 }
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #heatmap + .toggle_label,
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #backgroundRemoval + .toggle_label {

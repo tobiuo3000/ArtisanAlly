@@ -206,7 +206,7 @@ main {
 
                 a {
                     display: block;
-                    padding: 15px 25px;
+                    padding: 15px 24px;
                     position: absolute;
                     top: 15px;
                     ///*margin: 0 auto;*///
@@ -308,7 +308,8 @@ main {
                         justify-content: center;
                         align-items: center;
                         max-width: 500px;
-                        height: 100px;
+                        max-height: 230px;
+                        height: 250px;
                     }
 
                     #heatmap,
