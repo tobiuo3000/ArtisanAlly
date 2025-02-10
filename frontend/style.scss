@@ -300,17 +300,33 @@ main {
                         align-items: center;
                     }
 
-                    #histogram,
-                    #heatmap,
+                    #histogram {
+                        margin-bottom: 10px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        max-width: 500px;
+                        height: 300px;
+                    }
+
+                    #heatmap {
+                        margin-bottom: 10px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        max-width: 500px;
+                        height: 300px;
+                    }
+
                     #backgroundRemoval {
                         margin-bottom: 10px;
                         display: flex;
                         justify-content: center;
                         align-items: center;
                         max-width: 500px;
-                        max-height: 150px;
-                        height: 250px;
+                        height: 300px;
                     }
+
 
                     #heatmap,
                     #backgroundRemoval {

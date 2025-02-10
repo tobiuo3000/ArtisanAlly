@@ -280,16 +280,29 @@ main {
   justify-content: center;
   align-items: center;
 }
-#resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #histogram,
-#resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #heatmap,
+#resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #histogram {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 500px;
+  height: 300px;
+}
+#resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #heatmap {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 500px;
+  height: 300px;
+}
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #backgroundRemoval {
   margin-bottom: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   max-width: 500px;
-  max-height: 150px;
-  height: 250px;
+  height: 300px;
 }
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #heatmap + .toggle_label,
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #backgroundRemoval + .toggle_label {
