@@ -7,7 +7,6 @@ const __dirname = path.dirname(__filename);
 export default {
   entry: {
     main: './main.js',
-    aiChat: "./aiChat.js",
     resultsInit: "./resultsInit.js",
     uploadInit: "./uploadInit.js",
   },
