@@ -205,10 +205,12 @@ main {
 
                 a {
                     display: block;
-                    padding: 10px 20px;
-                    margin: 0 auto;
+                    padding: 15px 25px;
+                    position: absolute;
+                    top: 15px;
+                    ///*margin: 0 auto;*///
                     border-radius: 10px 10px 0 0;
-                    box-shadow: 3px 3px 1px #65558F;
+                    box-shadow: 5px 5px 1px #65558F;
                     text-decoration: none;
                     position: relative;
                     z-index: 1;
@@ -252,12 +254,12 @@ main {
             #tabbody {
                 border: none;
                 padding: 20px;
-                border-radius: 0 0 10px 10px;
+                border-radius: 20px 20px 20px 20px;
                 background-color: $tab1-color;
                 position: relative;
                 z-index: 4;
                 height: 460px;
-                box-shadow: 3px 3px 1px #65558F;
+                box-shadow: 5px 5px 1px #65558F;
 
                 .descriptionItem {
                     display: none;
