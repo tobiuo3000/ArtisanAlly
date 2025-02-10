@@ -67,9 +67,9 @@ async function handleImageUpload(file) {
   try {
     const jsonData = await getJsonData(file);
     // ここを消してした二つのコメントアウトを戻す
-    // const docId = "593ea0ec-47ed-4ff1-918a-7cf2512d9d92";
-    const docId = await sendImageToApi(jsonData);
-    docRefId = docId;
+    const docId = "593ea0ec-47ed-4ff1-918a-7cf2512d9d92";
+    // const docId = await sendImageToApi(jsonData);
+    // docRefId = docId;
     const firestoreDoc = await getFirestoreDoc(docId);
     displayImageData(firestoreDoc);
     showResultScreen();
