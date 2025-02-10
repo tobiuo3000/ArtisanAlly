@@ -66,8 +66,6 @@ async function handleImageUpload(file) {
   showLoadingScreen();
   try {
     const jsonData = await getJsonData(file);
-    console.log(window.location.origin);
-    // ここを消してした二つのコメントアウトを戻す
     let docId = null;
     if (window.location.origin.includes("localhost")) {
       docId = "593ea0ec-47ed-4ff1-918a-7cf2512d9d92";
@@ -80,7 +78,9 @@ async function handleImageUpload(file) {
     showResultScreen();
     showTab('tabpage1');
     setupRealtimeListener(docId);
-    await callAPIs(docId);
+    if (!window.location.origin.includes("localhost")) {
+      await callAPIs(docId);
+    }
   } catch (error) {
     console.error("Error processing image:", error);
     // alert("Error: " + error.message);
