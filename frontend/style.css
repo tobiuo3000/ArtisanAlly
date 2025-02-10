@@ -64,6 +64,7 @@ main {
   width: 24px;
   vertical-align: bottom;
   padding: 4px;
+  opacity: 0.5;
 }
 #uploadScreen #uploadTile #dndText div:first-child {
   font-weight: bold;
@@ -250,6 +251,11 @@ main {
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem {
   display: none;
 }
+#resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem .TypicalColordescriptionText {
+  text-align: center;
+  padding: 30px;
+  font-size: 1.5em;
+}
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem > div:first-child {
   margin: auto;
 }
@@ -266,7 +272,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 300px;
+  max-width: 500px;
   height: 300px;
 }
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #heatmap + .toggle_label,
@@ -291,7 +297,7 @@ main {
 #resultScreen .toggleWrapper {
   display: flex;
   justify-content: center;
-  margin: 20px;
+  margin: 50px;
 }
 #resultScreen .toggleWrapper .toggle {
   display: none;

@@ -74,6 +74,7 @@ main {
                 width: 24px;
                 vertical-align: bottom;
                 padding: 4px;
+                opacity: 0.5;
             }
             font-size: 1.2em;
             color: #666;
@@ -264,6 +265,12 @@ main {
                 .descriptionItem {
                     display: none;
 
+                    .TypicalColordescriptionText {
+                        text-align: center;
+                        padding: 30px;
+                        font-size: 1.5em;
+                    }
+
                     &>div:first-child {
                         margin: auto;
                     }
@@ -282,7 +289,7 @@ main {
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        max-width: 300px;
+                        max-width: 500px;
                         height: 300px;
                     }
 
@@ -320,7 +327,7 @@ main {
     .toggleWrapper {
         display: flex;
         justify-content: center;
-        margin: 20px;
+        margin: 50px;
 
         .toggle {
             display: none;
