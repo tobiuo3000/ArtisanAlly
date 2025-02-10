@@ -68,7 +68,7 @@ async function handleImageUpload(file) {
     const jsonData = await getJsonData(file);
     let docId = null;
     if (window.location.origin.includes("localhost")) {
-      docId = "593ea0ec-47ed-4ff1-918a-7cf2512d9d92";
+      docId = "470f9aaa-77d0-449c-b3db-29d9d7ea8e76";
     } else {
       docId = await sendImageToApi(jsonData);
     }
