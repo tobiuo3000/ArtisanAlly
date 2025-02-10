@@ -1,5 +1,4 @@
 import { showLoadingScreen, showResultScreen, showUploadScreen } from "./main.js";
-import { addMessageToChat } from "./aiChat.js";
 import { showTab } from "./resultsInit.js";
 
 // import { initializeApp } from "firebase/app";
@@ -17,7 +16,7 @@ const backgroundRemovalDiv = document.getElementById('backgroundRemoval');
 const toggleSwitch1 = document.getElementById('toggle_switch1');
 const toggleSwitch2 = document.getElementById('toggle_switch2');
 
-export let docRefId = null;
+let docRefId = null;
 
 const firebaseConfig = {
   apiKey: "AIzaSyA-wjt8D4zYzLhj6HEeLRqjSDWmTrBku70",
@@ -68,7 +67,7 @@ async function handleImageUpload(file) {
   try {
     const jsonData = await getJsonData(file);
     // ここを消してした二つのコメントアウトを戻す
-    // const docId = "593ea0ec-47ed-4ff1-918a-7cf2512d9d92";
+    //const docId = "593ea0ec-47ed-4ff1-918a-7cf2512d9d92";
     const docId = await sendImageToApi(jsonData);
     await callAPIs(docId);
     docRefId = docId;
@@ -365,4 +364,64 @@ function displayImageData(firestoreDoc) {
 // データ変更確認
 function onDataChanged(data) {
   console.log("Data changed:", data);
+}
+
+// aiChat ===========
+
+const messageBox = document.getElementById('messageBox');
+const inputMsg = document.getElementById('inputMsg');
+const sendBtn = document.getElementById('sendBtn');
+
+// メッセージの送信処理
+sendBtn.addEventListener('click', async () => {
+  const message = inputMsg.value.trim();
+  if (!message) return;
+  inputMsg.value = '';
+  // addMessageToChat(message, 'user');
+  try{
+    const aiResponse = await getAiResponse(message);
+    // addMessageToChat(aiResponse, 'ai');
+  } catch (error) {
+    console.error("Error getting AI response:", error);
+    // addMessageToChat("エラーが発生しました。", "ai");
+  }
+});
+
+// aiエージェントを叩いてテキストを取得
+async function getAiResponse(message) {
+  try {
+    console.log({
+      "user_message": message,
+      "room_id": docRefId,
+    });
+    const response = await fetch("/chat/", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "user_message": message,
+        "room_id": docRefId,
+      }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    console.log('Success: chat');
+  } catch (error) {
+    console.error('Error:', error);
+    // エラーハンドリング (UIにエラーメッセージを表示するなど)
+    throw error; //エラーを呼び出し元に再度投げる。
+  }
+}
+
+// メッセージを生成してぶちこむ
+export function addMessageToChat(message, sender, id) {
+  const messageElement = document.createElement('div');
+  messageElement.classList.add('message');
+  messageElement.classList.add(sender === 'user' ? 'user-message' : 'ai-message');
+  messageElement.id = id;
+  messageElement.textContent = message;
+  messageBox.appendChild(messageElement);
+  messageBox.scrollTop = messageBox.scrollHeight;
 }
