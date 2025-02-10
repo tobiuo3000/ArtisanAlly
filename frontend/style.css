@@ -64,6 +64,7 @@ main {
   width: 24px;
   vertical-align: bottom;
   padding: 4px;
+  opacity: 0.5;
 }
 #uploadScreen #uploadTile #dndText div:first-child {
   font-weight: bold;
