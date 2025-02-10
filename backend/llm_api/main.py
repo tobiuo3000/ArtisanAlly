@@ -34,8 +34,9 @@ def first_commentary():
             raise ValueError(f"No document found for room_id: {room_id}")
 
         original_image_filename = firestore_dict.get("original_image_name")
+        original_file_type = firestore_dict.get("file_type")
 
-        response_of_llm = call_llm(image_filename=original_image_filename, prompt=prompt_for_llm)
+        response_of_llm = call_llm(image_filename=original_image_filename, file_type=original_file_type, prompt=prompt_for_llm)
 
         new_user_document_name = "user0"
         new_agent_document_name = "agent0"
@@ -124,13 +125,13 @@ def third_commentary():
 
         original_image_filename = firestore_dict.get("heatmap_image_name")
 
-        response_of_llm = call_llm(image_filename=original_image_filename, prompt=prompt_for_llm)
+        response_of_llm = call_llm(image_filename=original_image_filename, file_type="jpeg", prompt=prompt_for_llm)
 
         return jsonify({f"status": 200})
     
     except Exception as e:
         return jsonify({f"error": str(e)})
-    
+
 
 
 @app.route("/chat/", methods=["POST"])
@@ -149,12 +150,13 @@ def chat_with_ai():
             raise ValueError(f"No document found for room_id: {room_id}")
 
         original_image_filename = firestore_dict.get("original_image_name")
+        original_file_type = firestore_dict.get("file_type")
         original_part_object = {
             "role": "user",
             "parts": [
                 Part.from_uri(
                     f"https://storage.googleapis.com/artisanally_images/images/{original_image_filename}",
-                    mime_type="image/jpeg",
+                    mime_type=f"image/{original_file_type}",
                 ).to_dict()
             ]
         }

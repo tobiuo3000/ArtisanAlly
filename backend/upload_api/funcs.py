@@ -24,6 +24,7 @@ def upload_image_to_cloud_storage(image_data, file_type: str, room_id: str) -> N
 
     doc_ref = db.collection("rooms").document(room_id)
     doc_ref.update({"original_image_name": filename})
+    doc_ref.update({"file_type": file_type})
     
     return None
 
