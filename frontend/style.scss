@@ -361,8 +361,8 @@ main {
     #aiChat {
         background-color: #fff;
         border-radius: 10px;
-        max-width: 1200px;
-        border: 1px solid $border-color;
+        max-width: 1140px;
+        border: 2px solid $border-color;
         margin: 0 auto;
 
         #messageBox {
@@ -440,7 +440,7 @@ main {
 
 // 隠し要素
 .hidden {
-   display: none !important;
+   ///*display: none !important;*///
 }
 
 .noneTransparent {
