@@ -253,6 +253,7 @@ main {
 }
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem .TypicalColordescriptionText {
   text-align: center;
+  padding-top: 30px;
   font-size: 1.5em;
 }
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem .HistogramdescriptionText {
