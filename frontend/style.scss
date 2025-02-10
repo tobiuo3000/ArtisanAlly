@@ -265,7 +265,7 @@ main {
                 .descriptionItem {
                     display: none;
 
-                    .descriptionText {
+                    .TypicalColordescriptionText {
                         text-align: center;
                         padding: 30px;
                         font-size: 1.5em;
@@ -289,7 +289,7 @@ main {
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        max-width: 300px;
+                        max-width: 500px;
                         height: 300px;
                     }
 
@@ -327,7 +327,7 @@ main {
     .toggleWrapper {
         display: flex;
         justify-content: center;
-        margin: 20px;
+        margin: 50px;
 
         .toggle {
             display: none;
