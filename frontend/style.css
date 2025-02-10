@@ -258,17 +258,14 @@ main {
 }
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem .HistogramdescriptionText {
   text-align: center;
-  padding-top: 30px;
   font-size: 1.5em;
 }
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem .HeatmapdescriptionText {
   text-align: center;
-  padding-top: 30px;
   font-size: 1.5em;
 }
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem .BackgroundRemovaldescriptionText {
   text-align: center;
-  padding-top: 30px;
   font-size: 1.5em;
 }
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem > div:first-child {
@@ -296,6 +293,10 @@ main {
   max-width: 500px;
   height: 300px;
 }
+#resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #heatmap img {
+  max-width: 300px;
+  max-height: 250px;
+}
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #backgroundRemoval {
   margin-bottom: 10px;
   display: flex;
@@ -303,6 +304,10 @@ main {
   align-items: center;
   max-width: 500px;
   height: 300px;
+}
+#resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #backgroundRemoval img {
+  max-width: 300px;
+  max-height: 250px;
 }
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #heatmap + .toggle_label,
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #backgroundRemoval + .toggle_label {

@@ -273,19 +273,17 @@ main {
 
                     .HistogramdescriptionText {
                         text-align: center;
-                        padding-top: 30px;
+                        ///*padding-top: 30px;*///
                         font-size: 1.5em;
                     }
 
                     .HeatmapdescriptionText {
                         text-align: center;
-                        padding-top: 30px;
                         font-size: 1.5em;
                     }
 
                     .BackgroundRemovaldescriptionText {
                         text-align: center;
-                        padding-top: 30px;
                         font-size: 1.5em;
                     }
 
@@ -316,6 +314,10 @@ main {
                         align-items: center;
                         max-width: 500px;
                         height: 300px;
+                        img {
+                            max-width: 300px;
+                            max-height: 250px;
+                        }
                     }
 
                     #backgroundRemoval {
@@ -325,6 +327,10 @@ main {
                         align-items: center;
                         max-width: 500px;
                         height: 300px;
+                        img {
+                            max-width: 300px;
+                            max-height: 250px;
+                        }
                     }
 
 
