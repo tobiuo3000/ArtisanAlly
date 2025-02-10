@@ -288,7 +288,7 @@ main {
   justify-content: center;
   align-items: center;
   max-width: 500px;
-  height: 250px;
+  height: 100px;
 }
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #heatmap + .toggle_label,
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #backgroundRemoval + .toggle_label {
@@ -416,6 +416,10 @@ main {
   cursor: pointer;
   font-size: 1.3em;
   width: 15%;
+}
+
+.hidden {
+  display: none !important;
 }
 
 .noneTransparent {

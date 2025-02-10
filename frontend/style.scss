@@ -308,7 +308,7 @@ main {
                         justify-content: center;
                         align-items: center;
                         max-width: 500px;
-                        height: 250px;
+                        height: 100px;
                     }
 
                     #heatmap,
@@ -471,7 +471,7 @@ main {
 
 // 隠し要素
 .hidden {
-   ///*display: none !important;*///
+   display: none !important;
 }
 
 .noneTransparent {
