@@ -241,7 +241,7 @@ main {
 #resultScreen #mainResultsScreen #rightPanel #tabbody {
   border: none;
   padding: 20px;
-  border-radius: 20px 20px 20px 20px;
+  border-radius: 20px;
   background-color: #FFCC00;
   position: relative;
   z-index: 4;
@@ -253,7 +253,23 @@ main {
 }
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem .TypicalColordescriptionText {
   text-align: center;
-  padding: 30px;
+  padding-top: 20px;
+  padding-bottom: 5px;
+  font-size: 1.5em;
+}
+#resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem .HistogramdescriptionText {
+  text-align: center;
+  padding-top: 30px;
+  font-size: 1.5em;
+}
+#resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem .HeatmapdescriptionText {
+  text-align: center;
+  padding-top: 30px;
+  font-size: 1.5em;
+}
+#resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem .BackgroundRemovaldescriptionText {
+  text-align: center;
+  padding-top: 30px;
   font-size: 1.5em;
 }
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem > div:first-child {
@@ -273,7 +289,7 @@ main {
   justify-content: center;
   align-items: center;
   max-width: 500px;
-  height: 300px;
+  height: 250px;
 }
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #heatmap + .toggle_label,
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #backgroundRemoval + .toggle_label {
@@ -284,12 +300,15 @@ main {
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #histogram-description,
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #heatmap-description,
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem #background-removal-description {
+  padding: 10px;
   text-align: center;
+  font-size: 12px;
+  line-height: 6px;
 }
 #resultScreen #mainResultsScreen #rightPanel #tabbody .descriptionItem img {
   display: block;
   margin: 0 auto;
-  max-width: 100%;
+  max-width: 90%;
 }
 #resultScreen #mainResultsScreen #rightPanel #tabbody #tabpage1 {
   display: block;
@@ -297,7 +316,7 @@ main {
 #resultScreen .toggleWrapper {
   display: flex;
   justify-content: center;
-  margin: 50px;
+  margin: 5px;
 }
 #resultScreen .toggleWrapper .toggle {
   display: none;
