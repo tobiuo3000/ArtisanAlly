@@ -40,8 +40,8 @@ def removal_post():
 
         blob = bucket.blob(f"images/{original_image_filename}")
         original_image_stream = blob.download_as_string()
-
         image_array = np.frombuffer(bytearray(original_image_stream), dtype=np.uint8)
+
         image_without_background_bytes = remove(image_array, force_return_bytes=True)
         if not image_without_background_bytes:
             raise ValueError("background removal failed.")
@@ -50,13 +50,13 @@ def removal_post():
 
         upload_image_to_cloud_storage(image_data=image_without_background_bytes, file_type="png", room_id=room_id, firestore_label="back_removed_image_name", db=db, bucket=bucket)
         
-        nparr = np.frombuffer(image_without_background_bytes, np.uint8)
-        image_without_background = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-        if image_without_background is None:
-            raise ValueError("Decoding the background removed image failed.")
+        #nparr = np.frombuffer(image_without_background_bytes, np.uint8)
+        #image_without_background = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-        calc_kmeans_clusters_sorted(image=image_without_background, num_clusters=20, room_id=room_id, db=db)
-        make_histogram(image=image_without_background, room_id=room_id, db=db, bucket=bucket)
+        image_imdecoded = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
+        
+        calc_kmeans_clusters_sorted(image=image_imdecoded, num_clusters=20, room_id=room_id, db=db)
+        make_histogram(image=image_imdecoded, room_id=room_id, db=db, bucket=bucket)
 
         return jsonify({"status": "200"})
 

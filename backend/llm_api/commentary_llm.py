@@ -13,7 +13,7 @@ safety_settings = {
 }
 
 
-def call_llm(image_filename=None, prompt=None) -> str:
+def call_llm(image_filename=None, file_type=None, prompt=None) -> str:
     conf = {
         "temperature": 1,
         "max_output_tokens": 256,
@@ -31,7 +31,7 @@ def call_llm(image_filename=None, prompt=None) -> str:
             [
                 Part.from_uri(
                     f"https://storage.googleapis.com/artisanally_images/images/{image_filename}",
-                    mime_type="image/jpeg",
+                    mime_type=f"image/{file_type}",
                 ),
                 prompt,
             ]
